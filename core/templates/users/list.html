@@ -1,0 +1,50 @@
+{% extends "backend.html" %}
+{% load simple_tags %}
+{% load filters %}
+
+{% block content %}
+    {% h1 "Korisnici" %}
+    {% button_new "Novi korisnik" "admin-user-form" %}
+
+    <div class="grid-10">
+        <table class="grid">
+            {% if rows %}
+                <tr>
+                    {% th "Id" "pk" "3" %}
+                    {% th "Korisničko ime" "username" "15" "left" %}
+                    {% th "Ime" "first_name" "20" "left" %}
+                    {% th "Prezime" "last_name" "20" "left" %}
+                    {% th "E-mail" "email" "22" "left" %}
+                    {% th "Aktivan" "is_active" "10" "left" %}
+                    {% th "Operacije" None "10" %}
+                </tr>
+                {% for row in rows %}
+                    {% url "admin-user-details" row.pk as details_url %}
+                    {% url "admin-user-form" row.pk as edit_url %}
+                    {% url "admin-user-delete" row.pk as delete_url %}
+                    <tr>
+                        {% td row.pk "pk" %}
+                        {% td "<a href="|add:edit_url|add:">"|add:row.username|add:"</a>" "LIID" "left" %}
+                        {% td row.first_name "first_name" "left" %}
+                        {% td row.last_name "last_name" "left" %}
+                        {% td row.email "email" "left" %}
+                        {% td row.is_active "is_active" "left" %}
+                        {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
+                        {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
+                        {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}
+                            {% td view|add:edit|add:delete %}
+                        {% endwith %}
+                        {% endwith %}
+                        {% endwith %}
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    {% td "Nema zapisa" %}
+                </tr>
+            {% endif %}
+        </table>
+    </div>
+    {% pager rows %}
+
+{% endblock %}

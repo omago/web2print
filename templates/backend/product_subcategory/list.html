@@ -1,0 +1,50 @@
+{% extends "backend.html" %}
+{% load simple_tags %}
+{% load filters %}
+
+{% block content %}
+
+    {% h1 page_title %}
+    {% button_new "Nova kategorija" "admin-product-subcategory-form" %}
+
+    <table class="grid">
+        {% if rows %}
+            <tr>
+                {% th "Id" "pk" "3" %}
+                {% th "Naziv" "name" "37" "left" %}
+                {% th "Slug" "slug" "20" "left" %}
+                {% th "Broj proizvoda" "number_of_products" "30" "left" %}
+                {% th "Operacije" None "10" %}
+            </tr>
+            {% for row in rows %}
+                {% url "admin-product-subcategory-details" row.pk as details_url %}
+                {% url "admin-product-subcategory-form" row.pk as edit_url %}
+                {% url "admin-product-subcategory-delete" row.pk as delete_url %}
+                {% url "admin-product-list" row.pk as list_product_url %}
+                <tr>
+                    {% td row.pk "pk" %}
+                    {% td "<a href="|add:edit_url|add:">"|add:row.name|add:"</a>" "name" "left" %}
+                    {% td row.slug "slug" "left" %}
+                    {% with number_of_products=row.number_of_products|convert_to_string:"0" %}
+                    {% with products="<a href='"|add:list_product_url|add:"'>"|add:number_of_products|add:"</a>" %}
+                        {% td products "number_of_products" "left" %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
+                    {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
+                    {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}
+                        {% td view|add:edit|add:delete %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                {% td "Nema zapisa" %}
+            </tr>
+        {% endif %}
+    </table>
+    {% pager rows %}
+
+{% endblock %}

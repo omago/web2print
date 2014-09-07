@@ -1,0 +1,74 @@
+{% extends "frontend.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <div id="register-page">
+        <h1>{%  trans "Registracija" %}</h1>
+        <p class="notification">{% trans "Pažnja, ukoliko već posjedujete korisnički račun kod nas, proslijedite na " %}<a href="{% url "user-login" %}">{% trans "PRIJAVU" %}</a>.</p>
+        <form action="{% url "user-register" %}" method="POST">
+            {% csrf_token %}
+            <p class="required-fields">{% trans "* Obavezna polja" %}</p>
+            <h2>{% trans "Osobni podaci" %}</h2>
+            <div>
+                <label for="{{ form.username.auto_id }}">{{ form.username.label }}</label>
+                <div>{{ form.username }}{% if form.username.field.required %}<span class="required">*</span>{% endif %}</div>
+                {{ form.username.errors }}
+            </div>
+
+            <div>
+                <label for="{{ form.password.auto_id }}">{{ form.password.label }}</label>
+                <div>{{ form.password }}{% if form.password.field.required %}<span class="required">*</span>{% endif %}</div>
+                {{ form.password.errors }}
+            </div>
+
+            <div>
+                <label for="{{ form.password_confirm.auto_id }}">{{ form.password_confirm.label }}</label>
+                <div>{{ form.password_confirm }}{% if form.password_confirm.field.required %}<span class="required">*</span>{% endif %}</div>
+                {{ form.password_confirm.errors }}
+            </div>
+            <div>
+                <label for="{{ form.company.auto_id }}">{{ form.company.label }}</label>
+                <div>{{ form.company }}{% if form.company.field.required %}<span class="required">*</span>{% endif %}</div>
+                {{ form.company.errors }}
+            </div>
+
+            <div>
+                <label for="{{ form.oib.auto_id }}">{{ form.oib.label }}</label>
+                <div>{{ form.oib }}{% if form.oib.field.required %}<span class="required">*</span>{% endif %}</div>
+                {{ form.oib.errors }}
+            </div>
+
+            <div class="gradient"></div>
+            <h2>{% trans "Kontakt" %}</h2>
+
+            <div>
+                <label for="{{ form.address.auto_id }}">{{ form.address.label }}</label>
+                <div>{{ form.address }}{% if form.address.field.required %}<span class="required">*</span>{% endif %}</div>
+                {{ form.address.errors }}
+            </div>
+            <div>
+                <label for="{{ form.e_mail.auto_id }}">{{ form.e_mail.label }}</label>
+                <div>{{ form.e_mail }}{% if form.e_mail.field.required %}<span class="required">*</span>{% endif %}</div>
+                {{ form.e_mail.errors }}
+            </div>
+
+            <div>
+                <label for="{{ form.phone.auto_id }}">{{ form.phone.label }}</label>
+                <div>{{ form.phone }}{% if form.phone.field.required %}<span class="required">*</span>{% endif %}</div>
+                {{ form.phone.errors }}
+            </div>
+
+            <div>
+                <label for="{{ form.contact_person.auto_id }}">{{ form.contact_person.label }}</label>
+                <div>{{ form.contact_person }}{% if form.contact_person.field.required %}<span class="required">*</span>{% endif %}</div>
+                {{ form.contact_person.errors }}
+            </div>
+
+            <div class="gradient"></div>
+            <input type="submit" value="{% trans "REGISTRIRAJ SE" %}">
+        </form>
+    </div>
+
+{% endblock %}

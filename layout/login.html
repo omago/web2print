@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Prijava - WEB2PRINT</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="{% static "login/css/style.css" %}" />
+    </head>
+    <body>
+        <div id="container">
+            <div id="login-form">
+                <div id="application-info">
+                    <img src="{% static "login/images/admin-login-icon.png" %}" />
+                    <p>Dobro došli u <br />ADMINISTRACIJU!</p>
+                </div>
+                {% block content %}
+                {% endblock %}
+                <div class="clear"></div>
+            </div>
+        </div>
+    </body>
+</html>

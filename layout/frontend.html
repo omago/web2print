@@ -1,0 +1,234 @@
+{% load staticfiles %}
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Main app</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static "frontend/css/style.css" %}" />
+    <script type="text/javascript" src="{% static "frontend/js/jquery-1.11.1.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "frontend/js/jquery.tools.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "frontend/js/scripts.js" %}"></script>
+</head>
+<body>
+    <header>
+        <div id="header-top">
+            <div class="container">
+                <div class="grid_12">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url "user-my-account" %}" class="my-account">{% trans "MOJ RAČUN" %} ({{ request.user.username }})</a> |
+                        <a href="{% url "user-logout" %}" class="logout">{% trans "ODJAVA" %}</a>
+                    {% else %}
+                        <a href="" class="login" id="login-button">{% trans "PRIJAVA" %}</a>
+                        <div id="login-form">
+                            <img class="content-up-arrow" src="{% static "frontend/images/content-up-arrow.png" %}" alt="" />
+                            <h4>{% trans "PRIJAVI SE" %}</h4>
+                            <img class="shadow" src="{% static "frontend/images/login-shadow.png" %}" alt="" />
+                            <form method="post" action="{% url "user-login" %}">{% csrf_token %}
+                                <input id="login-username" type="text" name="username" placeholder="{% trans "Korisničko ime" %}" maxlength="30" />
+                                <input id="login-password" type="text" name="password" placeholder="{% trans "Lozinka" %}" maxlength="30" />
+
+                                <input id="login-remeber-me" name="remember_me" type="checkbox" checked /> <label for="login-remeber-me">{% trans "Zapamti me" %}</label>
+                                <a class="forgot-password" href="{% url "user-forgotten-password" %}">{% trans "Zaboravili ste lozinku" %}?</a>
+
+                                <input type="submit" value="{% trans "Prijavi se" %}" />
+                                <img class="shadow" src="{% static "frontend/images/login-shadow.png" %}" alt="" />
+
+                                <p class="register">
+                                    {% trans "Nemate korisnički račun?" %}
+                                    <a href="{% url "user-register" %}">{% trans "Registriraj se?" %}</a>
+                                </p>
+                            </form>
+                        </div>
+                    {% endif %}
+
+                    <nav>
+                        <a href="#">{% trans "Pomoć i informacije" %}</a> |
+                        <a href="#">{% trans "Plaćanje" %}</a> |
+                        <a href="{% url "user-register" %}">{% trans "Registracija" %}</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="header-bottom">
+            <div class="container">
+                <div class="grid_12">
+                    <a href="{% url "index-page" %}" id="logo"></a>
+                    <form id="search-form">
+                        <input type="text" placeholder="{% trans "Traži" %}..">
+                        <input type="submit" value="OK">
+                    </form>
+                    <div id="cart">
+                        <a href="">
+                            {% trans "Košarica" %} (0)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <aside class="grid_3">
+            <menu>
+                {% for product_category in product_categories %}
+                    <h2>{{ product_category.name }}</h2>
+                    {% if product_category.productsubcategory_set.all %}
+                        <nav>
+                        {% for product_subcategory in product_category.productsubcategory_set.all %}
+                            <a href="{% url "product-subcategory-list" product_category.slug product_subcategory.slug %}">{{ product_subcategory.name }}</a>
+                        {% endfor %}
+                        </nav>
+                    {% endif %}
+                {% endfor %}
+{#                <h2>{% trans "Proizvodi" %}</h2>#}
+{#                <nav>#}
+{#                    <a href="">KNJIGE</a>#}
+{#                    <a href="">BLOKOVI</a>#}
+{#                    <a href="">JELOVNICI I CJENICI</a>#}
+{#                    <a href="">KALENDARI</a>#}
+{#                    <a href="">KATALOZI I BROŠURE</a>#}
+{#                    <a href="">KUVERTE</a>#}
+{#                    <a href="">LETCI</a>#}
+{#                    <a href="">MEMORANDUMI</a>#}
+{#                    <a href="">NALJEPNICE</a>#}
+{#                    <a href="">PLAKATI</a>#}
+{#                    <a href="">POSLOVNE MAPE</a>#}
+{#                    <a href="">POSJETNICE</a>#}
+{#                    <a href="">POZIVNICE I ČESTITKE</a>#}
+{#                    <a href="">PRIVJESNICE</a>#}
+{#                    <a href="">WOBBLERI</a>#}
+{#                    <a href="">RAZGLEDNICE</a>#}
+{#                    <a href="">ROKOVNICI</a>#}
+{#                    <a href="">STOLNI ŠATORI</a>#}
+{#                </nav>#}
+{#                <h2>{% trans "Personalizirani proizvodi" %}</h2>#}
+{#                <nav>#}
+{#                    <a href="">DIRECT MAIL</a>#}
+{#                    <a href="">BILJEŽNICE</a>#}
+{#                    <a href="">BOOKMARK</a>#}
+{#                    <a href="">DIPLOME, ZAHVALNICE</a>#}
+{#                    <a href="">GROWTH CHART</a>#}
+{#                    <a href="">KALENDARI</a>#}
+{#                    <a href="">NALJEPNICE</a>#}
+{#                    <a href="">POZIVNICE</a>#}
+{#                    <a href="">ROKOVNICI</a>#}
+{#                    <a href="">SPOMENARI</a>#}
+{#                </nav>#}
+{#                <h2>{% trans "XXL tisak" %}</h2>#}
+{#                <nav>#}
+{#                    <a href="">BILLBOARDI</a>#}
+{#                    <a href="">CERADE</a>#}
+{#                    <a href="">CITY LIGHT</a>#}
+{#                    <a href="">MESH</a>#}
+{#                    <a href="">PVC NALJEPNICE</a>#}
+{#                    <a href="">ROLL UP</a>#}
+{#                    <a href="">WINDOW GRAFIKA</a>#}
+{#                </nav>#}
+{#                <h2>{% trans "Usluge" %}</h2>#}
+{#                <nav>#}
+{#                    <a href="">DIZAJN I PRIPREMA ZA TISAK</a>#}
+{#                </nav>#}
+            </menu>
+
+            <div id="news-slider">
+                <h2>Novosti</h2>
+                <div class="scrollable">
+                    <div class="items">
+                        <div>
+                            <p>OTISNULI SMO GULIVERKU U PRIRODNOJ VELIČINI</p>
+                            <a class="read-more" href="#">Više >></a>
+                            <img src="{% static "frontend/images/novosti.jpg" %}" alt="" />
+                        </div>
+
+                        <div>
+                            <p>OTISNULI SMO GULIVERKU U PRIRODNOJ VELIČINI</p>
+                            <a class="read-more" href="#">Više >></a>
+                            <img src="{% static "frontend/images/novosti.jpg" %}" alt="" />
+                        </div>
+
+                        <div>
+                            <p>OTISNULI SMO GULIVERKU U PRIRODNOJ VELIČINI</p>
+                            <a class="read-more" href="#">Više >></a>
+                            <img src="{% static "frontend/images/novosti.jpg" %}" alt="" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navi"></div>
+            </div>
+        </aside>
+
+        <section style="float: left; width: 720px">
+            {% block content %}
+            {% endblock %}
+        </section>
+    </div>
+    <div class="clear"></div>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="grid_7" id="free-delivery">{% trans "U HR DOSTAVA URAČUNATA U CIJENU!" %}</div>
+                <div class="grid_5" id="contact">{% trans "PODRŠKA" %} <b>01 2587 968</b></div>
+            </div>
+        </div>
+        <div class="footer-middle">
+            <div class="container">
+                <menu>
+                    <div class="grid_3">
+                        <h2>{{ information_category.name }}</h2>
+                        {% if information_category_articles %}
+                            <nav>
+                                {% for information_category_article in information_category_articles %}
+                                    <a href="{% url "article-view" information_category.slug information_category_article.slug %}">{{ information_category_article.name }}</a>
+                                {% endfor %}
+                            </nav>
+                        {% endif %}
+                    </div>
+                    <div class="grid_3">
+                        <h2>{{ information_category.name }}</h2>
+                        {% if information_category_articles %}
+                            <nav>
+                                {% for information_category_article in information_category_articles %}
+                                    <a href="{% url "article-view" information_category.slug information_category_article.slug %}">{{ information_category_article.name }}</a>
+                                {% endfor %}
+                            </nav>
+                        {% endif %}
+                    </div>
+                    <div class="grid_3">
+                        <h2>{{ information_category.name }}</h2>
+                        {% if information_category_articles %}
+                            <nav>
+                                {% for information_category_article in information_category_articles %}
+                                    <a href="{% url "article-view" information_category.slug information_category_article.slug %}">{{ information_category_article.name }}</a>
+                                {% endfor %}
+                            </nav>
+                        {% endif %}
+                    </div>
+                    <div class="grid_3">
+                        <h2>Informacije</h2>
+                        <nav>
+                            <a href="#">Uvjeti poslovanja</a>
+                            <a href="#">Dostava</a>
+                            <a href="#">Plaćanje</a>
+                            <a href="#">Vraćanje narudžbe</a>
+                            <div>
+                                <a href="#"><img src="{% static "frontend/images/linked-in.png" %}"></a>
+                                <a href="#"><img src="{% static "frontend/images/facebook.png" %}"></a>
+                            </div>
+                        </nav>
+                    </div>
+                </menu>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="grid_12">
+                    © Copyright 2014 Web2tisak d.o.o.
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

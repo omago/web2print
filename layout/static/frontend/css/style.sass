@@ -1,0 +1,679 @@
+$font: 'Open Sans', sans-serif
+$font-size: 12px
+$primary-color: #333
+$background-color: #f2f2f2
+$header-top-color: #3f3d3d
+$light-green-color: #649eb7
+$grey-color: #919191
+$orange-color: #e67f36
+
+@mixin box-shadow($blur, $color: black)
+  -webkit-box-shadow: 0px 0px $blur 0px $color
+  -moz-box-shadow:    0px 0px $blur 0px $color
+  box-shadow:         0px 0px $blur 0px $color
+
+@mixin vertical-gradient($color1, $color2)
+  background: $color1
+  background: -moz-linear-gradient(top, $color1 0%, #ffffff 100%) /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color1), color-stop(100%, $color2)) /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, $color1 0%, $color2 100%) /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, $color1 0%, $color2 100%) /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, $color1 0%, $color2 100%) /* IE10+ */
+  background: linear-gradient(to bottom, $color1 0%, $color2 100%) /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$color1', endColorstr='$color2',GradientType=0 ) /* IE6-9 */
+
+*
+  margin: 0px
+  padding: 0px
+  border: 0px
+  text-decoration: none
+  color: #919191
+
+.clear
+  clear: both
+
+body
+  margin: 0px
+  font-family: $font
+  font-size: $font-size
+  color: $primary-color
+  background-color: $background-color
+
+.container
+  margin-left: auto
+  margin-right: auto
+  width: 960px
+
+.grid_1, .grid_2, .grid_3, .grid_4, .grid_5, .grid_6, .grid_7, .grid_8, .grid_9, .grid_10, .grid_11, .grid_12
+  display: inline
+  float: left
+  position: relative
+  margin-left: 10px
+  margin-right: 10px
+
+.container
+  .grid_1
+    width: 60px
+  .grid_2
+    width: 140px
+  .grid_3
+    width: 220px
+  .grid_4
+    width: 300px
+  .grid_5
+    width: 380px
+  .grid_6
+    width: 460px
+  .grid_7
+    width: 540px
+  .grid_8
+    width: 620px
+  .grid_9
+    width: 700px
+  .grid_10
+    width: 780px
+  .grid_11
+    width: 860px
+  .grid_12
+    width: 940px
+
+header
+  height: 140px
+
+  #header-top
+    height: 30px
+    padding-top: 8px
+    background-color: #3f3d3d
+    position: relative
+
+    .my-account,
+    .login,
+    .logout
+      display: inline-block
+      font-size: 14px
+      color: $light-green-color
+      font-weight: bold
+      height: 20px
+      &:hover
+        color: $background-color
+
+    .my-account
+      background: url("../images/my-account.png") no-repeat left center
+      padding-left: 20px
+
+    #login-form
+      display: none
+      +box-shadow(50px, #666)
+      position: absolute
+      z-index: 1000
+      background: white
+      top: 40px
+      width: 190px
+      padding: 20px
+      .content-up-arrow
+        position: absolute
+        left: 16px
+        top: -10px
+
+      h4
+        width: 80px
+        background: url("../images/my-account.png") no-repeat left center
+        padding-left: 20px
+        font-size: 16px
+        color: #666
+        margin: 0 auto
+      .shadow
+        margin: 10px auto 5px 0px
+
+      form
+        input[type=text],
+        input[type=password]
+          width: 174px
+          padding: 7px
+          border: 1px solid #e4e4e4
+          margin-bottom: 10px
+        label,
+        input[type=checkbox]
+          vertical-align: middle
+          font-size: 10px
+        .forgot-password
+          margin-top: -14px
+          display: block
+          text-align: right
+          color: $light-green-color
+          font-size: 10px
+          margin-bottom: 14px
+          &:hover
+            text-decoration: underline
+        input[type=submit]
+          background: $light-green-color
+          width: 190px
+          padding: 7px 0 5px
+          color: white
+          font-size: 16px
+          text-transform: uppercase
+          text-align: center
+          &:hover
+            cursor: pointer
+            background: #9fd0e6
+
+        .register
+          text-align: center
+          font-size: 12px
+          color: #525c65
+          line-height: 24px
+          a
+            background: #9fd0e6
+            color: white
+            padding: 3px 30px
+            &:hover
+              background: $light-green-color
+
+    nav
+      float: right
+      display: inline-block
+      padding-top: 2px
+      color: white
+
+      a
+        font-size: 12px
+        color: white
+        &:hover
+          color: $light-green-color
+
+  #header-bottom
+    margin-top: 35px
+    #logo
+      margin-top: 6px
+      display: block
+      float: left
+      background: url("../images/web2print.png")
+      width: 484px
+      height: 35px
+
+    #search-form
+      margin-left: 35px
+      float: left
+      margin-top: 3px
+      input[type=text]
+        float: left
+        border-top: 4px solid #74afc7
+        padding: 8px
+        width: 196px
+        background: white url("../images/search.png") no-repeat 190px 6px
+
+      input[type=submit]
+        float: left
+        width: 36px
+        height: 36px
+        background-color: $header-top-color
+        color: white
+        &:hover
+          cursor: pointer
+          background-color: $light-green-color
+
+    #cart
+      margin-top: -4px
+      margin-left: 15px
+      float: left
+      height: 47px
+      padding-left: 60px
+      background: url("../images/cart.png") no-repeat left center
+      line-height: 44px
+      a
+        color: $light-green-color
+        font-size: 17px
+        &:hover
+          color: $header-top-color
+
+aside
+  menu
+    h2
+      color: white
+      padding: 10px 16px
+    h2:nth-child(1)
+      background-color: #f48739
+    h2:nth-child(3)
+      background-color: #8088bc
+    h2:nth-child(5)
+      background-color: #bfc73d
+    h2:nth-child(7)
+      background-color: #bd7bc7
+
+    nav
+      padding: 10px 0
+      background: white
+      a
+        text-transform: uppercase
+        display: block
+        padding: 4px 16px
+        color: $grey-color
+        background: url("../images/main-menu-arrow.png") no-repeat 196px 9px
+        &:hover
+          background-color: $background-color
+
+  #news-slider
+    margin-top: 10px
+    border-top: 4px solid #74afc8
+    background: white
+    padding-bottom: 7px
+    h2
+      margin-top: 10px
+      font-size: 24px
+      text-align: center
+      color: #635f57
+
+  .scrollable
+    margin: 0 auto
+    z-index: 10
+    position: relative
+    overflow: hidden
+    width: 204px
+    height: 354px
+
+    .items
+      width: 20000em
+      position: absolute
+
+      div
+        float: left
+        position: relative
+
+        p
+          color: white
+          font-size: 25px
+          position: absolute
+          top: 100px
+          left: 20px
+          right: 20px
+          text-align: center
+
+        a.read-more
+          display: block
+          left: 40px
+          right: 40px
+          text-align: center
+          background: #74afc8
+          bottom: 20px
+          padding: 10px
+          color: white
+          font-size: 14px
+          text-transform: uppercase
+          position: absolute
+
+  .navi
+    width: 51px
+    height: 17px
+    margin: 10px auto
+
+    a
+      cursor: pointer
+      width: 11px
+      height: 11px
+      float: left
+      margin: 3px
+      background: url("../images/news-slider-circle.png") 0 0 no-repeat
+      display: block
+      font-size: 1px
+      &:hover
+        background: url("../images/news-slider-active-circle.png") 0 0 no-repeat
+      &.active
+        background: url("../images/news-slider-active-circle.png") 0 0 no-repeat
+
+#main-slider
+  position: relative
+  margin-left: 10px
+  margin-bottom: 10px
+  width: 700px
+  height: 240px
+
+  .browse
+    z-index: 10000
+    display: block
+    position: absolute
+    top: 96px
+    width: 28px
+    height: 48px
+    cursor: pointer
+
+  .prev
+    background: url("../images/slider-left-arrow.png")
+    left: 20px
+  .next
+    background: url("../images/slider-right-arrow.png")
+    right: 20px
+
+  .scrollable
+    z-index: 10
+    position: relative
+    overflow: hidden
+    width: 700px
+    height: 240px
+
+    .items
+      width: 20000em
+      position: absolute
+
+      div
+        float: left
+        position: relative
+        p
+          text-transform: uppercase
+          position: absolute
+          padding: 1px 20px
+          color: white
+          display: inline-block
+          background: rgba(#7ecff7, 0.6)
+          font-size: 64px
+          left: 70px
+          top: 50px
+        h1
+          position: absolute
+          display: inline-block
+          left: 70px
+          top: 140px
+          a
+            text-transform: uppercase
+            padding: 10px 20px
+            background: rgba(#649eb7, 0.6)
+            font-size: 20px
+            display: block
+            color: white
+            &:hover
+              background: #649eb7
+        a.read-more
+          font-weight: bold
+          right: 80px
+          bottom: 40px
+          color: white
+          font-size: 14px
+          text-transform: uppercase
+          position: absolute
+
+  .navi
+    z-index: 10000
+    position: absolute
+    left: 316px
+    bottom: 10px
+    width: 65px
+    height: 13px
+
+    a
+      cursor: pointer
+      width: 7px
+      height: 7px
+      float: left
+      margin: 3px
+      background: url("../images/slider-circle.png") 0 0 no-repeat
+      display: block
+      font-size: 1px
+      &:hover
+        background: url("../images/slider-active-circle.png") 0 0 no-repeat
+      &.active
+        background: url("../images/slider-active-circle.png") 0 0 no-repeat
+
+.quick-links
+  a
+    background: white no-repeat center 10px
+    border-top: 5px solid #74afc7
+    color: $grey-color
+    display: block
+    padding-top: 60px
+    padding-bottom: 16px
+    text-align: center
+    font-size: 14px
+  #order-press
+    background-image: url("../images/question-mark.png")
+  #sending-instructions
+    background-image: url("../images/up-arrow.png")
+  #featured-products
+    background-image: url("../images/percentage.png")
+
+.shadow
+  margin: 20px 10px
+
+h1
+  color: $grey-color
+  font-size: 24px
+  text-align: center
+
+.article
+  background: white
+  padding: 30px
+  h1
+    margin-bottom: 20px
+    text-align: left
+  h2
+    color: #919191
+    margin: 20px 0 10px 0
+    font-size: 18px
+
+  ul, ol
+    margin: 10px 0 10px 30px
+    ul, ol
+      margin: 0 0 0 30px
+
+.breadcrumb
+  color: gray
+  padding-bottom: 10px
+  margin-bottom: 20px
+  border-bottom: 1px dotted gray
+
+.articles
+  margin-top: 20px
+
+  div.box-1 h2
+    background-color: rgba(#8088bc, 0.7)
+
+  div.box-2 h2
+    background-color: rgba(#bc80ba, 0.7)
+
+  div.box-3 h2
+    background-color: rgba(#ffb243, 0.7)
+
+  div.box-1, div.box-2, div.box-3
+    background: white
+    position: relative
+    min-height: 320px
+    padding-bottom: 14px
+
+    h2
+      z-index: 9
+      position: absolute
+      left: 0px
+      right: 0px
+      top: 0px
+      font-weight: bold
+      text-align: center
+      a
+        display: block
+        padding: 10px
+        font-size: 14px
+        color: white
+
+    p
+      font-size: 13px
+      padding: 10px
+      color: $grey-color
+
+    > a
+      font-weight: bold
+      font-size: 14px
+      position: absolute
+      right: 10px
+      bottom: 10px
+      text-transform: uppercase
+      color: $grey-color
+
+    img.new
+      z-index: 10
+      position: absolute
+      right: -3px
+      top: -3px
+
+#register-page
+  background: #ffffff
+  padding: 20px
+  *
+    color: #5e5e5e
+  h1
+    margin-bottom: 10px
+  h2
+    border-bottom: 1px dashed #5e5e5e
+    font-size: 16px
+    padding-bottom: 10px
+    margin-bottom: 20px
+  .notification
+    background: #f2f2f2
+    padding: 10px
+    a
+      color: $light-green-color
+      &:hover
+        text-decoration: underline
+  .required-fields
+    text-align: right
+    margin-top: 20px
+    margin-bottom: -19px
+  form
+    padding-top: 20px
+    > div
+      margin: 10px 0
+      label
+        width: 200px
+        display: inline-block
+
+      .errorlist
+        list-style-type: none
+        margin-left: 206px
+        li
+          color: red
+          font-size: 11px
+
+      div
+        width: 400px
+        display: inline-block
+        input
+          width: 367px
+          padding: 4px
+          border: 1px solid #e2e2e2
+        input[type=checkbox]
+          width: 12px
+          padding: 4px
+          border: 1px solid #e2e2e2
+
+        .required
+          padding-left: 4px
+
+    input[type=submit]
+      margin-left: 204px
+      padding: 10px 36px
+      font-size: 16px
+      background-color: $light-green-color
+      color: #ffffff
+      &:hover
+        background-color: red
+
+  .gradient
+    margin-top: 20px
+    margin-bottom: 8px
+    +vertical-gradient(#f2f2f2, #ffffff)
+    height: 20px
+
+.product-category-list
+  background: white
+  padding: 20px 4px
+
+  .product-box
+    margin: 5px
+    float: left
+    width: 344px
+    height: 200px
+    border: 1px solid #d0d0d0
+    position: relative
+    h2
+      position: absolute
+      top: 125px
+      right: 0px
+      a
+        padding: 10px 20px
+        font-size: 14px
+        background-color: $orange-color
+        color: white
+        text-transform: uppercase
+        &:hover
+          background-color: #bfc73d
+    .read-more
+      padding: 5px 20px
+      display: block
+      position: absolute
+      color: white
+      background-color: $light-green-color
+      top: 160px
+      right: 0
+      &:hover
+        background-color: #bfc73d
+
+.subtitle
+  text-align: center
+  font-size: 16px
+  margin: 10px 0
+
+.product-category-description
+  background-color: #ffffff
+  padding: 26px 16px
+  text-align: center
+
+.content-down-arrow
+  position: relative
+  margin-left: 40px
+  z-index: 1000
+
+#banners
+  text-align: center
+  a
+    padding: 2px
+
+footer
+  margin-top: 50px
+  *
+    color: white
+
+  .footer-top
+    background: #74afc8
+    height: 106px
+    div
+      font-size: 20px
+      color: white
+      line-height: 106px
+      background: no-repeat left center
+      text-indent: 80px
+    div:nth-child(1)
+      background-image: url("../images/delivery.png")
+    div:nth-child(2)
+      background-image: url("../images/phone.png")
+
+  .footer-middle
+    background: #6b9db6
+    height: 280px
+    menu
+      padding-top: 30px
+      h2
+        font-size: 20px
+        color: white
+        font-weight: bold
+      nav
+        > a
+          display: block
+          color: white
+          font-size: 14px
+          padding: 6px 0
+        div
+          margin-top: 16px
+          a
+            margin-right: 10px
+
+  .footer-bottom
+    height: 64px
+    background: #3f3d3d
+    line-height: 62px
+    color: #a6dbef

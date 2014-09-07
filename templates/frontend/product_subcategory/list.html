@@ -1,0 +1,39 @@
+{% extends "frontend.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <div class="product-category-list">
+        <h1>{{ subcategory.name }}</h1>
+        {% if products %}
+            <p class="subtitle">{% trans "Odaberite kategoriju za kalkulaciju cijene >>" %}</p>
+            {% for product in products %}
+                {% url "product-view" category.slug subcategory.slug product.slug as product_view_url %}
+                <div class="product-box">
+                    <a href="{{ product_view_url }}"><img src="{{ product.image.url }}" alt="{{ product.name }}" /></a>
+                    <h2><a href="{{ product_view_url }}">{{ product.name }}</a></h2>
+                    <a class="read-more" href="{{ product_view_url }}">{% trans "Odaberi >>" %}</a>
+                </div>
+            {% endfor %}
+            <div class="clear"></div>
+        {% else %}
+            <p class="subtitle">{% trans "Kategorija ne sadrži niti jedan proizvod" %}</p>
+        {% endif %}
+    </div>
+
+    {% if subcategory.description %}
+        <img class="content-down-arrow" src="{% static "frontend/images/content_down_arrow.png" %}" />
+        <img class="shadow" style="margin-top: -40px" src="{% static "frontend/images/shadow.png" %}" />
+        <div class="product-category-description">{{ subcategory.description }}</div>
+    {% endif %}
+
+    <img class="shadow" src="{% static "frontend/images/shadow.png" %}" />
+
+    <h2 class="subtitle">{% trans "Obradujte svoje klijente ili prijatelje, personalizirajte svoju tiskovinu" %}</h2>
+    {% include 'frontend/partial/articles.html' %}
+
+    <img class="shadow" src="{% static "frontend/images/shadow.png" %}" />
+    {% include 'frontend/partial/banners.html' %}
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "frontend.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <div class="article">
+        <div class="breadcrumb">Vi se nalazite: {{ article.article_category.name }} > {{ article.name }}</div>
+        <h1>{{ article.name }}</h1>
+        {{ article.content|safe }}
+    </div>
+{% endblock %}

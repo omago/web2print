@@ -1,0 +1,46 @@
+{% extends "backend.html" %}
+{% load simple_tags %}
+{% load filters %}
+
+{% block content %}
+
+    {% h1 page_title %}
+    {% button_new "Novi banner" "admin-banner-form" %}
+
+    <table class="grid">
+        {% if rows %}
+            <tr>
+                {% th "Id" "pk" "3" %}
+                {% th "Naziv" "name" "20" "left" %}
+                {% th "Link" "link" "37" "left" %}
+                {% th "Pozicija" "banner_position" "30" "left" %}
+                {% th "Operacije" None "10" %}
+            </tr>
+            {% for row in rows %}
+                {% url "admin-banner-details" row.pk as details_url %}
+                {% url "admin-banner-form" row.pk as edit_url %}
+                {% url "admin-banner-delete" row.pk as delete_url %}
+                {% url "admin-product-subcategory-list" row.pk as list_subcategory_url %}
+                <tr>
+                    {% td row.pk "pk" %}
+                    {% td "<a href="|add:edit_url|add:">"|add:row.name|add:"</a>" "name" "left" %}
+                    {% td "<a href="|add:row.link|add:" target='_blank'>"|add:row.link|add:"</a>" "link" "left" %}
+                    {% td row.banner_position "banner_position" "left" %}
+                    {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
+                    {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
+                    {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}
+                        {% td view|add:edit|add:delete %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                {% td "Nema zapisa" %}
+            </tr>
+        {% endif %}
+    </table>
+    {% pager rows %}
+
+{% endblock %}

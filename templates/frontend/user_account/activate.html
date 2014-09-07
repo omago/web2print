@@ -1,0 +1,19 @@
+{% extends "frontend.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <div id="register-page">
+        <h1>{%  trans "Aktivacija" %}</h1>
+        <p class="notification">
+            {% if not error %}
+                {% trans "Vaš račun je uspješno aktiviran." %}<br /><br />
+                {% trans "Molimo proslijedite na " %}<a href="{% url "user-login" %}">{% trans "PRIJAVU" %}</a>.
+            {% else %}
+                {% trans "Došlo je do greške prilikom aktivacije vašeg računa." %}
+            {% endif %}
+        </p>
+    </div>
+
+{% endblock %}

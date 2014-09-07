@@ -1,0 +1,123 @@
+{% extends "frontend.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div id="main-slider">
+    <a class="prev browse left"></a>
+
+    <div class="scrollable">
+        <div class="items">
+            <div>
+                <p>Novo</p>
+                <h1><a href="#">Personalizirani planeri</a></h1>
+                <a class="read-more" href="#">Više >></a>
+                <img src="{% static "frontend/images/slider-slika.jpg" %}" alt="" />
+            </div>
+
+            <div>
+                <p>Novo</p>
+                <h1><a href="#">Personalizirani planeri</a></h1>
+                <a class="read-more" href="#">Više >></a>
+                <img src="{% static "frontend/images/slider-slika.jpg" %}" alt="" />
+            </div>
+
+            <div>
+                <p>Novo</p>
+                <h1><a href="#">Personalizirani planeri</a></h1>
+                <a class="read-more" href="#">Više >></a>
+                <img src="{% static "frontend/images/slider-slika.jpg" %}" alt="" />
+            </div>
+
+            <div>
+                <p>Novo</p>
+                <h1><a href="#">Personalizirani planeri</a></h1>
+                <a class="read-more" href="#">Više >></a>
+                <img src="{% static "frontend/images/slider-slika.jpg" %}" alt="" />
+            </div>
+
+            <div>
+                <p>Novo</p>
+                <h1><a href="#">Personalizirani planeri</a></h1>
+                <a class="read-more" href="#">Više >></a>
+                <img src="{% static "frontend/images/slider-slika.jpg" %}" alt="" />
+            </div>
+        </div>
+    </div>
+
+    <a class="next browse right"></a>
+    <div class="navi"></div>
+</div>
+
+<div class="quick-links">
+    <a href="" class="grid_3" id="order-press">{% trans "Kako naručiti tisak" %}</a>
+    <a href="" class="grid_3" id="sending-instructions">{% trans "Upute za slanje datoteka" %}</a>
+    <a href="" class="grid_3" id="featured-products">{% trans "Proizvodi na akciji" %}</a>
+</div>
+
+<div class="clear"></div>
+
+<div class="articles">
+    <div class="grid_3 box-1">
+        <h2><a href="#">PERSONALIZACIJA</a></h2>
+        <img src="{% static "frontend/images/personalizacija.jpg" %}" alt="PERSONALIZACIJA" />
+        <p>Što je personalizacija i što sve možete kod nas personalizirati? Nunc eleifend suscipit velit sit amet convallis</p>
+        <a href="">{% trans "Više" %} >></a>
+    </div>
+    <div class="grid_3 box-2">
+        <h2><a href="#">DIRECT MAIL</a></h2>
+        <img src="{% static "frontend/images/direct-mail.jpg" %}" alt="DIRECT MAIL" />
+        <p>Fusce est felis, laoreet ac interdum sit amet, consectetur ac massa.</p>
+        <a href="">{% trans "Više" %} >></a>
+    </div>
+    <div class="grid_3 box-3">
+        <h2><a href="#">TISAK KNJIGA</a></h2>
+        <img src="{% static "frontend/images/tisak-knjiga.jpg" %}" alt="TISAK KNJIGA" />
+        <p>Maecenas malesuada porta rutrum. Donec sit amet lorem eget eros accumsan laoreet vel tempus felis.</p>
+        <a href="">{% trans "Više" %} >></a>
+    </div>
+</div>
+
+
+<img class="shadow" src="{% static "frontend/images/shadow.png" %}" />
+<h1>Izdvojeno iz ponude</h1>
+
+<div class="articles">
+    <div class="grid_3 box-1">
+        <img class="new" src="{% static "frontend/images/new.png" %}" />
+        <h2><a href="#">PERSONALIZACIJA</a></h2>
+        <img src="{% static "frontend/images/personalizacija.jpg" %}" alt="PERSONALIZACIJA" />
+        <p>Što je personalizacija i što sve možete kod nas personalizirati? Nunc eleifend suscipit velit sit amet convallis</p>
+        <a href="">{% trans "Više" %} >></a>
+    </div>
+    <div class="grid_3 box-1">
+        <h2><a href="#">DIRECT MAIL</a></h2>
+        <img src="{% static "frontend/images/direct-mail.jpg" %}" alt="DIRECT MAIL" />
+        <p>Fusce est felis, laoreet ac interdum sit amet, consectetur ac massa.</p>
+        <a href="">{% trans "Više" %} >></a>
+    </div>
+    <div class="grid_3 box-1">
+        <h2><a href="#">TISAK KNJIGA</a></h2>
+        <img src="{% static "frontend/images/tisak-knjiga.jpg" %}" alt="TISAK KNJIGA" />
+        <p>Maecenas malesuada porta rutrum. Donec sit amet lorem eget eros accumsan laoreet vel tempus felis.</p>
+        <a href="">{% trans "Više" %} >></a>
+    </div>
+</div>
+
+<img class="shadow" src="{% static "frontend/images/shadow.png" %}" />
+
+<div id="banners">
+    {% if bottom_large_banner %}
+        <a href="{{ bottom_large_banner.link }}"><img src="{{ bottom_large_banner.image.url }}" /></a>
+    {% endif %}
+    {% if bottom_left_small_banner %}
+        <a href="{{ bottom_left_small_banner.link }}"><img src="{{ bottom_left_small_banner.image.url }}" /></a>
+    {% endif %}
+    {% if bottom_right_small_banner %}
+        <a href="{{ bottom_right_small_banner.link }}"><img src="{{ bottom_right_small_banner.image.url }}" /></a>
+    {% endif %}
+
+</div>
+
+{% endblock %}
