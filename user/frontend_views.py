@@ -48,6 +48,7 @@ def register(request):
 
     context.update(csrf(request))
     context['form'] = form
+    context['page_title'] = "Registracija"
 
     return render_to_response('frontend/user_account/register.html', context, context_instance=RequestContext(request))
 
@@ -84,6 +85,7 @@ def forgotten_password(request):
 
     context.update(csrf(request))
     context['form'] = form
+    context['page_title'] = "Zaboravljena lozinka"
 
     return render_to_response('frontend/user_account/forgotten_password.html', context, context_instance=RequestContext(request))
 
@@ -106,6 +108,7 @@ def my_account(request):
     context.update(csrf(request))
     context['form'] = form
     context['updated'] = updated
+    context['page_title'] = "Moj račun"
 
     return render_to_response('frontend/user_account/my_account.html', context, context_instance=RequestContext(request))
 
@@ -122,7 +125,8 @@ def activate(request, pk, activation_code):
     except User.DoesNotExist:
         error = True
 
-    context = {"error": error}
+    context = {"error": error,
+               "page_title": "Aktivacija"}
 
     return render_to_response('frontend/user_account/activate.html', context, context_instance=RequestContext(request))
 
@@ -153,6 +157,7 @@ def login(request):
     context.update(csrf(request))
     context['form'] = form
     context['error'] = error
+    context['page_title'] = "Prijava"
 
     return render_to_response('frontend/user_account/login.html', context, context_instance=RequestContext(request))
 
@@ -189,6 +194,7 @@ def reset_password(request, pk, reset_password_code):
         context['reset_password_code'] = reset_password_code
         context['error'] = error
         context['validation_error'] = validation_error
+        context['page_title'] = "Reset lozinke"
 
         return render_to_response('frontend/user_account/reset_password.html', context, context_instance=RequestContext(request))
     else:

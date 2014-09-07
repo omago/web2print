@@ -1,0 +1,41 @@
+{% extends "frontend.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <div class="cart-page">
+        <h1>Košarica</h1>
+        <p>Vaša košarica trenutno sadži slijedeće artikle:</p>
+
+        <table>
+            <tr>
+                <th>Proizvod</th>
+                <th>Količina</th>
+                <th>PDV</th>
+                <th>Cijena</th>
+                <th>Obriši</th>
+            </tr>
+            <tr>
+                <td>
+                    <img src="/uploads/products/kalendar_1.jpg" />
+                    Kalendar jednolisni, dorada plastifikacija spirala, pekmez, med
+                </td>
+                <td>50</td>
+                <td>25 kn</td>
+                <td>1.250,00 kn</td>
+                <td>x</td>
+            </tr>
+        </table>
+
+        <img class="shadow" src="{% static "frontend/images/shadow.png" %}" />
+
+        <h2 class="subtitle">{% trans "Obradujte svoje klijente ili prijatelje, personalizirajte svoju tiskovinu" %}</h2>
+        {% include 'frontend/partial/articles.html' %}
+
+        <img class="shadow" src="{% static "frontend/images/shadow.png" %}" />
+        {% include 'frontend/partial/banners.html' %}
+
+    </div>
+
+{% endblock %}

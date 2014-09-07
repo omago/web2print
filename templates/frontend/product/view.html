@@ -1,0 +1,77 @@
+{% extends "frontend.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <div class="product-view">
+        <div class="page-header">
+            <div>
+                <h2>{{ subcategory.name }}</h2>
+                <a href="#" class="drop-down-menu"></a>
+                <div class="drop-down-menu">
+                    <ul>
+                        {% for subcategory_product in subcategory.product_set.all %}
+                            <li><a href="{% url "product-view" category.slug subcategory.slug subcategory_product.slug %}">{{ subcategory_product.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <h1>{{ product.name }}</h1>
+        </div>
+
+        <section>
+            <div>
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+                <p>{{ product.description }}</p>
+            </div>
+            <form method="POST">
+                <h2>Moj kalkulator</h2>
+                <fieldset>
+                    <div>
+                        <div>
+                            <label for="{{ form.number_of_pages.auto_id }}">{{ form.number_of_pages.label }}</label>
+                            <div>{{ form.number_of_pages }}{% if form.number_of_pages.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.number_of_pages.errors }}
+                        </div>
+                        <div>
+                            <label for="{{ form.product_format.auto_id }}">{{ form.product_format.label }}</label>
+                            <div>{{ form.product_format }}{% if form.product_format.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.product_format.errors }}
+                        </div>
+                        <div>
+                            <label for="{{ form.number_of_colors.auto_id }}">{{ form.number_of_colors.label }}</label>
+                            <div>{{ form.number_of_colors }}{% if form.number_of_colors.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.number_of_colors.errors }}
+                        </div>
+                        <div>
+                            <label for="{{ form.quantity.auto_id }}">{{ form.quantity.label }}</label>
+                            <div>{{ form.quantity }}{% if form.quantity.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.quantity.errors }}
+                        </div>
+                        <div>
+                            <label for="{{ form.plastic_finish.auto_id }}">{{ form.plastic_finish.label }}</label>
+                            <div>{{ form.plastic_finish }}{% if form.plastic_finish.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.plastic_finish.errors }}
+                        </div>
+                        <div>
+                            <label for="{{ form.uv_finish.auto_id }}">{{ form.uv_finish.label }}</label>
+                            <div>{{ form.uv_finish }}{% if form.uv_finish.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.uv_finish.errors }}
+                        </div>
+                    </div>
+                    <div class="total">
+                         <p class="label">Ukupno + PDV</p>
+                         <p class="value">1.580,75</p>
+                    </div>
+                </fieldset>
+                <div class="submit-button-holder">
+                    <input type="submit" value="DODAJ U KOŠARICU" />
+                </div>
+            </form>
+
+        </section>
+
+    </div>
+
+{% endblock %}

@@ -5,12 +5,21 @@ $(function() {
 });
 
 $(document).ready(function() {
-//    $("body").click(function() {
-//        $('#login-form').hide();
-//    })
+    $("body").click(function() {
+        $('div.drop-down-menu').hide();
+    })
 
     $("#login-button").click(function() {
          $('#login-form').toggle();
         return false;
     })
+
+
+    $("a.drop-down-menu").click(function() {
+        $('div.drop-down-menu').toggle();
+        return false;
+    })
+
+
+
 })

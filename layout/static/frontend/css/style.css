@@ -551,6 +551,160 @@ h1 {
       .product-category-list .product-box .read-more:hover {
         background-color: #bfc73d; }
 
+.product-view .page-header {
+  height: 44px;
+  background: #ee9a44;
+  background: -moz-linear-gradient(top, #ee9a44 0%, white 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee9a44), color-stop(100%, #e67233));
+  background: -webkit-linear-gradient(top, #ee9a44 0%, #e67233 100%);
+  background: -o-linear-gradient(top, #ee9a44 0%, #e67233 100%);
+  background: -ms-linear-gradient(top, #ee9a44 0%, #e67233 100%);
+  background: linear-gradient(to bottom, #ee9a44 0%, #e67233 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2',GradientType=0 ); }
+  .product-view .page-header > div {
+    height: 44px;
+    float: left;
+    background: #f48739;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative; }
+    .product-view .page-header > div h2,
+    .product-view .page-header > div > a.drop-down-menu {
+      float: left;
+      display: block;
+      color: white;
+      height: 44px; }
+    .product-view .page-header > div h2 {
+      font-size: 14px;
+      width: 190px;
+      padding: 12px; }
+    .product-view .page-header > div > a.drop-down-menu {
+      background: white url("../images/product-view-choice-arrow.png") no-repeat center center;
+      width: 44px; }
+    .product-view .page-header > div div {
+      display: none;
+      background: url("../images/product-view-up-arrow.png") no-repeat 229px top;
+      padding-top: 8px;
+      position: absolute;
+      top: 50px;
+      width: 258px; }
+      .product-view .page-header > div div ul {
+        -webkit-box-shadow: 0px 0px 16px 0px #999999;
+        -moz-box-shadow: 0px 0px 16px 0px #999999;
+        box-shadow: 0px 0px 16px 0px #999999;
+        padding: 3px 0;
+        background: white;
+        list-style-type: none; }
+        .product-view .page-header > div div ul li a {
+          padding: 3px 28px 3px 10px;
+          border-bottom: 1px solid #f4f4f4;
+          display: block;
+          font-size: 12px;
+          color: #919191; }
+          .product-view .page-header > div div ul li a:hover {
+            background-color: #6b9db6;
+            color: white; }
+      .product-view .page-header > div div li:last-child a {
+        border-bottom: 0; }
+  .product-view .page-header h1 {
+    color: white;
+    padding: 12px;
+    font-size: 14px;
+    float: left; }
+.product-view section > div {
+  text-align: center;
+  float: left;
+  padding-top: 20px;
+  width: 258px; }
+  .product-view section > div img {
+    max-width: 238px; }
+  .product-view section > div p {
+    text-align: left;
+    color: #6695ad;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: bold; }
+.product-view section > form {
+  margin-top: 16px;
+  width: 462px;
+  float: left; }
+  .product-view section > form h2 {
+    background: #ee9a44;
+    background: -moz-linear-gradient(top, #ee9a44 0%, white 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee9a44), color-stop(100%, #e67233));
+    background: -webkit-linear-gradient(top, #ee9a44 0%, #e67233 100%);
+    background: -o-linear-gradient(top, #ee9a44 0%, #e67233 100%);
+    background: -ms-linear-gradient(top, #ee9a44 0%, #e67233 100%);
+    background: linear-gradient(to bottom, #ee9a44 0%, #e67233 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2',GradientType=0 );
+    color: white;
+    height: 20px;
+    padding: 4px 0 2px 0;
+    font-size: 12px;
+    text-align: center; }
+  .product-view section > form fieldset {
+    padding: 0 10px 10px 10px;
+    background: white; }
+    .product-view section > form fieldset > div {
+      background: #f2f2f2;
+      padding: 10px 0;
+      margin-top: 10px; }
+      .product-view section > form fieldset > div > div {
+        padding: 10px; }
+        .product-view section > form fieldset > div > div label,
+        .product-view section > form fieldset > div > div div {
+          display: inline-block;
+          vertical-align: middle; }
+        .product-view section > form fieldset > div > div label {
+          text-align: right;
+          width: 116px; }
+        .product-view section > form fieldset > div > div div {
+          padding-left: 10px;
+          width: 290px; }
+          .product-view section > form fieldset > div > div div input[type=number],
+          .product-view section > form fieldset > div > div div input[type=text],
+          .product-view section > form fieldset > div > div div select {
+            background: white;
+            width: 250px;
+            padding: 4px;
+            margin-right: 6px; }
+          .product-view section > form fieldset > div > div div select {
+            width: 258px; }
+      .product-view section > form fieldset > div p.label,
+      .product-view section > form fieldset > div p.value {
+        display: inline-block;
+        width: 186px;
+        font-size: 15px;
+        font-weight: bold;
+        margin: 0 16px; }
+      .product-view section > form fieldset > div p.label {
+        color: #f48739; }
+      .product-view section > form fieldset > div p.value {
+        color: #6695ad;
+        text-align: right; }
+  .product-view section > form .submit-button-holder {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    background: url("../images/product-view-cart-arrow.png") no-repeat center top;
+    padding-top: 22px; }
+    .product-view section > form .submit-button-holder input[type=submit] {
+      background: url("../images/product-view-cart-icon.png") no-repeat 20px 10px, #ee9a44;
+      background: url("../images/product-view-cart-icon.png") no-repeat 20px 10px, -moz-linear-gradient(top, #ee9a44 0%, white 100%);
+      background: url("../images/product-view-cart-icon.png") no-repeat 20px 10px, -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee9a44), color-stop(100%, #e67232));
+      background: url("../images/product-view-cart-icon.png") no-repeat 20px 10px, -webkit-linear-gradient(top, #ee9a44 0%, #e67232 100%);
+      background: url("../images/product-view-cart-icon.png") no-repeat 20px 10px, -o-linear-gradient(top, #ee9a44 0%, #e67232 100%);
+      background: url("../images/product-view-cart-icon.png") no-repeat 20px 10px, -ms-linear-gradient(top, #ee9a44 0%, #e67232 100%);
+      background: url("../images/product-view-cart-icon.png") no-repeat 20px 10px, linear-gradient(to bottom, #ee9a44 0%, #e67232 100%);
+      padding: 14px 26px 14px 50px;
+      margin: 10px auto;
+      color: white;
+      font-weight: bold;
+      cursor: pointer; }
+      .product-view section > form .submit-button-holder input[type=submit]:hover {
+        background: #6b9db6 url("../images/product-view-cart-icon.png") no-repeat 20px 10px; }
+
 .subtitle {
   text-align: center;
   font-size: 16px;
