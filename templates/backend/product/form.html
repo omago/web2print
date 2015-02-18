@@ -10,19 +10,273 @@
             <a href="{% url "admin-product-list" %}" class="button back">Natrag</a>
         </div>
 
-        <fieldset>
-            {% for field in form %}
-                {% if field|field_type != "ClearableFileInput" %}
+        <div class="grid-5 padding-right-20">
+            <h2>Osnovni atributi proizvoda</h2>
+            <fieldset>
+                {% get_fieldset name,subcategory,image,description as basic_fields from form %}
+                {% for field in basic_fields %}
                     <div>
-                {% else %}
-                    <div class="input">
-                {% endif %}
-                    <label for="{{ field.auto_id }}">{{ field.label }}</label>
-                    <div>{{ field }}</div>
-                    {{ field.errors }}
+                        <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                        <div>{{ field }}</div>
+                        {{ field.errors }}
+                    </div>
+                {% endfor %}
+            </fieldset>
+        </div>
+        <div class="grid-5 padding-left-20">
+            <h2>Meta atributi</h2>
+            <fieldset>
+                {% get_fieldset meta_description,meta_keywords as meta_fields from form %}
+                {% for field in meta_fields %}
+                    <div>
+                        <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                        <div>{{ field }}</div>
+                        {{ field.errors }}
+                    </div>
+                {% endfor %}
+            </fieldset>
+        </div>
+        <div class="clear"></div>
+
+
+        <div class="grid-5 padding-right-20">
+
+            <h2>Osnovni parametri proizvoda</h2>
+            <fieldset>
+                <div>
+                    <label for="{{ form.has_title.auto_id }}">{{ form.has_title.label }}</label>
+                    <div>{{ form.has_title }}</div>
+                    {{ form.has_title.errors }}
                 </div>
-            {% endfor %}
-        </fieldset>
+                <div>
+                    <label for="{{ form.product_formats.auto_id }}">{{ form.product_formats.label }}</label>
+                    <div>{{ form.product_formats }}</div>
+                    {{ form.product_formats.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.paper.auto_id }}">{{ form.paper.label }}</label>
+                    <div>{{ form.paper }}</div>
+                    {{ form.paper.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.press.auto_id }}">{{ form.press.label }}</label>
+                    <div>{{ form.press }}</div>
+                    {{ form.press.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.has_mutations.auto_id }}">{{ form.has_mutations.label }}</label>
+                    <div>{{ form.has_mutations }}</div>
+                    {{ form.has_mutations.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.has_cover.auto_id }}">{{ form.has_cover.label }}</label>
+                    <div>{{ form.has_cover }}</div>
+                    {{ form.has_cover.errors }}
+                </div>
+                <div class="{% if not form.has_cover.value %}display-none{% endif %}">
+                    <label for="{{ form.cover_paper.auto_id }}">{{ form.cover_paper.label }}</label>
+                    <div>{{ form.cover_paper }}</div>
+                    {{ form.cover_paper.errors }}
+                </div>
+                <div class="{% if not form.has_cover.value %}display-none{% endif %}">
+                    <label for="{{ form.cover_plastic.auto_id }}">{{ form.cover_plastic.label }}</label>
+                    <div>{{ form.cover_plastic }}</div>
+                    {{ form.cover_plastic.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.has_insert.auto_id }}">{{ form.has_insert.label }}</label>
+                    <div>{{ form.has_insert }}</div>
+                    {{ form.has_insert.errors }}
+                </div>
+                <div class="{% if not form.has_insert.value %}display-none{% endif %}">
+                    <label for="{{ form.insert_paper.auto_id }}">{{ form.insert_paper.label }}</label>
+                    <div>{{ form.insert_paper }}</div>
+                    {{ form.insert_paper.errors }}
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="grid-5 padding-left-20">
+            <h2>Parametri dorade proizvoda</h2>
+            <fieldset>
+                <div>
+                    <label for="{{ form.has_cutting.auto_id }}">{{ form.has_cutting.label }}</label>
+                    <div>{{ form.has_cutting }}</div>
+                    {{ form.has_cutting.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.has_improper_cutting.auto_id }}">{{ form.has_improper_cutting.label }}</label>
+                    <div>{{ form.has_improper_cutting }}</div>
+                    {{ form.has_improper_cutting.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.has_creasing.auto_id }}">{{ form.has_creasing.label }}</label>
+                    <div>{{ form.has_creasing }}</div>
+                    {{ form.has_creasing.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.has_hole_drilling.auto_id }}">{{ form.has_hole_drilling.label }}</label>
+                    <div>{{ form.has_hole_drilling }}</div>
+                    {{ form.has_hole_drilling.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.has_vacuuming.auto_id }}">{{ form.has_vacuuming.label }}</label>
+                    <div>{{ form.has_vacuuming }}</div>
+                    {{ form.has_vacuuming.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.has_binding.auto_id }}">{{ form.has_binding.label }}</label>
+                    <div>{{ form.has_binding }}</div>
+                    {{ form.has_binding.errors }}
+                </div>
+                <div class="{% if not form.has_binding.value %}display-none{% endif %}">
+                    <label for="{{ form.bindings.auto_id }}">{{ form.bindings.label }}</label>
+                    <div>{{ form.bindings }}</div>
+                    {{ form.bindings.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.has_flexion.auto_id }}">{{ form.has_flexion.label }}</label>
+                    <div>{{ form.has_flexion }}</div>
+                    {{ form.has_flexion.errors }}
+                </div>
+                <div class="{% if not form.has_flexion.value %}display-none{% endif %}">
+                    <label for="{{ form.flexion.auto_id }}">{{ form.flexion.label }}</label>
+                    <div>{{ form.flexion }}</div>
+                    {{ form.flexion.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.has_laminating.auto_id }}">{{ form.has_laminating.label }}</label>
+                    <div>{{ form.has_laminating }}</div>
+                    {{ form.has_laminating.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.has_plastic.auto_id }}">{{ form.has_plastic.label }}</label>
+                    <div>{{ form.has_plastic }}</div>
+                    {{ form.has_plastic.errors }}
+                </div>
+                <div class="{% if not form.has_plastic.value %}display-none{% endif %}">
+                    <label for="{{ form.plastic.auto_id }}">{{ form.plastic.label }}</label>
+                    <div>{{ form.plastic }}</div>
+                    {{ form.plastic.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.has_rounding.auto_id }}">{{ form.has_rounding.label }}</label>
+                    <div>{{ form.has_rounding }}</div>
+                    {{ form.has_rounding.errors }}
+                </div>
+            </fieldset>
+        </div>
+        <div class="clear"></div>
+
+
+        <div class="grid-5 padding-right-20">
+
+            <h2>Redoslijed osnovnih parametara proizvoda</h2>
+            <fieldset>
+                <div class="{% if not form.has_title.value %}display-none{% endif %}">
+                    <label for="{{ form.title_order.auto_id }}">{{ form.title_order.label }}</label>
+                    <div>{{ form.title_order }}</div>
+                    {{ form.title_order.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.format_order.auto_id }}">{{ form.format_order.label }}</label>
+                    <div>{{ form.format_order }}</div>
+                    {{ form.format_order.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.paper_order.auto_id }}">{{ form.paper_order.label }}</label>
+                    <div>{{ form.paper_order }}</div>
+                    {{ form.paper_order.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.press_order.auto_id }}">{{ form.press_order.label }}</label>
+                    <div>{{ form.press_order }}</div>
+                    {{ form.press_order.errors }}
+                </div>
+                <div class="{% if not form.has_mutations.value %}display-none{% endif %}">
+                    <label for="{{ form.number_of_mutations_order.auto_id }}">{{ form.number_of_mutations_order.label }}</label>
+                    <div>{{ form.number_of_mutations_order }}</div>
+                    {{ form.number_of_mutations_order.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.number_of_copies_order.auto_id }}">{{ form.number_of_copies_order.label }}</label>
+                    <div>{{ form.number_of_copies_order }}</div>
+                    {{ form.number_of_copies_order.errors }}
+                </div>
+                <div class="{% if not form.has_cover.value %}display-none{% endif %}">
+                    <label for="{{ form.cover_paper_order.auto_id }}">{{ form.cover_paper_order.label }}</label>
+                    <div>{{ form.cover_paper_order }}</div>
+                    {{ form.cover_paper_order.errors }}
+                </div>
+                <div class="{% if not form.has_cover.value %}display-none{% endif %}">
+                    <label for="{{ form.cover_plastic_order.auto_id }}">{{ form.cover_plastic_order.label }}</label>
+                    <div>{{ form.cover_plastic_order }}</div>
+                    {{ form.cover_plastic_order.errors }}
+                </div>
+                <div class="{% if not form.has_insert.value %}display-none{% endif %}">
+                    <label for="{{ form.insert_paper_order.auto_id }}">{{ form.insert_paper_order.label }}</label>
+                    <div>{{ form.insert_paper_order }}</div>
+                    {{ form.insert_paper_order.errors }}
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="grid-5 padding-left-20">
+            <h2>Redoslijed parametara dorade</h2>
+            <fieldset>
+                <div class="{% if not form.has_cutting.value %}display-none{% endif %}">
+                    <label for="{{ form.cutting_order.auto_id }}">{{ form.cutting_order.label }}</label>
+                    <div>{{ form.cutting_order }}</div>
+                    {{ form.cutting_order.errors }}
+                </div>
+                <div class="{% if not form.has_improper_cutting.value %}display-none{% endif %}">
+                    <label for="{{ form.improper_cutting_order.auto_id }}">{{ form.improper_cutting_order.label }}</label>
+                    <div>{{ form.improper_cutting_order }}</div>
+                    {{ form.improper_cutting_order.errors }}
+                </div>
+                <div class="{% if not form.has_creasing.value %}display-none{% endif %}">
+                    <label for="{{ form.creasing_order.auto_id }}">{{ form.creasing_order.label }}</label>
+                    <div>{{ form.creasing_order }}</div>
+                    {{ form.creasing_order.errors }}
+                </div>
+                <div class="{% if not form.has_hole_drilling.value %}display-none{% endif %}">
+                    <label for="{{ form.hole_drilling_order.auto_id }}">{{ form.hole_drilling_order.label }}</label>
+                    <div>{{ form.hole_drilling_order }}</div>
+                    {{ form.hole_drilling_order.errors }}
+                </div>
+                <div class="{% if not form.has_vacuuming.value %}display-none{% endif %}">
+                    <label for="{{ form.vacuuming_order.auto_id }}">{{ form.vacuuming_order.label }}</label>
+                    <div>{{ form.vacuuming_order }}</div>
+                    {{ form.vacuuming_order.errors }}
+                </div>
+                <div class="{% if not form.has_binding.value %}display-none{% endif %}">
+                    <label for="{{ form.bindings_order.auto_id }}">{{ form.bindings_order.label }}</label>
+                    <div>{{ form.bindings_order }}</div>
+                    {{ form.bindings_order.errors }}
+                </div>
+                <div class="{% if not form.has_flexion.value %}display-none{% endif %}">
+                    <label for="{{ form.flexion_order.auto_id }}">{{ form.flexion_order.label }}</label>
+                    <div>{{ form.flexion_order }}</div>
+                    {{ form.flexion_order.errors }}
+                </div>
+                <div class="{% if not form.has_laminating.value %}display-none{% endif %}">
+                    <label for="{{ form.laminating_order.auto_id }}">{{ form.laminating_order.label }}</label>
+                    <div>{{ form.laminating_order }}</div>
+                    {{ form.laminating_order.errors }}
+                </div>
+                <div class="{% if not form.has_plastic.value %}display-none{% endif %}">
+                    <label for="{{ form.plastic_order.auto_id }}">{{ form.plastic_order.label }}</label>
+                    <div>{{ form.plastic_order }}</div>
+                    {{ form.plastic_order.errors }}
+                </div>
+                <div class="{% if not form.has_rounding.value %}display-none{% endif %}">
+                    <label for="{{ form.rounding_order.auto_id }}">{{ form.rounding_order.label }}</label>
+                    <div>{{ form.rounding_order }}</div>
+                    {{ form.rounding_order.errors }}
+                </div>
+            </fieldset>
+        </div>
+        <div class="clear"></div>
 
         <input type="submit" class="button save" name="submit" value="Spremi">
 

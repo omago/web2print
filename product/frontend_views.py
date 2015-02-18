@@ -14,7 +14,7 @@ def view(request, category, subcategory, product):
     category = ProductCategory.objects.get(slug=category)
     subcategory = ProductSubcategory.objects.filter(slug=subcategory).filter(category=category).get()
     product = Product.objects.filter(subcategory=subcategory).filter(slug=product).get()
-    form = CartProductForm()
+    form = CartProductForm(product=product)
 
     context = {"category": category,
                "subcategory": subcategory,

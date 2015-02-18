@@ -54,12 +54,14 @@ INSTALLED_APPS = (
     "article",
     "user",
     "cart",
-    "paper_category",
-    "paper_type",
-    "number_of_colors",
     "product_format",
-    "service_category",
-    "service",
+    "paper",
+    "press",
+    "plastic",
+    "flexion",
+    "cart_product",
+    "cart",
+    "binding",
 )
 
 MIDDLEWARE_CLASSES = (

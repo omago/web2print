@@ -85,102 +85,79 @@ $(document).ready(function() {
                 $("input[id=" + id_field + "]").val(ui.item.id)
             }
         });
-    })
+    });
+
+    $("input[name=has_title]").change(function() {
+        switch_related_field($(this), $("#id_title_order"));
+    });
+
+    $("input[name=has_mutations]").change(function() {
+        switch_related_field($(this), $("#id_number_of_mutations_order"));
+    });
+
+    $("input[name=has_cover]").change(function() {
+        switch_related_field($(this), $("#id_cover_paper"));
+        switch_related_field($(this), $("#id_cover_plastic"));
+        switch_related_field($(this), $("#id_cover_paper_order"));
+        switch_related_field($(this), $("#id_cover_plastic_order"));
+    });
+
+    $("input[name=has_insert]").change(function() {
+        switch_related_field($(this), $("#id_insert_paper"));
+        switch_related_field($(this), $("#id_insert_paper_order"));
+    });
 
 
-//    $(".autocomplete").click(function() {
-//        alert($(this).attr("rel"))
-//    })
+    $("input[name=has_cutting]").change(function() {
+        switch_related_field($(this), $("#id_cutting_order"));
+    });
 
+    $("input[name=has_improper_cutting]").change(function() {
+        switch_related_field($(this), $("#id_improper_cutting_order"));
+    });
 
-//    $("#add_new_key").click(function() {
-//
-//        $("#dialog-form").remove();
-//        $("body").append("<div id='dialog-form' title='Dodavanje ključa'>" +
-//            "<div class='dialog_form'>" +
-//                "Molimo upišite naziv ključa<br /><br />" +
-//                "<label>Naziv</label>" +
-//                "<input type='text' id='key_name' name='key_name'>" +
-//            "</div></div>");
-//
-//        $("#dialog-form").dialog({
-//			resizable: false,
-//			height: 182,
-//			modal: true,
-//			buttons: {
-//                "Dodaj ključ": function() {
-//
-//                    var dialog = $(this);
-//
-//                    var value = $("input#key_name").val()
-//                    var valid = validate(value, 'a-zA-Z1234567890_-');
-//
-//                    $("#dialog-form div.error").remove();
-//
-//                    if(valid) {
-//                        $.ajax({
-//                            url: "/system-configuration/add_key/",
-//                            dataType: "json",
-//                            data: {
-//                                key: value
-//                            },
-//                            success: function( data ) {
-//                                if(data.success){
-//                                    $(".no-keys-defined").remove();
-//                                    $("#form").append("<div>" +
-//                                        "<label for='id_" + value + "'>" + value + "</label>" +
-//                                        "<div>" +
-//                                            "<input id='id_" + value + "' name='" + value + "' type='text' value=''></div>" +
-//                                            "<a class='delete-key' data-key='" + value + "' title='Obriši ključ'></a>" +
-//                                        "</div>");
-//                                    dialog.dialog("close");
-//                                } else {
-//                                    $("input#key_name").after("<div class='error'>" + data.error + "</div>")
-//                                }
-//                            }
-//                        });
-//                    } else {
-//                        $("input#key_name").after("<div class='error'>Dozvoljeni su samo alfanumerički znakovi</div>")
-//                    }
-//
-//				},
-//                "Odustani": function() {
-//					$(this).dialog("close");
-//                    $("#dialog-form").remove();
-//				}
-//			}
-//		})
-//    })
+    $("input[name=has_creasing]").change(function() {
+        switch_related_field($(this), $("#id_creasing_order"));
+    });
 
-//    function validate(value, allowed_chars){
-//        var reg = new RegExp('^[' + allowed_chars + ']+$');
-//        var valid = reg.test(value);
-//        return valid;
-//    }
+    $("input[name=has_hole_drilling]").change(function() {
+        switch_related_field($(this), $("#id_hole_drilling_order"));
+    });
 
-//    $(document).on("click", ".delete-key", function() {
-//        var clicked_key = $(this);
-//        var value = clicked_key.data("key");
-//
-//        $.ajax({
-//            url: "/system-configuration/remove_key/",
-//            dataType: "json",
-//            data: {
-//                key: value
-//            },
-//            success: function( data ) {
-//                if(data.success) {
-//                    $.when(clicked_key.parent().remove()).then(add_no_key_div());
-//                }
-//            }
-//        });
-//    })
-//
-//    function add_no_key_div() {
-//        if($("#form div").length == 0) {
-//            $("#form").append("<div class='no-keys-defined margin-10'>Nema definiranih ključeva</div>")
-//        }
-//
-//    }
+    $("input[name=has_vacuuming]").change(function() {
+        switch_related_field($(this), $("#id_vacuuming_order"));
+    });
+
+    $("input[name=has_binding]").change(function() {
+        switch_related_field($(this), $("#id_bindings"));
+        switch_related_field($(this), $("#id_bindings_order"));
+    });
+
+    $("input[name=has_flexion]").change(function() {
+        switch_related_field($(this), $("#id_flexion"));
+        switch_related_field($(this), $("#id_flexion_order"));
+    });
+
+    $("input[name=has_laminating]").change(function() {
+        switch_related_field($(this), $("#id_laminating_order"));
+    });
+
+    $("input[name=has_plastic]").change(function() {
+        switch_related_field($(this), $("#id_plastic"));
+        switch_related_field($(this), $("#id_plastic_order"));
+    });
+
+    $("input[name=has_rounding]").change(function() {
+        switch_related_field($(this), $("#id_rounding_order"));
+    });
+
+    function switch_related_field(object, parent) {
+        var related_select =  parent.parent().parent();
+        if(object.is(":checked")) {
+            related_select.removeClass("display-none");
+        } else {
+            related_select.addClass("display-none");
+        }
+    }
 
 });

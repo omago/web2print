@@ -1,0 +1,27 @@
+{% extends "backend.html" %}
+{% load simple_tags %}
+
+{% block content %}
+
+    <form method="post">{% csrf_token %}
+        {% h1 page_title %}
+        <div>
+            <a href="{% url "admin-plastic-list" %}" class="button back">Natrag</a>
+        </div>
+
+        <fieldset>
+
+            {% for field in form %}
+                <div>
+                    <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                    <div>{{ field }}</div>
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
+
+        </fieldset>
+
+        <input type="submit" class="button save" name="submit" value="Spremi">
+
+    </form>
+{% endblock %}
