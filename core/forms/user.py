@@ -19,15 +19,13 @@ class UserForm(forms.ModelForm):
             self.fields['password'].label = "Lozinka"
 
         self.fields['username'].label = "Korisničko ime"
-        self.fields['first_name'].label = "Ime"
-        self.fields['last_name'].label = "Prezime"
-        self.fields['email'].label = "E-mail"
-        self.fields['is_active'].label = "Aktivan"
         self.fields['is_superuser'].label = "Administrator"
+        self.fields['is_active'].label = "Aktivan"
 
     class Meta:
         model = User
-        exclude = ('last_login', 'date_joined')
+        exclude = ('last_login', 'date_joined', 'reset_password_code_expiration', 'reset_password_code',
+                   'activation_code')
 
     def save(self, commit=True):
         user = super(UserForm, self).save(commit=False)

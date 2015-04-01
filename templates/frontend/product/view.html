@@ -26,16 +26,16 @@
                 <img src="{{ product.image.url }}" alt="{{ product.name }}" />
                 <p>{{ product.description }}</p>
             </div>
-            <form method="POST">
+            <form method="POST" id="product-cart-form">{% csrf_token %}
                 <h2>Moj kalkulator</h2>
-
                 <fieldset>
+                    {{ form.product }}
                     <div>
-                        {% get_fieldset title,format,press,paper,umber_of_mutation,number_of_copies,cover_paper,cover_plastic,insert_paper as basic_fields from form %}
+                        {% get_fieldset title,format,user_format_width,user_format_height,user_format_add_to_user_formats,press,paper,umber_of_mutation,number_of_copies,cover_paper,cover_plastic,insert_paper as basic_fields from form %}
                         {% for field in basic_fields %}
                             <div>
                                 <label for="{{ field.auto_id }}">{{ field.label }}</label>
-                                <div>{{ field }}{% if field.required %}<span class="required">*</span>{% endif %}</div>
+                                <div>{{ field }}{% if field.field.required %}<span class="required">*</span>{% endif %}</div>
                                 {{ field.errors }}
                             </div>
                         {% endfor %}
@@ -45,14 +45,14 @@
                         {% for field in finishing_fields %}
                             <div>
                                 <label for="{{ field.auto_id }}">{{ field.label }}</label>
-                                <div>{{ field }}{% if field.required %}<span class="required">*</span>{% endif %}</div>
+                                <div>{{ field }}{% if field.field.required %}<span class="required">*</span>{% endif %}</div>
                                 {{ field.errors }}
                             </div>
                         {% endfor %}
                     </div>
                     <div class="total">
-                         <p class="label">Ukupno + PDV</p>
-                         <p class="value">1.580,75</p>
+                        <p class="label">Ukupno + PDV</p>
+                        <p class="value" id="product-price">0</p>
                     </div>
                 </fieldset>
                 <div class="submit-button-holder">

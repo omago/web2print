@@ -28,7 +28,6 @@ $orange-color: #e67f36
   background: $image, -moz-linear-gradient(center top, $color1 0%, $color2 100%)
   background: $image, -moz-gradient(center top, $color1 0%, $color2 100%)
 
-
 @mixin vertical-gradient-with-image($image, $image_repeat, $image_vertical, $image_horizontal, $color1, $color2)
   background: url($image) $image_repeat $image_vertical $image_horizontal, $color1
   background: url($image) $image_repeat $image_vertical $image_horizontal, -moz-linear-gradient(top, $color1 0%, #ffffff 100%) /* FF3.6+ */
@@ -738,6 +737,12 @@ h1
                 margin-right: 6px
               select
                 width: 258px
+            .errorlist
+              margin-top: 4px
+              margin-left: 132px
+              list-style: none
+              li
+                color: red
           p.label,
           p.value
             display: inline-block

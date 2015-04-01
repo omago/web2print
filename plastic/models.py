@@ -10,6 +10,9 @@ class Plastic(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_fields(self):
+        return [(field.verbose_name, field.value_to_string(self)) for field in self._meta.fields]
+
     class Meta:
         ordering = ['-pk']
         db_table = "plastic"

@@ -6,9 +6,13 @@ from django.db import models
 
 class Press(models.Model):
     name = models.CharField(verbose_name="Naziv", max_length=1024)
+    both_sides_print = models.BooleanField(verbose_name="Obostrani print")
 
     def __unicode__(self):
         return self.name
+
+    def get_fields(self):
+        return [(field.verbose_name, field.value_to_string(self)) for field in self._meta.fields]
 
     class Meta:
         ordering = ['-pk']

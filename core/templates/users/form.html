@@ -10,48 +10,13 @@
     </div>
 
     <fieldset>
-
-        <div>
-            <label for="{{ form.username.auto_id }}">{{ form.username.label }}</label>
-            <div>{{ form.username }}</div>
-            {{ form.username.errors }}
-        </div>
-
-        <div>
-            <label for="{{ form.password.auto_id }}">{{ form.password.label }}</label>
-            <div>{{ form.password }}</div>
-            {{ form.password.errors }}
-        </div>
-
-        <div>
-            <label for="{{ form.email.auto_id }}">{{ form.email.label }}</label>
-            <div>{{ form.email }}</div>
-            {{ form.email.errors }}
-        </div>
-
-        <div>
-            <label for="{{ form.first_name.auto_id }}">{{ form.first_name.label }}</label>
-            <div>{{ form.first_name }}</div>
-            {{ form.first_name.errors }}
-        </div>
-
-        <div>
-            <label for="{{ form.last_name.auto_id }}">{{ form.last_name.label }}</label>
-            <div>{{ form.last_name }}</div>
-            {{ form.last_name.errors }}
-        </div>
-
-        <div>
-            <label for="{{ form.is_active.auto_id }}">{{ form.is_active.label }}</label>
-            <div>{{ form.is_active }}</div>
-            {{ form.is_active.errors }}
-        </div>
-
-        <div>
-            <label for="{{ form.is_superuser.auto_id }}">{{ form.is_superuser.label }}</label>
-            <div>{{ form.is_superuser }}</div>
-            {{ form.is_superuser.errors }}
-        </div>
+        {% for field in form %}
+            <div>
+                <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                <div>{{ field }}</div>
+                {{ field.errors }}
+            </div>
+        {% endfor %}
 
     </fieldset>
 

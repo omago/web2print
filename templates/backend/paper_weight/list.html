@@ -1,0 +1,44 @@
+{% extends "backend.html" %}
+{% load simple_tags %}
+{% load filters %}
+
+{% block content %}
+
+    {% h1 page_title %}
+    {% button_new "Nova gramatura papira" "admin-paper-weight-form" %}
+
+    <table class="grid">
+        {% if rows %}
+            <tr>
+                {% th "Id" "pk" "3" %}
+                {% th "Gramatura" "weight" "87" "left" %}
+                {% th "Operacije" None "10" %}
+            </tr>
+            {% for row in rows %}
+                {% url "admin-paper-weight-details" row.pk as details_url %}
+                {% url "admin-paper-weight-form" row.pk as edit_url %}
+                {% url "admin-paper-weight-delete" row.pk as delete_url %}
+                <tr>
+                    {% td row.pk "pk" %}
+                    {% with weight=row.weight|convert_to_string:"0" %}
+                    {% td "<a href="|add:edit_url|add:">"|add:weight|add:"</a>" "weight" "left" %}
+                    {% endwith %}
+
+                    {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
+                    {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
+                    {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}
+                        {% td view|add:edit|add:delete %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                {% td "Nema zapisa" %}
+            </tr>
+        {% endif %}
+    </table>
+    {% pager rows %}
+
+{% endblock %}

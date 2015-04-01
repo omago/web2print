@@ -11,12 +11,12 @@ from django.forms.util import ErrorList
 from .models import User
 
 
-class UserAccuntForm(forms.ModelForm):
+class UserAccountForm(forms.ModelForm):
     password_confirm = forms.CharField(widget=forms.PasswordInput, required=True, label="Potvrda lozinke")
     password = forms.CharField(widget=forms.PasswordInput, required=True, label="Lozinka")
 
     def __init__(self, *args, **kwargs):
-        super(UserAccuntForm, self).__init__(*args, **kwargs)
+        super(UserAccountForm, self).__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -41,7 +41,7 @@ class UserAccuntForm(forms.ModelForm):
         exclude = ('last_login', 'date_joined', 'activation_code', 'is_active', 'is_superuser', 'reset_password_code', 'reset_password_code_expiration')
 
     def save(self, commit=True):
-        user = super(UserAccuntForm, self).save(commit=False)
+        user = super(UserAccountForm, self).save(commit=False)
         if user.pk:
             if self.cleaned_data.has_key("password"):
                 user.set_password(self.cleaned_data["password"])

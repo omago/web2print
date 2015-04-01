@@ -11,7 +11,10 @@
         {% if rows %}
             <tr>
                 {% th "Id" "pk" "3" %}
-                {% th "Naziv" "name" "87" "left" %}
+                {% th "Tip papira" "paper_type.name" "27" "left" %}
+                {% th "Gramatura papira" "paper_weight.weight" "20" "left" %}
+                {% th "Finish papira" "paper_finish.name" "20" "left" %}
+                {% th "Cijena po kilogramu papira" "price_per_kilogram" "20" "left" %}
                 {% th "Operacije" None "10" %}
             </tr>
             {% for row in rows %}
@@ -20,7 +23,10 @@
                 {% url "admin-paper-delete" row.pk as delete_url %}
                 <tr>
                     {% td row.pk "pk" %}
-                    {% td "<a href="|add:edit_url|add:">"|add:row.name|add:"</a>" "name" "left" %}
+                    {% td "<a href="|add:edit_url|add:">"|add:row.paper_type.name|add:"</a>" "name" "left" %}
+                    {% td row.paper_weight.weight "paper_weight.weight" "left" %}
+                    {% td row.paper_finish.name "paper_finish.name" "left" %}
+                    {% td row.price_per_kilogram "price_per_kilogram" "left" %}
                     {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
                     {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
                     {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}

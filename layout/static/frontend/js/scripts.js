@@ -18,8 +18,26 @@ $(document).ready(function() {
     $("a.drop-down-menu").click(function() {
         $('div.drop-down-menu').toggle();
         return false;
-    })
+    });
 
 
+    $("#product-cart-form input").keyup(function() {
+        calculate_price();
+    });
 
+
+    $("#product-cart-form input[type=checkbox]").change(function() {
+        calculate_price();
+    });
+
+    $("#product-cart-form select").change(function() {
+        calculate_price();
+    });
+
+    function calculate_price() {
+        var form_data = $("#product-cart-form").serialize();
+        $.post("/product/calculate-price", form_data).done(function(data) {
+            $("#product-price").html(data.product_price);
+        });
+    }
 })

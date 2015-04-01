@@ -12,7 +12,7 @@ body {
   margin: 0px;
   font-family: "Open Sans", sans-serif;
   font-size: 12px;
-  color: #333333;
+  color: #333;
   background-color: #f2f2f2; }
 
 .container {
@@ -76,9 +76,9 @@ header {
       padding-left: 20px; }
     header #header-top #login-form {
       display: none;
-      -webkit-box-shadow: 0px 0px 50px 0px #666666;
-      -moz-box-shadow: 0px 0px 50px 0px #666666;
-      box-shadow: 0px 0px 50px 0px #666666;
+      -webkit-box-shadow: 0px 0px 50px 0px #666;
+      -moz-box-shadow: 0px 0px 50px 0px #666;
+      box-shadow: 0px 0px 50px 0px #666;
       position: absolute;
       z-index: 1000;
       background: white;
@@ -94,7 +94,7 @@ header {
         background: url("../images/my-account.png") no-repeat left center;
         padding-left: 20px;
         font-size: 16px;
-        color: #666666;
+        color: #666;
         margin: 0 auto; }
       header #header-top #login-form .shadow {
         margin: 10px auto 5px 0px; }
@@ -449,7 +449,7 @@ h1 {
       top: -3px; }
 
 #register-page {
-  background: white;
+  background: #ffffff;
   padding: 20px; }
   #register-page * {
     color: #5e5e5e; }
@@ -502,20 +502,20 @@ h1 {
       padding: 10px 36px;
       font-size: 16px;
       background-color: #649eb7;
-      color: white; }
+      color: #ffffff; }
       #register-page form input[type=submit]:hover {
         background-color: red; }
   #register-page .gradient {
     margin-top: 20px;
     margin-bottom: 8px;
     background: #f2f2f2;
-    background: -moz-linear-gradient(top, #f2f2f2 0%, white 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f2f2f2), color-stop(100%, white));
-    background: -webkit-linear-gradient(top, #f2f2f2 0%, white 100%);
-    background: -o-linear-gradient(top, #f2f2f2 0%, white 100%);
-    background: -ms-linear-gradient(top, #f2f2f2 0%, white 100%);
-    background: linear-gradient(to bottom, #f2f2f2 0%, white 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2',GradientType=0 );
+    background: -moz-linear-gradient(top, #f2f2f2 0%, #ffffff 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f2f2f2), color-stop(100%, #ffffff));
+    background: -webkit-linear-gradient(top, #f2f2f2 0%, #ffffff 100%);
+    background: -o-linear-gradient(top, #f2f2f2 0%, #ffffff 100%);
+    background: -ms-linear-gradient(top, #f2f2f2 0%, #ffffff 100%);
+    background: linear-gradient(to bottom, #f2f2f2 0%, #ffffff 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$color1', endColorstr='$color2',GradientType=0 );
     height: 20px; }
 
 .product-category-list {
@@ -554,18 +554,18 @@ h1 {
 .product-view .page-header {
   height: 44px;
   background: #ee9a44;
-  background: -moz-linear-gradient(top, #ee9a44 0%, white 100%);
+  background: -moz-linear-gradient(top, #ee9a44 0%, #ffffff 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee9a44), color-stop(100%, #e67233));
   background: -webkit-linear-gradient(top, #ee9a44 0%, #e67233 100%);
   background: -o-linear-gradient(top, #ee9a44 0%, #e67233 100%);
   background: -ms-linear-gradient(top, #ee9a44 0%, #e67233 100%);
   background: linear-gradient(to bottom, #ee9a44 0%, #e67233 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2',GradientType=0 ); }
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$color1', endColorstr='$color2',GradientType=0 ); }
   .product-view .page-header > div {
     height: 44px;
     float: left;
     background: #f48739;
-    color: white;
+    color: #ffffff;
     font-size: 14px;
     font-weight: bold;
     position: relative; }
@@ -580,7 +580,7 @@ h1 {
       width: 190px;
       padding: 12px; }
     .product-view .page-header > div > a.drop-down-menu {
-      background: white url("../images/product-view-choice-arrow.png") no-repeat center center;
+      background: #ffffff url("../images/product-view-choice-arrow.png") no-repeat center center;
       width: 44px; }
     .product-view .page-header > div div {
       display: none;
@@ -590,9 +590,9 @@ h1 {
       top: 50px;
       width: 258px; }
       .product-view .page-header > div div ul {
-        -webkit-box-shadow: 0px 0px 16px 0px #999999;
-        -moz-box-shadow: 0px 0px 16px 0px #999999;
-        box-shadow: 0px 0px 16px 0px #999999;
+        -webkit-box-shadow: 0px 0px 16px 0px #999;
+        -moz-box-shadow: 0px 0px 16px 0px #999;
+        box-shadow: 0px 0px 16px 0px #999;
         padding: 3px 0;
         background: white;
         list-style-type: none; }
@@ -631,21 +631,21 @@ h1 {
   float: left; }
   .product-view section > form h2 {
     background: #ee9a44;
-    background: -moz-linear-gradient(top, #ee9a44 0%, white 100%);
+    background: -moz-linear-gradient(top, #ee9a44 0%, #ffffff 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee9a44), color-stop(100%, #e67233));
     background: -webkit-linear-gradient(top, #ee9a44 0%, #e67233 100%);
     background: -o-linear-gradient(top, #ee9a44 0%, #e67233 100%);
     background: -ms-linear-gradient(top, #ee9a44 0%, #e67233 100%);
     background: linear-gradient(to bottom, #ee9a44 0%, #e67233 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2',GradientType=0 );
-    color: white;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$color1', endColorstr='$color2',GradientType=0 );
+    color: #ffffff;
     height: 20px;
     padding: 4px 0 2px 0;
     font-size: 12px;
     text-align: center; }
   .product-view section > form fieldset {
     padding: 0 10px 10px 10px;
-    background: white; }
+    background: #ffffff; }
     .product-view section > form fieldset > div {
       background: #f2f2f2;
       padding: 10px 0;
@@ -665,12 +665,18 @@ h1 {
           .product-view section > form fieldset > div > div div input[type=number],
           .product-view section > form fieldset > div > div div input[type=text],
           .product-view section > form fieldset > div > div div select {
-            background: white;
+            background: #ffffff;
             width: 250px;
             padding: 4px;
             margin-right: 6px; }
           .product-view section > form fieldset > div > div div select {
             width: 258px; }
+        .product-view section > form fieldset > div > div .errorlist {
+          margin-top: 4px;
+          margin-left: 132px;
+          list-style: none; }
+          .product-view section > form fieldset > div > div .errorlist li {
+            color: red; }
       .product-view section > form fieldset > div p.label,
       .product-view section > form fieldset > div p.value {
         display: inline-block;
@@ -691,7 +697,7 @@ h1 {
     padding-top: 22px; }
     .product-view section > form .submit-button-holder input[type=submit] {
       background: url("../images/product-view-cart-icon.png") no-repeat 20px 10px, #ee9a44;
-      background: url("../images/product-view-cart-icon.png") no-repeat 20px 10px, -moz-linear-gradient(top, #ee9a44 0%, white 100%);
+      background: url("../images/product-view-cart-icon.png") no-repeat 20px 10px, -moz-linear-gradient(top, #ee9a44 0%, #ffffff 100%);
       background: url("../images/product-view-cart-icon.png") no-repeat 20px 10px, -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee9a44), color-stop(100%, #e67232));
       background: url("../images/product-view-cart-icon.png") no-repeat 20px 10px, -webkit-linear-gradient(top, #ee9a44 0%, #e67232 100%);
       background: url("../images/product-view-cart-icon.png") no-repeat 20px 10px, -o-linear-gradient(top, #ee9a44 0%, #e67232 100%);
@@ -699,7 +705,7 @@ h1 {
       background: url("../images/product-view-cart-icon.png") no-repeat 20px 10px, linear-gradient(to bottom, #ee9a44 0%, #e67232 100%);
       padding: 14px 26px 14px 50px;
       margin: 10px auto;
-      color: white;
+      color: #ffffff;
       font-weight: bold;
       cursor: pointer; }
       .product-view section > form .submit-button-holder input[type=submit]:hover {
@@ -711,7 +717,7 @@ h1 {
   margin: 10px 0; }
 
 .product-category-description {
-  background-color: white;
+  background-color: #ffffff;
   padding: 26px 16px;
   text-align: center; }
 
@@ -765,3 +771,5 @@ footer {
     background: #3f3d3d;
     line-height: 62px;
     color: #a6dbef; }
+
+/*# sourceMappingURL=style.css.map */

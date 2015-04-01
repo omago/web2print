@@ -15,13 +15,13 @@ from django.template import RequestContext
 from django.contrib.auth import logout
 
 from e_mail.e_mail import Email
-from .forms import UserAccuntForm, UserLoginForm, ForgottenPasswordForm, ResetPasswordForm
+from .forms import UserAccountForm, UserLoginForm, ForgottenPasswordForm, ResetPasswordForm
 from .models import User
 
 def register(request):
 
     if request.POST:
-        form = UserAccuntForm(request.POST)
+        form = UserAccountForm(request.POST)
 
         if form.is_valid():
             user = form.save()
@@ -42,7 +42,7 @@ def register(request):
 
             return HttpResponseRedirect(reverse("user-successful-registration"))
     else:
-        form = UserAccuntForm()
+        form = UserAccountForm()
 
     context = {}
 
@@ -94,14 +94,14 @@ def my_account(request):
     user = request.user
     updated = False
     if request.POST:
-        form = UserAccuntForm(request.POST, instance=user)
+        form = UserAccountForm(request.POST, instance=user)
 
         if form.is_valid():
             form.save()
             form.save_m2m()
             updated = True
     else:
-        form = UserAccuntForm(instance=user)
+        form = UserAccountForm(instance=user)
 
     context = {}
 

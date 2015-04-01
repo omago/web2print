@@ -31,13 +31,23 @@
                             <li><a href="{% url "admin-banner-index" %}">Banneri</a></li>
                             <li><a href="{% url "admin-user" %}">Korisnici</a></li>
 
+                            <li><a class="submenu-horizontal">Cijene</a>
+                                <ul>
+                                    <li><a href="{% url "admin-printing-price-index" %}">Cijene printa</a></li>
+                                </ul>
+                            </li>
+
                             <li><a class="submenu-horizontal">Šifrarnici</a>
                                 <ul>
-                                    <li><a href="{% url "admin-paper-index" %}">Papir</a></li>
+                                    <li><a href="{% url "admin-paper-type-index" %}">Tipovi papira</a></li>
+                                    <li><a href="{% url "admin-paper-finish-index" %}">Finishi papira</a></li>
+                                    <li><a href="{% url "admin-paper-weight-index" %}">Gramatura papira</a></li>
+                                    <li><a href="{% url "admin-paper-index" %}">Papiri</a></li>
+                                    <li><a href="{% url "admin-printer-index" %}">Strojevi</a></li>
                                     <li><a href="{% url "admin-press-index" %}">Tisak</a></li>
                                     <li><a href="{% url "admin-plastic-index" %}">Platika</a></li>
                                     <li><a href="{% url "admin-flexion-index" %}">Savijanje</a></li>
-                                    <li><a href="{% url "admin-product-format-index" %}">Formati proizvoda</a></li>
+                                    <li><a href="{% url "admin-format-index" %}">Formati proizvoda</a></li>
                                 </ul>
                             </li>
                         </ul>

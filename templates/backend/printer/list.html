@@ -1,0 +1,43 @@
+{% extends "backend.html" %}
+{% load simple_tags %}
+{% load filters %}
+
+{% block content %}
+
+    {% h1 page_title %}
+    {% button_new "Novi stroj" "admin-printer-form" %}
+
+    <table class="grid">
+        {% if rows %}
+            <tr>
+                {% th "Id" "pk" "3" %}
+                {% th "Naziv" "name" "47" "left" %}
+                {% th "Kolor" "color" "40" "left" %}
+                {% th "Operacije" None "10" %}
+            </tr>
+            {% for row in rows %}
+                {% url "admin-printer-details" row.pk as details_url %}
+                {% url "admin-printer-form" row.pk as edit_url %}
+                {% url "admin-printer-delete" row.pk as delete_url %}
+                <tr>
+                    {% td row.pk "pk" %}
+                    {% td "<a href="|add:edit_url|add:">"|add:row.name|add:"</a>" "name" "left" %}
+                    {% td row.color "color" "left" %}
+                    {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
+                    {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
+                    {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}
+                        {% td view|add:edit|add:delete %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                {% td "Nema zapisa" %}
+            </tr>
+        {% endif %}
+    </table>
+    {% pager rows %}
+
+{% endblock %}

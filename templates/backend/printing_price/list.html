@@ -1,0 +1,51 @@
+{% extends "backend.html" %}
+{% load simple_tags %}
+{% load filters %}
+
+{% block content %}
+
+    {% h1 page_title %}
+    {% button_new "Nova cijena printa" "admin-printing-price-form" %}
+
+    <table class="grid">
+        {% if rows %}
+            <tr>
+                {% th "Id" "pk" "3" %}
+                {% th "Stroj" "printer.name" "23" "left" %}
+                {% th "Araka od" "quire_from" "10" "left" %}
+                {% th "Araka do" "quire_to" "10" "left" %}
+                {% th "Cijena starta" "start_price" "15" "left" %}
+                {% th "Cijena klika" "click_price" "15" "left" %}
+                {% th "Cijena obostranog tiska" "both_sides_price" "15" "left" %}
+                {% th "Operacije" None "10" %}
+            </tr>
+            {% for row in rows %}
+                {% url "admin-printing-price-details" row.pk as details_url %}
+                {% url "admin-printing-price-form" row.pk as edit_url %}
+                {% url "admin-printing-price-delete" row.pk as delete_url %}
+                <tr>
+                    {% td row.pk "pk" %}
+                    {% td "<a href="|add:edit_url|add:">"|add:row.printer.name|add:"</a>" "name" "left" %}
+                    {% td row.quire_from "quire_from" "left" %}
+                    {% td row.quire_to "quire_to" "left" %}
+                    {% td row.start_price "start_price" "left" %}
+                    {% td row.click_price "click_price" "left" %}
+                    {% td row.both_sides_price "both_sides_price" "left" %}
+                    {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
+                    {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
+                    {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}
+                        {% td view|add:edit|add:delete %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                {% td "Nema zapisa" %}
+            </tr>
+        {% endif %}
+    </table>
+    {% pager rows %}
+
+{% endblock %}

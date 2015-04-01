@@ -34,3 +34,11 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         exclude = ['slug']
+
+    # def save(self, commit=True):
+    #     instance = super(ProductForm, self).save(commit=False)
+    #     #instance.flag1 = 'flag1' in self.cleaned_data['multi_choice']
+    #
+    #     if commit:
+    #         instance.save()
+    #     return instance

@@ -5,7 +5,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 
 from product_subcategory.models import ProductSubcategory
-from product_format.models import ProductFormat
+from format.models import Format
 from paper.models import Paper
 from press.models import Press
 from plastic.models import Plastic
@@ -24,7 +24,7 @@ class Product(models.Model):
 
     # base attributes
     has_title = models.BooleanField(verbose_name="Proizvod ima naslov")
-    product_formats = models.ManyToManyField(ProductFormat, null=True, verbose_name="Formati proizvoda", related_name="product-product-formats")
+    formats = models.ManyToManyField(Format, null=True, verbose_name="Formati proizvoda", related_name="product-formats")
     paper = models.ManyToManyField(Paper, related_name="paper", null=True, verbose_name="Papiri")
     press = models.ManyToManyField(Press, verbose_name="Tisak", null=True)
     has_mutations = models.BooleanField(verbose_name="Proizvod ima mutacije")
