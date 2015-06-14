@@ -41,7 +41,14 @@
                         {% endfor %}
 
                         <h2>Dorade</h2>
-
+                        {% get_fieldset finish as finish_fields from form %}
+                        {% for field in finish_fields %}
+                            <div>
+                                <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                                <div>{{ field }}{% if field.field.required %}<span class="required">*</span>{% endif %}</div>
+                                {{ field.errors }}
+                            </div>
+                        {% endfor %}
                     </div>
                     <div class="total">
                         <p class="label">Ukupno + PDV</p>

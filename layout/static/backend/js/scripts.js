@@ -133,6 +133,27 @@ $(document).ready(function() {
         });
     });
 
+    $("#product-basic-params").sortable({
+        stop: function() {
+            set_basic_fields_order();
+        }
+    });
+
+    set_basic_fields_order();
+
+    function set_basic_fields_order() {
+        var list_of_values = [];
+        $("#product-basic-params div > label").each(function() {
+            var value = $(this).attr("for").replace("id_", "");
+            if(value) {
+                list_of_values.push(value);
+            }
+        });
+        $("input#id_basic_fields_order").val(list_of_values.join())
+    }
+
+
+    // finish functions
     $("ul#id_finish").sortable({
         stop: function() {
             set_finish_order();

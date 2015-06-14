@@ -58,6 +58,7 @@ class CartProductForm(forms.ModelForm):
         self.fields.keyOrder.append('press')
         self.fields["press"].queryset = Press.objects.filter(pk__in=self.product.press.all())
         self.fields.keyOrder.append('number_of_copies')
+        self.fields.keyOrder.append('finish')
 
         if not product.has_mutations:
             self.fields.pop('number_of_mutation')
@@ -78,8 +79,6 @@ class CartProductForm(forms.ModelForm):
         else:
             self.fields.keyOrder.append('insert_paper')
             self.fields["insert_paper"].queryset = Paper.objects.filter(pk__in=self.product.insert_paper.all())
-
-
 
     # popraviti metodu
     def clean(self):

@@ -4,8 +4,8 @@
 from django.db import models
 from user.models import User
 
-class Cart(models.Model):
 
+class Cart(models.Model):
     user = models.ForeignKey(User, verbose_name="Korisnik")
 
     class Meta:

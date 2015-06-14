@@ -80,7 +80,11 @@ def get_type_for_finish(request):
 @user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy("admin-login"))
 def get_selected_finish_types_for_product(request):
     product = request.GET.get("product")
-    finish_types = FinishType.objects.filter(product=product)
+    try:
+        finish_types = FinishType.objects.filter(product=product)
+    except ValueError:
+        finish_types = FinishType.objects.none()
+
     data = serializers.serialize("json", finish_types)
 
     return HttpResponse(data, content_type='application/json')

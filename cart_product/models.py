@@ -8,6 +8,7 @@ from format.models import Format
 from paper.models import Paper
 from press.models import Press
 from plastic.models import Plastic
+from finish.models import Finish
 
 
 class CartProduct(models.Model):
@@ -24,6 +25,8 @@ class CartProduct(models.Model):
     cover_paper = models.ForeignKey(Paper, null=True, blank=True, verbose_name="Papir za korice", related_name="cart-product-cover-paper")
     cover_plastic = models.ForeignKey(Plastic, null=True, blank=True, verbose_name="Plastika na koricama", related_name="cart-product-cover-plastic")
     insert_paper = models.ForeignKey(Paper, null=True, blank=True, verbose_name="Papir na umetku", related_name="cart-product-insert-paper")
+
+    finish = models.ManyToManyField(Finish, null=True, blank=True, verbose_name="Dorade", related_name="cart-product-finish")
 
     class Meta:
         ordering = ['-pk']

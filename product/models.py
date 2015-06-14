@@ -33,6 +33,7 @@ class Product(models.Model):
     cover_plastic = models.ManyToManyField(Plastic, verbose_name="Platika za korice", null=True)
     has_insert = models.BooleanField(verbose_name="Proizvod ima umetak")
     insert_paper = models.ManyToManyField(Paper, verbose_name="Papiri za umetke", null=True, related_name="product-insert-paper")
+    basic_fields_order = models.CharField(verbose_name="Redoslijed osnovnih parametara", max_length=1024, null=True, blank=True)
 
     #finish
     finish = models.ManyToManyField(Finish, verbose_name="Dorade", null=True, blank=True)

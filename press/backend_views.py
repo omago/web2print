@@ -15,6 +15,7 @@ from .forms import PressForm
 
 context = {'page_title': "Tisak"}
 
+
 @login_required()
 @user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy("admin-login"))
 def index(request):

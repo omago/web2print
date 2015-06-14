@@ -38,6 +38,12 @@ class ProductForm(forms.ModelForm):
         model = Product
         exclude = ['slug']
         widgets = {
+            'formats': forms.CheckboxSelectMultiple(),
+            'paper': forms.CheckboxSelectMultiple(),
+            'press': forms.CheckboxSelectMultiple(),
+            'cover_paper': forms.CheckboxSelectMultiple(),
+            'cover_plastic': forms.CheckboxSelectMultiple(),
+            'insert_paper': forms.CheckboxSelectMultiple(),
             'finish': forms.CheckboxSelectMultiple(),
             'finish_type': forms.CheckboxSelectMultiple(),
         }
