@@ -12,6 +12,7 @@ from django.core.context_processors import csrf
 
 from .models import Product
 from .forms import ProductForm
+from finish.models import Finish
 
 context = {'page_title': "Proizvodi"}
 
@@ -65,7 +66,17 @@ def form(request, pk=None):
             form = ProductForm(request.POST, request.FILES)
 
         if form.is_valid():
-            form.save()
+            product = form.save()
+            product_finishes = product.finish.all()
+
+            for finish in product_finishes:
+                product.finish.remove(finish)
+
+            finishes = request.POST.getlist('finish')
+
+            for finish in finishes:
+                finish_object = Finish.objects.get(pk=int(finish))
+                product.finish.add(finish_object)
 
             return HttpResponseRedirect(reverse("admin-product-list"))
     else:
@@ -78,6 +89,7 @@ def form(request, pk=None):
     context.update(csrf(request))
 
     context['form'] = form
+    context['product_id'] = pk
 
     return render_to_response('backend/product/form.html', context, context_instance=RequestContext(request))
 

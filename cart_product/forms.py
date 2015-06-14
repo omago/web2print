@@ -12,8 +12,6 @@ from format.models import Format
 from paper.models import Paper
 from press.models import Press
 from plastic.models import Plastic
-from binding.models import Binding
-from flexion.models import Flexion
 from printing_price.models import PrintingPrice
 from cart.models import Cart
 
@@ -81,61 +79,7 @@ class CartProductForm(forms.ModelForm):
             self.fields.keyOrder.append('insert_paper')
             self.fields["insert_paper"].queryset = Paper.objects.filter(pk__in=self.product.insert_paper.all())
 
-        #
-        # DORADE
-        #
-        if not product.has_cutting:
-            self.fields.pop('cutting')
-        else:
-            self.fields.keyOrder.append('cutting')
 
-        if not product.has_improper_cutting:
-            self.fields.pop('improper_cutting')
-        else:
-            self.fields.keyOrder.append('improper_cutting')
-
-        if not product.has_creasing:
-            self.fields.pop('creasing')
-        else:
-            self.fields.keyOrder.append('creasing')
-
-        if not product.has_hole_drilling:
-            self.fields.pop('hole_drilling')
-        else:
-            self.fields.keyOrder.append('hole_drilling')
-
-        if not product.has_vacuuming:
-            self.fields.pop('vacuuming')
-        else:
-            self.fields.keyOrder.append('vacuuming')
-
-        if not product.has_binding:
-            self.fields.pop('bindings')
-        else:
-            self.fields.keyOrder.append('bindings')
-            self.fields["bindings"].queryset = Binding.objects.filter(pk__in=self.product.bindings.all())
-
-        if not product.has_flexion:
-            self.fields.pop('flexion')
-        else:
-            self.fields.keyOrder.append('flexion')
-            self.fields["flexion"].queryset = Flexion.objects.filter(pk__in=self.product.flexion.all())
-
-        if not product.has_laminating:
-            self.fields.pop('laminating')
-        else:
-            self.fields.keyOrder.append('laminating')
-
-        if not product.has_plastic:
-            self.fields.pop('plastic')
-        else:
-            self.fields.keyOrder.append('plastic')
-            self.fields["plastic"].queryset = Plastic.objects.filter(pk__in=self.product.plastic.all())
-
-        if not product.has_rounding:
-            self.fields.pop('rounding')
-        else:
-            self.fields.keyOrder.append('rounding')
 
     # popraviti metodu
     def clean(self):
@@ -230,7 +174,3 @@ class CartProductForm(forms.ModelForm):
             products_per_sheet = products_per_vertical_sheet
 
         return products_per_sheet
-
-
-
-

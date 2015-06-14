@@ -363,30 +363,33 @@ input.button { height: 38px; width: auto; }
 
 /* FORM
 ----------------------------------*/
-form fieldset { border-collapse: collapse; border: 1px solid white; margin-top: 30px; background: #ffffff; margin-bottom: 20px; }
+form fieldset { width: 100%; border-collapse: collapse; border: 1px solid white; margin-top: 30px; background: #ffffff; margin-bottom: 20px; }
 form fieldset > div { position: relative; margin: 1px; }
 form fieldset div.red { background: red; color: white; }
 form fieldset div.green { background: lightgreen; }
-form fieldset > div label { position: absolute; top: 0px; left: 0px; width: 200px; display: block; padding: 10px; line-height: 16px; background: #EBEBEB; }
-form fieldset > div > div { background: #F4F4F4; margin-left: 222px; min-height: 36px; }
-form.view fieldset > div > div { padding: 10px; min-height: 16px; }
-form.view fieldset > div > div ul {margin-left: 18px; }
-form fieldset > div > div input[type=number],
+form fieldset > div label { position: absolute; top: 0px; left: 0px; width: 250px; display: block; padding: 10px; line-height: 16px; background: #FFE9D2; }
+form fieldset > div > div { background: #FCF5ED; margin-left: 272px;  }
+form.view fieldset > div > div { padding: 10px; min-height: 16px; background: #F4F4F4; }
+form.view fieldset > div label { background: #EBEBEB; }
+
 form fieldset > div > div input[type=email],
+form fieldset > div > div input[type=number],
 form fieldset > div > div input[type=password],
 form fieldset > div > div input[type=text] { border: 0px; width: 97%; background: transparent; height: 36px; padding-left: 1.5%; padding-right: 1.5%; }
 form fieldset > div > div input[type=file] { border: 0px; width: 97%; background: transparent; height: 29px; padding-left: 1.5%; padding-right: 1.5%; padding-top: 7px; }
-form fieldset > div > div input[type=checkbox] { border: 0px; width: 50px; background: transparent; height: 33px; padding-left: 1.5%; padding-right: 1.5%; }
-form fieldset > div > div textarea { border: 0px; width: 97%; background: transparent; padding: 1.5%; height: 80px; }
+form fieldset > div > div input[type=checkbox] { border: 0px; width: 50px; background: transparent; margin: 11px; height: 14px; width: 14px; }
+form fieldset > div > div textarea { border: 0px; width: 97%; background: transparent; padding-left: 1.5%; padding-right: 1.5%; padding-top: 1.5%; padding-bottom: 1.5%; }
 form fieldset > div > div textarea:focus { background: white; }
 form fieldset > div > div input:focus { background: white; }
 form fieldset > div > div select { border: 0px; width: 100%; background: transparent; height: 36px; padding-left: 1.5%; line-height: 36px; }
 form fieldset > div > div select option { line-height: 36px;  }
 form fieldset > div > div select[multiple="multiple"] { height: auto; padding-top: 10px; padding-bottom: 10px; }
-form fieldset > div > div > ul { list-style-type: none; margin-left: 0px!important; }
-form fieldset > div > div input.autocomplete { text-indent: 24px; background-image: url("../images/sprite.png"); background-repeat: no-repeat; background-position: 0px -1043px; }
-form fieldset > div.input div {  padding: 1.5%; }
-form fieldset > div.input div input { padding: 0; margin-top: 8px;  }
+form fieldset > div > div a { color: rgb(183,137,32); text-shadow: 1px 1px 0px rgb(255,255,255); font-weight: bold; }
+form fieldset > div > div a:hover { border-bottom: 1px dotted rgb(183,137,32); }
+form fieldset > div > div > ul { list-style-type: none; margin-left: 0px!important; padding: 6px 0; }
+form fieldset > div > div > ul li ul { list-style-type: none; margin-left: 10px!important; padding: 6px 0; }
+form fieldset > div > div > ul label { position: relative; background: transparent; padding: 5px; }
+form fieldset > div > div > ul label input[type=checkbox] { margin: 1px 6px; }
 
 
 .files { padding: 10px; }

@@ -64,10 +64,11 @@ INSTALLED_APPS = (
     "printing_price",
     "press",
     "plastic",
-    "flexion",
     "cart_product",
     "cart",
-    "binding",
+    "finish",
+    "finish_price",
+    "finish_type",
 )
 
 MIDDLEWARE_CLASSES = (

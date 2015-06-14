@@ -13,7 +13,6 @@ class Article(models.Model):
     article_category = models.ForeignKey(ArticleCategory, verbose_name="Uvod")
     intro = models.TextField(verbose_name="Uvod", null=True, blank=True)
     content = models.TextField(verbose_name="Sadržaj", null=True, blank=True)
-    content = models.TextField(verbose_name="Sadržaj", null=True, blank=True)
     meta_description = models.TextField(verbose_name="Meta opis", null=True, blank=True)
     meta_keywords = models.TextField(verbose_name="Ključne riječi", null=True, blank=True)
 

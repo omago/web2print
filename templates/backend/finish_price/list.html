@@ -1,0 +1,62 @@
+{% extends "backend.html" %}
+{% load simple_tags %}
+{% load filters %}
+
+{% block content %}
+
+    {% h1 page_title %}
+    <a href="{{ form_url }}" class="button new">Nova cijena dorade</a>
+
+    <form method="get">{% csrf_token %}
+        <fieldset>
+            {% for field in search_form %}
+                <div>
+                    <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                    <div>{{ field }}</div>
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
+        </fieldset>
+        <input type="submit" class="button search" name="submit" value="Pretraži">
+    </form>
+
+    <table class="grid">
+        {% if rows %}
+            <tr>
+                {% th "Id" "pk" "3" %}
+                {% th "Dorada" "finish" "27" "left" %}
+                {% th "Tip dorade" "finish_type" "15" "left" %}
+                {% th "X" "x" "15" "left" %}
+                {% th "Cijena starta" "start_price" "15" "left" %}
+                {% th "Cijena X-a" "x_price" "15" "left" %}
+                {% th "Operacije" None "10" %}
+            </tr>
+            {% for row in rows %}
+                {% url "admin-finish-price-details" row.pk as details_url %}
+                {% url "admin-finish-price-form" row.pk as edit_url %}
+                {% url "admin-finish-price-delete" row.pk as delete_url %}
+                <tr>
+                    {% td row.pk "pk" %}
+                    {% td "<a href="|add:edit_url|add:">"|add:row.finish.name|add:"</a>" "name" "left" %}
+                    {% td row.finish_type "finish_type" "left" %}
+                    {% td row.x "x" "left" %}
+                    {% td row.start_price "start_price" "left" %}
+                    {% td row.x_price "x_price" "left" %}
+                    {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
+                    {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
+                    {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}
+                        {% td view|add:edit|add:delete %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                {% td "Nema zapisa" %}
+            </tr>
+        {% endif %}
+    </table>
+    {% pager rows %}
+
+{% endblock %}

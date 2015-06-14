@@ -9,6 +9,7 @@
         <div>
             <a href="{% url "admin-product-list" %}" class="button back">Natrag</a>
         </div>
+        <div id="product_id" class="display-none">{{ product_id }}</div>
 
         <div class="grid-5 padding-right-20">
             <h2>Osnovni atributi proizvoda</h2>
@@ -97,79 +98,6 @@
         </div>
 
         <div class="grid-5 padding-left-20">
-            <h2>Parametri dorade proizvoda</h2>
-            <fieldset>
-                <div>
-                    <label for="{{ form.has_cutting.auto_id }}">{{ form.has_cutting.label }}</label>
-                    <div>{{ form.has_cutting }}</div>
-                    {{ form.has_cutting.errors }}
-                </div>
-                <div>
-                    <label for="{{ form.has_improper_cutting.auto_id }}">{{ form.has_improper_cutting.label }}</label>
-                    <div>{{ form.has_improper_cutting }}</div>
-                    {{ form.has_improper_cutting.errors }}
-                </div>
-                <div>
-                    <label for="{{ form.has_creasing.auto_id }}">{{ form.has_creasing.label }}</label>
-                    <div>{{ form.has_creasing }}</div>
-                    {{ form.has_creasing.errors }}
-                </div>
-                <div>
-                    <label for="{{ form.has_hole_drilling.auto_id }}">{{ form.has_hole_drilling.label }}</label>
-                    <div>{{ form.has_hole_drilling }}</div>
-                    {{ form.has_hole_drilling.errors }}
-                </div>
-                <div>
-                    <label for="{{ form.has_vacuuming.auto_id }}">{{ form.has_vacuuming.label }}</label>
-                    <div>{{ form.has_vacuuming }}</div>
-                    {{ form.has_vacuuming.errors }}
-                </div>
-                <div>
-                    <label for="{{ form.has_binding.auto_id }}">{{ form.has_binding.label }}</label>
-                    <div>{{ form.has_binding }}</div>
-                    {{ form.has_binding.errors }}
-                </div>
-                <div class="{% if not form.has_binding.value %}display-none{% endif %}">
-                    <label for="{{ form.bindings.auto_id }}">{{ form.bindings.label }}</label>
-                    <div>{{ form.bindings }}</div>
-                    {{ form.bindings.errors }}
-                </div>
-                <div>
-                    <label for="{{ form.has_flexion.auto_id }}">{{ form.has_flexion.label }}</label>
-                    <div>{{ form.has_flexion }}</div>
-                    {{ form.has_flexion.errors }}
-                </div>
-                <div class="{% if not form.has_flexion.value %}display-none{% endif %}">
-                    <label for="{{ form.flexion.auto_id }}">{{ form.flexion.label }}</label>
-                    <div>{{ form.flexion }}</div>
-                    {{ form.flexion.errors }}
-                </div>
-                <div>
-                    <label for="{{ form.has_laminating.auto_id }}">{{ form.has_laminating.label }}</label>
-                    <div>{{ form.has_laminating }}</div>
-                    {{ form.has_laminating.errors }}
-                </div>
-                <div>
-                    <label for="{{ form.has_plastic.auto_id }}">{{ form.has_plastic.label }}</label>
-                    <div>{{ form.has_plastic }}</div>
-                    {{ form.has_plastic.errors }}
-                </div>
-                <div class="{% if not form.has_plastic.value %}display-none{% endif %}">
-                    <label for="{{ form.plastic.auto_id }}">{{ form.plastic.label }}</label>
-                    <div>{{ form.plastic }}</div>
-                    {{ form.plastic.errors }}
-                </div>
-                <div>
-                    <label for="{{ form.has_rounding.auto_id }}">{{ form.has_rounding.label }}</label>
-                    <div>{{ form.has_rounding }}</div>
-                    {{ form.has_rounding.errors }}
-                </div>
-            </fieldset>
-        </div>
-        <div class="clear"></div>
-
-
-        <div class="grid-5 padding-right-20">
 
             <h2>Redoslijed osnovnih parametara proizvoda</h2>
             <fieldset>
@@ -220,62 +148,25 @@
                 </div>
             </fieldset>
         </div>
+        <div class="clear"></div>
 
-        <div class="grid-5 padding-left-20">
-            <h2>Redoslijed parametara dorade</h2>
+
+        <div class="grid-5 padding-right-20">
+            <h2>Parametri dorade proizvoda</h2>
             <fieldset>
-                <div class="{% if not form.has_cutting.value %}display-none{% endif %}">
-                    <label for="{{ form.cutting_order.auto_id }}">{{ form.cutting_order.label }}</label>
-                    <div>{{ form.cutting_order }}</div>
-                    {{ form.cutting_order.errors }}
+                <div>
+                    <label for="{{ form.finish.auto_id }}">{{ form.finish.label }}</label>
+                    <div>{{ form.finish }}</div>
+                    {{ form.finish.errors }}
                 </div>
-                <div class="{% if not form.has_improper_cutting.value %}display-none{% endif %}">
-                    <label for="{{ form.improper_cutting_order.auto_id }}">{{ form.improper_cutting_order.label }}</label>
-                    <div>{{ form.improper_cutting_order }}</div>
-                    {{ form.improper_cutting_order.errors }}
-                </div>
-                <div class="{% if not form.has_creasing.value %}display-none{% endif %}">
-                    <label for="{{ form.creasing_order.auto_id }}">{{ form.creasing_order.label }}</label>
-                    <div>{{ form.creasing_order }}</div>
-                    {{ form.creasing_order.errors }}
-                </div>
-                <div class="{% if not form.has_hole_drilling.value %}display-none{% endif %}">
-                    <label for="{{ form.hole_drilling_order.auto_id }}">{{ form.hole_drilling_order.label }}</label>
-                    <div>{{ form.hole_drilling_order }}</div>
-                    {{ form.hole_drilling_order.errors }}
-                </div>
-                <div class="{% if not form.has_vacuuming.value %}display-none{% endif %}">
-                    <label for="{{ form.vacuuming_order.auto_id }}">{{ form.vacuuming_order.label }}</label>
-                    <div>{{ form.vacuuming_order }}</div>
-                    {{ form.vacuuming_order.errors }}
-                </div>
-                <div class="{% if not form.has_binding.value %}display-none{% endif %}">
-                    <label for="{{ form.bindings_order.auto_id }}">{{ form.bindings_order.label }}</label>
-                    <div>{{ form.bindings_order }}</div>
-                    {{ form.bindings_order.errors }}
-                </div>
-                <div class="{% if not form.has_flexion.value %}display-none{% endif %}">
-                    <label for="{{ form.flexion_order.auto_id }}">{{ form.flexion_order.label }}</label>
-                    <div>{{ form.flexion_order }}</div>
-                    {{ form.flexion_order.errors }}
-                </div>
-                <div class="{% if not form.has_laminating.value %}display-none{% endif %}">
-                    <label for="{{ form.laminating_order.auto_id }}">{{ form.laminating_order.label }}</label>
-                    <div>{{ form.laminating_order }}</div>
-                    {{ form.laminating_order.errors }}
-                </div>
-                <div class="{% if not form.has_plastic.value %}display-none{% endif %}">
-                    <label for="{{ form.plastic_order.auto_id }}">{{ form.plastic_order.label }}</label>
-                    <div>{{ form.plastic_order }}</div>
-                    {{ form.plastic_order.errors }}
-                </div>
-                <div class="{% if not form.has_rounding.value %}display-none{% endif %}">
-                    <label for="{{ form.rounding_order.auto_id }}">{{ form.rounding_order.label }}</label>
-                    <div>{{ form.rounding_order }}</div>
-                    {{ form.rounding_order.errors }}
+                <div class="display-none">
+                    <label for="{{ form.finish_order.auto_id }}">{{ form.finish_order.label }}</label>
+                    <div>{{ form.finish_order }}</div>
+                    {{ form.finish_order.errors }}
                 </div>
             </fieldset>
         </div>
+
         <div class="clear"></div>
 
         <input type="submit" class="button save" name="submit" value="Spremi">

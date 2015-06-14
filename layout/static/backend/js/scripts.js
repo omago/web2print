@@ -107,50 +107,6 @@ $(document).ready(function() {
         switch_related_field($(this), $("#id_insert_paper_order"));
     });
 
-
-    $("input[name=has_cutting]").change(function() {
-        switch_related_field($(this), $("#id_cutting_order"));
-    });
-
-    $("input[name=has_improper_cutting]").change(function() {
-        switch_related_field($(this), $("#id_improper_cutting_order"));
-    });
-
-    $("input[name=has_creasing]").change(function() {
-        switch_related_field($(this), $("#id_creasing_order"));
-    });
-
-    $("input[name=has_hole_drilling]").change(function() {
-        switch_related_field($(this), $("#id_hole_drilling_order"));
-    });
-
-    $("input[name=has_vacuuming]").change(function() {
-        switch_related_field($(this), $("#id_vacuuming_order"));
-    });
-
-    $("input[name=has_binding]").change(function() {
-        switch_related_field($(this), $("#id_bindings"));
-        switch_related_field($(this), $("#id_bindings_order"));
-    });
-
-    $("input[name=has_flexion]").change(function() {
-        switch_related_field($(this), $("#id_flexion"));
-        switch_related_field($(this), $("#id_flexion_order"));
-    });
-
-    $("input[name=has_laminating]").change(function() {
-        switch_related_field($(this), $("#id_laminating_order"));
-    });
-
-    $("input[name=has_plastic]").change(function() {
-        switch_related_field($(this), $("#id_plastic"));
-        switch_related_field($(this), $("#id_plastic_order"));
-    });
-
-    $("input[name=has_rounding]").change(function() {
-        switch_related_field($(this), $("#id_rounding_order"));
-    });
-
     function switch_related_field(object, parent) {
         var related_select =  parent.parent().parent();
         if(object.is(":checked")) {
@@ -160,4 +116,92 @@ $(document).ready(function() {
         }
     }
 
+    $("select#id_finish").change(function() {
+        var finish_select = $(this);
+        var finish_select_value = finish_select.val();
+        var finish_type = $("#id_finish_type");
+        $("#id_finish_type option:gt(0)").remove();
+        var finish_type_initial_option = $("#id_finish_type").html();
+        var options = [];
+
+        options.push(finish_type_initial_option);
+        $.getJSON("/admin/finish-type/get-type-for-finish", { finish: finish_select_value }, function( data ) {
+            $.each( data, function( key, val ) {
+                options.push("<option value='" + val["pk"] + "'>" + val["fields"]["name"] + "</option>");
+            });
+            finish_type.html(options);
+        });
+    });
+
+    $("ul#id_finish").sortable({
+        stop: function() {
+            set_finish_order();
+        }
+    });
+
+    set_finish_order();
+
+    function set_finish_order() {
+        var list_of_values = [];
+        $("ul#id_finish li input[name=finish]").each(function() {
+            var value = $(this).attr("value");
+            if(value) {
+                list_of_values.push(value);
+            }
+        });
+        $("input#id_finish_order").val(list_of_values.join())
+    }
+
+    $("input[name=finish]").each(function() {
+        var finish_object = $(this);
+        get_finish_type_options(finish_object);
+    });
+
+    $("input[name=finish]").change(function() {
+        var finish_object = $(this);
+        get_finish_type_options(finish_object);
+    });
+
+    function get_finish_type_options(finish_object) {
+        var finish_id = finish_object.attr("value");
+        var product_id = $("#product_id").html();
+
+        if (finish_object.is(':checked')) {
+            var options = "";
+
+            $.getJSON("/admin/finish-type/get-selected-finish-types-for-product", { product: product_id }, function( data ) {
+                var checked_list = []
+                $.each( data, function( key, val ) {
+                    checked_list.push(val["pk"])
+                });
+
+                $.getJSON("/admin/finish-type/get-type-for-finish", { finish: finish_id }, function( data ) {
+                    if(data.length > 0) {
+                        options += "<ul id='finish_type'>";
+                        $.each( data, function( key, val ) {
+                            var checked = "";
+                            if (checked_list.indexOf(parseInt(val["pk"])) >= 0) {
+                                checked = "checked";
+                            }
+                            var option_id = finish_id + "_finish_type" + val["pk"];
+                            options += "<li>" +
+                            "<label for='" + option_id + "'>" +
+                            "<input type='checkbox' id='" + option_id + "' " + checked + " " + " name='finish_type' value='" + val["pk"] + "'>" +
+                            val["fields"]["name"] +
+                            "</label>" +
+                            "</li>";
+                        });
+                        options += "</ul>";
+                    }
+
+                    finish_object.parent().append(options);
+                });
+
+            });
+
+
+        } else {
+            finish_object.parent().find("#finish_type").remove();
+        }
+    }
 });

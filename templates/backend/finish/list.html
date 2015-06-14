@@ -1,0 +1,72 @@
+{% extends "backend.html" %}
+{% load simple_tags %}
+{% load filters %}
+
+{% block content %}
+
+    {% h1 page_title %}
+    {% button_new "Nova dorada" "admin-finish-form" %}
+
+    <table class="grid">
+        {% if rows %}
+            <tr>
+                {% th "Id" "pk" "3" %}
+                {% th "Naziv" "name" "17" "left" %}
+                {% th "Vrsta x-a" "x" "20" "left" %}
+                {% th "Sadrži tipove" "has_types" "15" "left" %}
+                {% th "Dodatno" "display_as_additional" "10" "left" %}
+                {% th "Tipovi" "number_of_types" "10" "left" %}
+                {% th "Cijene" "number_of_prices" "10" "left" %}
+                {% th "Operacije" None "10" %}
+            </tr>
+            {% for row in rows %}
+                {% url "admin-finish-details" row.pk as details_url %}
+                {% url "admin-finish-form" row.pk as edit_url %}
+                {% url "admin-finish-delete" row.pk as delete_url %}
+                {% url "admin-finish-type-list" as finish_type_list_url %}
+                {% url "admin-finish-price-list" as finish_price_list_url %}
+                <tr>
+                    {% td row.pk "pk" %}
+                    {% td "<a href="|add:edit_url|add:">"|add:row.name|add:"</a>" "name" "left" %}
+                    {% td row.x "x" "left" %}
+                    {% td row.has_types "has_types" "left" %}
+                    {% td row.display_as_additional "display_as_additional" "left" %}
+
+                    {% with row_pk_string=row.pk|convert_to_string:"0" %}
+
+                    {% with number_of_types=row.number_of_types|convert_to_string:"0" %}
+                    {% with types="<a href='"|add:finish_type_list_url|add:"?finish="|add:row_pk_string|add:"'>"|add:number_of_types|add:"</a>" %}
+                        {% if row.has_types %}
+                            {% td types "number_of_types" "left" %}
+                        {% else %}
+                            {% td "" "number_of_types" "left" %}
+                        {% endif %}
+                    {% endwith %}
+                    {% endwith %}
+
+                    {% with number_of_prices=row.number_of_prices|convert_to_string:"0" %}
+                    {% with prices="<a href='"|add:finish_price_list_url|add:"?finish="|add:row_pk_string|add:"'>"|add:number_of_prices|add:"</a>" %}
+                        {% td prices "number_of_prices" "left" %}
+                    {% endwith %}
+                    {% endwith %}
+
+                    {% endwith %}
+
+                    {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
+                    {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
+                    {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}
+                        {% td view|add:edit|add:delete %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                {% td "Nema zapisa" %}
+            </tr>
+        {% endif %}
+    </table>
+    {% pager rows %}
+
+{% endblock %}

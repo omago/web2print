@@ -3,6 +3,7 @@
 
 from django import forms
 from .models import Product
+from finish.models import Finish
 
 
 class ProductForm(forms.ModelForm):
@@ -17,27 +18,32 @@ class ProductForm(forms.ModelForm):
     cover_plastic_order = forms.IntegerField(label="Plastika za korice", required=False)
     insert_paper_order = forms.IntegerField(label="Papir za umetak", required=False)
 
-    cutting_order = forms.IntegerField(label="Rezanje", required=False)
-    improper_cutting_order = forms.IntegerField(label="Nepravilno rezanje", required=False)
-    creasing_order = forms.IntegerField(label="Biganje", required=False)
-    hole_drilling_order = forms.IntegerField(label="Bušenje rupa", required=False)
-    vacuuming_order = forms.IntegerField(label="Vakumiranje", required=False)
-    bindings_order = forms.IntegerField(label="Uvez", required=False)
-    flexion_order = forms.IntegerField(label="Savijanje", required=False)
-    laminating_order = forms.IntegerField(label="Laminiranje", required=False)
-    plastic_order = forms.IntegerField(label="Plastika", required=False)
-    rounding_order = forms.IntegerField(label="Rundanje", required=False)
-
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
+        finish_list = []
+        if self.instance.finish_order:
+            finish_orders = self.instance.finish_order.split(",")
+            for finish_order in finish_orders:
+                finish = Finish.objects.get(pk=int(finish_order))
+                finish_list.append((finish.pk, finish.name))
+
+            finishes = Finish.objects.exclude(pk__in=finish_orders)
+
+            for finish in finishes:
+                finish_list.append((finish.pk, finish.name))
+
+            self.fields["finish"].choices = finish_list
 
     class Meta:
         model = Product
         exclude = ['slug']
+        widgets = {
+            'finish': forms.CheckboxSelectMultiple(),
+            'finish_type': forms.CheckboxSelectMultiple(),
+        }
 
     # def save(self, commit=True):
     #     instance = super(ProductForm, self).save(commit=False)
-    #     #instance.flag1 = 'flag1' in self.cleaned_data['multi_choice']
     #
     #     if commit:
     #         instance.save()

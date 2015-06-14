@@ -9,8 +9,8 @@ from format.models import Format
 from paper.models import Paper
 from press.models import Press
 from plastic.models import Plastic
-from binding.models import Binding
-from flexion.models import Flexion
+from finish.models import Finish
+from finish_type.models import FinishType
 
 
 class Product(models.Model):
@@ -34,20 +34,10 @@ class Product(models.Model):
     has_insert = models.BooleanField(verbose_name="Proizvod ima umetak")
     insert_paper = models.ManyToManyField(Paper, verbose_name="Papiri za umetke", null=True, related_name="product-insert-paper")
 
-    # finishing attributes
-    has_cutting = models.BooleanField(verbose_name="Proizvod ima rezanje")
-    has_improper_cutting = models.BooleanField(verbose_name="Proizvod ima nepravilno rezanje")
-    has_creasing = models.BooleanField(verbose_name="Proizvod ima biganje")
-    has_hole_drilling = models.BooleanField(verbose_name="Proizvod ima bušenje rupa")
-    has_vacuuming = models.BooleanField(verbose_name="Proizvod ima vakumiranje")
-    has_binding = models.BooleanField(verbose_name="Proizvod ima uvez")
-    bindings = models.ManyToManyField(Binding, verbose_name="Uvezi", null=True, related_name="product-bindings")
-    has_flexion = models.BooleanField(verbose_name="Proizvod ima savijanje")
-    flexion = models.ManyToManyField(Flexion, verbose_name="Savijanje", null=True, related_name="product-flexion")
-    has_laminating = models.BooleanField(verbose_name="Proizvod ima laminiranje")
-    has_plastic = models.BooleanField(verbose_name="Proizvod ima plastiku")
-    plastic = models.ManyToManyField(Plastic, verbose_name="Plastika", related_name="product-plastic", null=True)
-    has_rounding = models.BooleanField(verbose_name="Proizvod ima rundanje")
+    #finish
+    finish = models.ManyToManyField(Finish, verbose_name="Dorade", null=True, blank=True)
+    finish_type = models.ManyToManyField(FinishType, verbose_name="Tipovi dorada", null=True, blank=True)
+    finish_order = models.CharField(verbose_name="Redoslijed dorada", max_length=1024, null=True, blank=True)
 
     # meta attributes
     meta_description = models.TextField(verbose_name="Meta opis", null=True, blank=True)
