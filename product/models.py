@@ -11,6 +11,7 @@ from press.models import Press
 from plastic.models import Plastic
 from finish.models import Finish
 from finish_type.models import FinishType
+from printer.models import Printer
 
 
 class Product(models.Model):
@@ -21,6 +22,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=128, verbose_name="Slug")
     image = models.ImageField(max_length=128, verbose_name="Slika", upload_to="products", null=True, blank=True)
     description = models.TextField(verbose_name="Opis", null=True, blank=True)
+    printer = models.ManyToManyField(Printer, verbose_name="Stroj", null=True, blank=True)
 
     # base attributes
     has_title = models.BooleanField(verbose_name="Proizvod ima naslov")
@@ -33,7 +35,7 @@ class Product(models.Model):
     cover_plastic = models.ManyToManyField(Plastic, verbose_name="Platika za korice", null=True)
     has_insert = models.BooleanField(verbose_name="Proizvod ima umetak")
     insert_paper = models.ManyToManyField(Paper, verbose_name="Papiri za umetke", null=True, related_name="product-insert-paper")
-    basic_fields_order = models.CharField(verbose_name="Redoslijed osnovnih parametara", max_length=1024, null=True, blank=True)
+    insert_press = models.ManyToManyField(Press, verbose_name="Tisak za umetak", null=True, related_name="product-insert-press")
 
     #finish
     finish = models.ManyToManyField(Finish, verbose_name="Dorade", null=True, blank=True)

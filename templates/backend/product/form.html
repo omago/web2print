@@ -14,7 +14,7 @@
         <div class="grid-5 padding-right-20">
             <h2>Osnovni atributi proizvoda</h2>
             <fieldset>
-                {% get_fieldset name,subcategory,image,description as basic_fields from form %}
+                {% get_fieldset name,subcategory,image,description,printer as basic_fields from form %}
                 {% for field in basic_fields %}
                     <div>
                         <label for="{{ field.auto_id }}">{{ field.label }}</label>
@@ -96,75 +96,17 @@
                             <div>{{ form.insert_paper }}</div>
                             {{ form.insert_paper.errors }}
                         </div>
+                        <div class="{% if not form.has_insert.value %}display-none{% endif %}">
+                            <label for="{{ form.insert_press.auto_id }}">{{ form.insert_press.label }}</label>
+                            <div>{{ form.insert_press }}</div>
+                            {{ form.insert_press.errors }}
+                        </div>
                     </div>
                     {{ form.has_insert.errors }}
                  </div>
 
             </fieldset>
-            <fieldset>
-                <div>
-                    <label for="{{ form.basic_fields_order.auto_id }}">{{ form.basic_fields_order.label }}</label>
-                    <div>{{ form.basic_fields_order }}</div>
-                    {{ form.basic_fields_order.errors }}
-                </div>
-            </fieldset>
-
         </div>
-
-
-{#        <div class="grid-5 padding-left-20">#}
-{##}
-{#            <h2>Redoslijed osnovnih parametara proizvoda</h2>#}
-{#            <fieldset>#}
-{#                <div class="{% if not form.has_title.value %}display-none{% endif %}">#}
-{#                    <label for="{{ form.title_order.auto_id }}">{{ form.title_order.label }}</label>#}
-{#                    <div>{{ form.title_order }}</div>#}
-{#                    {{ form.title_order.errors }}#}
-{#                </div>#}
-{#                <div>#}
-{#                    <label for="{{ form.format_order.auto_id }}">{{ form.format_order.label }}</label>#}
-{#                    <div>{{ form.format_order }}</div>#}
-{#                    {{ form.format_order.errors }}#}
-{#                </div>#}
-{#                <div>#}
-{#                    <label for="{{ form.paper_order.auto_id }}">{{ form.paper_order.label }}</label>#}
-{#                    <div>{{ form.paper_order }}</div>#}
-{#                    {{ form.paper_order.errors }}#}
-{#                </div>#}
-{#                <div>#}
-{#                    <label for="{{ form.press_order.auto_id }}">{{ form.press_order.label }}</label>#}
-{#                    <div>{{ form.press_order }}</div>#}
-{#                    {{ form.press_order.errors }}#}
-{#                </div>#}
-{#                <div class="{% if not form.has_mutations.value %}display-none{% endif %}">#}
-{#                    <label for="{{ form.number_of_mutations_order.auto_id }}">{{ form.number_of_mutations_order.label }}</label>#}
-{#                    <div>{{ form.number_of_mutations_order }}</div>#}
-{#                    {{ form.number_of_mutations_order.errors }}#}
-{#                </div>#}
-{#                <div>#}
-{#                    <label for="{{ form.number_of_copies_order.auto_id }}">{{ form.number_of_copies_order.label }}</label>#}
-{#                    <div>{{ form.number_of_copies_order }}</div>#}
-{#                    {{ form.number_of_copies_order.errors }}#}
-{#                </div>#}
-{#                <div class="{% if not form.has_cover.value %}display-none{% endif %}">#}
-{#                    <label for="{{ form.cover_paper_order.auto_id }}">{{ form.cover_paper_order.label }}</label>#}
-{#                    <div>{{ form.cover_paper_order }}</div>#}
-{#                    {{ form.cover_paper_order.errors }}#}
-{#                </div>#}
-{#                <div class="{% if not form.has_cover.value %}display-none{% endif %}">#}
-{#                    <label for="{{ form.cover_plastic_order.auto_id }}">{{ form.cover_plastic_order.label }}</label>#}
-{#                    <div>{{ form.cover_plastic_order }}</div>#}
-{#                    {{ form.cover_plastic_order.errors }}#}
-{#                </div>#}
-{#                <div class="{% if not form.has_insert.value %}display-none{% endif %}">#}
-{#                    <label for="{{ form.insert_paper_order.auto_id }}">{{ form.insert_paper_order.label }}</label>#}
-{#                    <div>{{ form.insert_paper_order }}</div>#}
-{#                    {{ form.insert_paper_order.errors }}#}
-{#                </div>#}
-{#            </fieldset>#}
-{#        </div>#}
-{#        <div class="clear"></div>#}
-
 
         <div class="grid-5 padding-left-20">
             <h2>Parametri dorade proizvoda</h2>

@@ -11,7 +11,7 @@ class FinishPriceForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(FinishPriceForm, self).__init__(*args, **kwargs)
-        if kwargs and kwargs["initial"]["finish"]:
+        if kwargs and "initial" in kwargs:
             self.fields['finish_type'].queryset = FinishType.objects.filter(finish=kwargs["initial"]["finish"])
         elif args and args[0]["finish"]:
             self.fields['finish_type'].queryset = FinishType.objects.filter(finish=args[0]["finish"])

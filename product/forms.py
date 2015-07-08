@@ -33,6 +33,7 @@ class ProductForm(forms.ModelForm):
                 finish_list.append((finish.pk, finish.name))
 
             self.fields["finish"].choices = finish_list
+        self.fields["printer"].widget.attrs.update({'size': '10'})
 
     class Meta:
         model = Product

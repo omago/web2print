@@ -11,6 +11,7 @@ class Paper(models.Model):
     paper_type = models.ForeignKey(PaperType, verbose_name="Tip papira")
     paper_weight = models.ForeignKey(PaperWeight, verbose_name="Gramatura papira")
     paper_finish = models.ForeignKey(PaperFinish, verbose_name="Finish papira", blank=True, null=True)
+    paper_thickness = models.DecimalField(decimal_places=2, max_digits=11, verbose_name="Debljina papira")
     price_per_kilogram = models.DecimalField(decimal_places=2, max_digits=11, verbose_name="Cijena po kilogramu")
 
     def __unicode__(self):
