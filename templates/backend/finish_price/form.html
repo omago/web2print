@@ -10,6 +10,10 @@
         </div>
 
         <fieldset>
+            {% for key,value in form.errors.items %}
+                {{ value }}
+            {% endfor %}
+
 
             {% for field in form %}
                 <div>

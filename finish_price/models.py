@@ -22,3 +22,6 @@ class FinishPrice(models.Model):
     class Meta:
         ordering = ['-pk']
         db_table = "finish_price"
+        unique_together = ('finish', 'finish_type', 'x', 'start_price', 'x_price')
+        verbose_name = "Cijena dorade"
+        verbose_name_plural = "Cijene dorade"

@@ -21,3 +21,6 @@ class PrintingPrice(models.Model):
     class Meta:
         ordering = ['-pk']
         db_table = "printing_price"
+        verbose_name = "Cijena printa"
+        verbose_name_plural = "Cijene printa"
+        unique_together = ('printer', 'both_sides', 'x', 'start_price', 'x_price')
