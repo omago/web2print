@@ -54,6 +54,12 @@ def list(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy("admin-login"))
 def form(request, pk=None):
+
+    paper_type_id = request.GET.get("paper_type_id", None)
+    initial = {}
+    if paper_type_id:
+        initial = PaperType.objects.filter(pk=paper_type_id).values()[0]
+
     if request.POST:
         if pk:
             object = PaperType.objects.get(pk=pk)
@@ -70,7 +76,7 @@ def form(request, pk=None):
             object = PaperType.objects.get(pk=pk)
             form = PaperTypeForm(instance=object)
         else:
-            form = PaperTypeForm()
+            form = PaperTypeForm(initial=initial)
 
     context.update(csrf(request))
 

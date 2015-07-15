@@ -13,3 +13,6 @@ class PrinterForm(forms.ModelForm):
     class Meta:
         model = Printer
         exclude = ['slug']
+        widgets = {
+            'press': forms.CheckboxSelectMultiple(),
+        }

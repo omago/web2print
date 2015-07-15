@@ -57,6 +57,12 @@ def list(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy("admin-login"))
 def form(request, pk=None):
+
+    finish_id = request.GET.get("finish_id", None)
+    initial = {}
+    if finish_id:
+        initial = Finish.objects.filter(pk=finish_id).values()[0]
+
     if request.POST:
         if pk:
             object = Finish.objects.get(pk=pk)
@@ -73,7 +79,7 @@ def form(request, pk=None):
             object = Finish.objects.get(pk=pk)
             form = FinishForm(instance=object)
         else:
-            form = FinishForm()
+            form = FinishForm(initial=initial)
 
     context.update(csrf(request))
 

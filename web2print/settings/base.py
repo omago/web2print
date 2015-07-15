@@ -60,6 +60,7 @@ INSTALLED_APPS = (
     "paper_type",
     "paper_finish",
     "paper_weight",
+    "insert_price",
     "printer",
     "printing_price",
     "press",

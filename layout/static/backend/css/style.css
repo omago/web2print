@@ -322,6 +322,7 @@ input.button { height: 38px; width: auto; }
 .grid .stats,
 .grid .update,
 .grid .view,
+.grid .copy,
 .grid .edit,
 .grid .add-event,
 .grid .delete { background-image: url("../images/sprite.png"); text-indent: 200px; vertical-align: middle; overflow: hidden; display: inline-block; margin: 0 3px!important; width: 16px!important; height: 16px!important; border: 0px; padding: 0px!important; }
@@ -331,6 +332,7 @@ input.button { height: 38px; width: auto; }
 .grid .stats:hover,
 .grid .update:hover,
 .grid .view:hover,
+.grid .copy:hover,
 .grid .download:hover,
 .grid .edit:hover,
 .grid .add-event:hover,
@@ -341,6 +343,7 @@ input.button { height: 38px; width: auto; }
 .grid .stats { background-position: -10px -334px!important; }
 .grid .update { background-position: -10px -154px!important; }
 .grid .view { background-position: -10px -370px!important; }
+.grid .copy { background-position: -10px -1378px!important; }
 .grid .edit { background-position: -10px -406px!important; }
 .grid .add-event { background-position: -10px -1198px!important; }
 .grid .delete { background-position: -10px -298px!important; }

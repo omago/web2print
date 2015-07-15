@@ -16,15 +16,20 @@
             </tr>
             {% for row in rows %}
                 {% url "admin-press-details" row.pk as details_url %}
+                {% url "admin-press-form" as copy_url %}
                 {% url "admin-press-form" row.pk as edit_url %}
                 {% url "admin-press-delete" row.pk as delete_url %}
                 <tr>
                     {% td row.pk "pk" %}
                     {% td "<a href="|add:edit_url|add:">"|add:row.name|add:"</a>" "name" "left" %}
+                    {% with row_pk_string=row.pk|convert_to_string:"0" %}
+                    {% with copy="<a href='"|add:copy_url|add:"?press_id="|add:row_pk_string|add:"' class='copy'></a>" %}
                     {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
                     {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
                     {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}
-                        {% td view|add:edit|add:delete %}
+                        {% td copy|add:view|add:edit|add:delete %}
+                    {% endwith %}
+                    {% endwith %}
                     {% endwith %}
                     {% endwith %}
                     {% endwith %}

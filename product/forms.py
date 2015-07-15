@@ -8,16 +8,6 @@ from finish.models import Finish
 
 class ProductForm(forms.ModelForm):
 
-    title_order = forms.IntegerField(label="Naslov", required=False)
-    format_order = forms.IntegerField(label="Format", required=False)
-    paper_order = forms.IntegerField(label="Papir", required=False)
-    press_order = forms.IntegerField(label="Tisak", required=False)
-    number_of_mutations_order = forms.IntegerField(label="Broj mutacija", required=False)
-    number_of_copies_order = forms.IntegerField(label="Naklada", required=False)
-    cover_paper_order = forms.IntegerField(label="Papir za korice", required=False)
-    cover_plastic_order = forms.IntegerField(label="Plastika za korice", required=False)
-    insert_paper_order = forms.IntegerField(label="Papir za umetak", required=False)
-
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
         finish_list = []
@@ -34,6 +24,8 @@ class ProductForm(forms.ModelForm):
 
             self.fields["finish"].choices = finish_list
         self.fields["printer"].widget.attrs.update({'size': '10'})
+        self.fields["cover_printer"].widget.attrs.update({'size': '10'})
+        self.fields["insert_printer"].widget.attrs.update({'size': '10'})
 
     class Meta:
         model = Product

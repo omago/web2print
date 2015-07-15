@@ -10,7 +10,7 @@
             <a href="{% url "admin-product-list" %}" class="button back">Natrag</a>
         </div>
         <div id="product_id" class="display-none">{{ product_id }}</div>
-
+        {{ form.errors }}
         <div class="grid-5 padding-right-20">
             <h2>Osnovni atributi proizvoda</h2>
             <fieldset>
@@ -74,6 +74,11 @@
                     <div>
                         {{ form.has_cover }}
                         <div class="{% if not form.has_cover.value %}display-none{% endif %}">
+                            <label for="{{ form.turn_on_cover.auto_id }}">{{ form.turn_on_cover.label }}</label>
+                            <div>{{ form.turn_on_cover }}</div>
+                            {{ form.turn_on_cover.errors }}
+                        </div>
+                        <div class="{% if not form.has_cover.value %}display-none{% endif %}">
                             <label for="{{ form.cover_paper.auto_id }}">{{ form.cover_paper.label }}</label>
                             <div>{{ form.cover_paper }}</div>
                             {{ form.cover_paper.errors }}
@@ -82,6 +87,11 @@
                             <label for="{{ form.cover_plastic.auto_id }}">{{ form.cover_plastic.label }}</label>
                             <div>{{ form.cover_plastic }}</div>
                             {{ form.cover_plastic.errors }}
+                        </div>
+                        <div class="{% if not form.has_cover.value %}display-none{% endif %}">
+                            <label for="{{ form.cover_printer.auto_id }}">{{ form.cover_printer.label }}</label>
+                            <div>{{ form.cover_printer }}</div>
+                            {{ form.cover_printer.errors }}
                         </div>
                     </div>
                     {{ form.has_cover.errors }}
@@ -100,6 +110,11 @@
                             <label for="{{ form.insert_press.auto_id }}">{{ form.insert_press.label }}</label>
                             <div>{{ form.insert_press }}</div>
                             {{ form.insert_press.errors }}
+                        </div>
+                        <div class="{% if not form.has_insert.value %}display-none{% endif %}">
+                            <label for="{{ form.insert_printer.auto_id }}">{{ form.insert_printer.label }}</label>
+                            <div>{{ form.insert_printer }}</div>
+                            {{ form.insert_printer.errors }}
                         </div>
                     </div>
                     {{ form.has_insert.errors }}

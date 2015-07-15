@@ -23,7 +23,9 @@
 
         <section>
             <div>
-                <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+                {% endif %}
                 <p>{{ product.description }}</p>
             </div>
             <form method="POST" id="product-cart-form">{% csrf_token %}
@@ -31,24 +33,118 @@
                 <fieldset>
                     {{ form.product }}
                     <div>
-                        {% get_fieldset title,format,user_format_width,user_format_height,user_format_add_to_user_formats,press,paper,umber_of_mutation,number_of_copies,cover_paper,cover_plastic,insert_paper as basic_fields from form %}
-                        {% for field in basic_fields %}
-                            <div>
-                                <label for="{{ field.auto_id }}">{{ field.label }}</label>
-                                <div>{{ field }}{% if field.field.required %}<span class="required">*</span>{% endif %}</div>
-                                {{ field.errors }}
-                            </div>
+
+                        <div>
+                            <label for="{{ form.title.auto_id }}">{{ form.title.label }}</label>
+                            <div>{{ form.title }}{% if form.title.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.title.errors }}
+                        </div>
+
+                        <div>
+                            <label for="{{ form.format_choices.auto_id }}">{{ form.format_choices.label }}</label>
+                            <div>{{ form.format_choices }}{% if form.format_choices.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.format_choices.errors }}
+                        </div>
+
+                        <div>
+                            <label for="{{ form.press.auto_id }}">{{ form.press.label }}</label>
+                            <div>{{ form.press }}{% if form.press.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.press.errors }}
+                        </div>
+
+                        <div>
+                            <label for="{{ form.paper.auto_id }}">{{ form.paper.label }}</label>
+                            <div>{{ form.paper }}{% if form.paper.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.paper.errors }}
+                        </div>
+
+                        <div>
+                            <label for="{{ form.number_of_copies.auto_id }}">{{ form.number_of_copies.label }}</label>
+                            <div>{{ form.number_of_copies }}{% if form.number_of_copies.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.number_of_copies.errors }}
+                        </div>
+
+                        <div>
+                            <label for="{{ form.number_of_mutation.auto_id }}">{{ form.number_of_mutation.label }}</label>
+                            <div>{{ form.number_of_mutation }}{% if form.number_of_mutation.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.number_of_mutation.errors }}
+                        </div>
+
+                        <div>
+                            <label for="{{ form.has_cover.auto_id }}">{{ form.has_cover.label }}</label>
+                            <div>{{ form.has_cover }}{% if form.has_cover.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.has_cover.errors }}
+                        </div>
+
+                        <div class="{% if not form.has_cover.value %}display-none{% endif %}">
+                            <label for="{{ form.cover_paper.auto_id }}">{{ form.cover_paper.label }}</label>
+                            <div>{{ form.cover_paper }}{% if form.cover_paper.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.cover_paper.errors }}
+                        </div>
+
+                        <div class="{% if not form.has_cover.value %}display-none{% endif %}">
+                            <label for="{{ form.cover_plastic.auto_id }}">{{ form.cover_plastic.label }}</label>
+                            <div>{{ form.cover_plastic }}{% if form.cover_plastic.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.cover_plastic.errors }}
+                        </div>
+
+                        <div>
+                            <label for="{{ form.has_insert.auto_id }}">{{ form.has_insert.label }}</label>
+                            <div>{{ form.has_insert }}{% if form.has_insert.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.has_insert.errors }}
+                        </div>
+
+                        <div class="{% if not form.has_insert.value %}display-none{% endif %}">
+                            <label for="{{ form.number_of_inserts.auto_id }}">{{ form.number_of_inserts.label }}</label>
+                            <div>{{ form.number_of_inserts }}{% if form.number_of_inserts.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.number_of_inserts.errors }}
+                        </div>
+
+                        <div class="{% if not form.has_insert.value %}display-none{% endif %}">
+                            <label for="{{ form.insert_print.auto_id }}">{{ form.insert_print.label }}</label>
+                            <div>{{ form.insert_print }}{% if form.insert_print.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.insert_print.errors }}
+                        </div>
+
+                        <div class="{% if not form.insert_print.value %}display-none{% endif %}">
+                            <label for="{{ form.insert_paper.auto_id }}">{{ form.insert_paper.label }}</label>
+                            <div>{{ form.insert_paper }}{% if form.insert_paper.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.insert_paper.errors }}
+                        </div>
+
+                        <div class="{% if not form.insert_print.value %}display-none{% endif %}">
+                            <label for="{{ form.insert_press.auto_id }}">{{ form.insert_press.label }}</label>
+                            <div>{{ form.insert_press }}{% if form.insert_press.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.insert_press.errors }}
+                        </div>
+
+                        <div class="{% if not form.insert_print.value %}display-none{% endif %}">
+                            <label for="{{ form.insert_volume.auto_id }}">{{ form.insert_volume.label }}</label>
+                            <div>{{ form.insert_volume }}{% if form.insert_volume.field.required %}<span class="required">*</span>{% endif %}</div>
+                            {{ form.insert_volume.errors }}
+                        </div>
+                        {{ request.POST.finish }}
+
+                        {% for finish in request.POST.finish %}
+                            {{ finish }}
                         {% endfor %}
 
                         <h2>Dorade</h2>
-                        {% get_fieldset finish as finish_fields from form %}
-                        {% for field in finish_fields %}
+                        {% for pk, choice in form.finish.field.widget.choices %}
                             <div>
-                                <label for="{{ field.auto_id }}">{{ field.label }}</label>
-                                <div>{{ field }}{% if field.field.required %}<span class="required">*</span>{% endif %}</div>
-                                {{ field.errors }}
+                                <label for="id_options_{{ forloop.counter0 }}">{{ choice }}</label>
+                                <div><input {% for finish in request.POST.finish %}{% if finish == pk %}checked="checked"{% endif %}{% endfor %} type="checkbox" id="id_options_{{ forloop.counter0 }}" value="{{ pk }}" name="finish" /></div>
                             </div>
                         {% endfor %}
+
+{#                        {% get_fieldset finish as finish_fields from form %}#}
+{#                        {% for field in finish_fields %}#}
+{#                            <div>#}
+{#                                <label for="{{ field.auto_id }}">{{ field.label }}</label>#}
+{#                                <div>{{ field }}{% if field.field.required %}<span class="required">*</span>{% endif %}</div>#}
+{#                                {{ field.errors }}#}
+{#                            </div>#}
+{#                        {% endfor %}#}
                     </div>
                     <div class="total">
                         <p class="label">Ukupno + PDV</p>

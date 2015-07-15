@@ -98,13 +98,11 @@ $(document).ready(function() {
     $("input[name=has_cover]").change(function() {
         switch_related_field($(this), $("#id_cover_paper"));
         switch_related_field($(this), $("#id_cover_plastic"));
-        switch_related_field($(this), $("#id_cover_paper_order"));
-        switch_related_field($(this), $("#id_cover_plastic_order"));
     });
 
     $("input[name=has_insert]").change(function() {
         switch_related_field($(this), $("#id_insert_paper"));
-        switch_related_field($(this), $("#id_insert_paper_order"));
+        switch_related_field($(this), $("#id_insert_press"));
     });
 
     function switch_related_field(object, parent) {

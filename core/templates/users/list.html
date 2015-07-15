@@ -12,8 +12,8 @@
                 <tr>
                     {% th "Id" "pk" "3" %}
                     {% th "Korisničko ime" "username" "15" "left" %}
-                    {% th "Ime" "first_name" "20" "left" %}
-                    {% th "Prezime" "last_name" "20" "left" %}
+                    {% th "Tvrtka" "company" "20" "left" %}
+                    {% th "OIB" "oib" "20" "left" %}
                     {% th "E-mail" "email" "22" "left" %}
                     {% th "Aktivan" "is_active" "10" "left" %}
                     {% th "Operacije" None "10" %}
@@ -25,9 +25,9 @@
                     <tr>
                         {% td row.pk "pk" %}
                         {% td "<a href="|add:edit_url|add:">"|add:row.username|add:"</a>" "LIID" "left" %}
-                        {% td row.first_name "first_name" "left" %}
-                        {% td row.last_name "last_name" "left" %}
-                        {% td row.email "email" "left" %}
+                        {% td row.company "company" "left" %}
+                        {% td row.oib "oib" "left" %}
+                        {% td row.e_mail "e_mail" "left" %}
                         {% td row.is_active "is_active" "left" %}
                         {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
                         {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}

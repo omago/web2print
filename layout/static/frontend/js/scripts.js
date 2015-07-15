@@ -40,4 +40,175 @@ $(document).ready(function() {
             $("#product-price").html(data.product_price);
         });
     }
-})
+
+    $("#id_format_choices").change(function() {
+        var _this = $(this);
+        if(_this.val() == "custom") {
+            var dialog_html =
+            '<div id="dialog-form" title="Dodaj novi format">' +
+                '<form>' +
+                    '<fieldset>' +
+                        '<div><label for="user_format_width">Širina (mm)</label><input type="text" name="user_format_width" id="user_format_width" /><div class="error"></div></div>' +
+                        '<div><label for="user_format_height">Visina (mm)</label><input type="text" name="user_format_height" id="user_format_height" /><div class="error"></div></div>' +
+                        '<div><label for="user_format_add_to_my_formats">Dodaj u moje formate</label><input type="checkbox" name="user_format_add_to_my_formats" id="user_format_add_to_my_formats" /></div>' +
+                        '<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">' +
+                    '</fieldset>' +
+                '</form>' +
+            '</div>';
+
+            $("body").append(dialog_html);
+            var dialog = $("#dialog-form").dialog({
+                height: 270,
+                width: 350,
+                modal: false,
+                resizable: false,
+                buttons: {
+                    "Dodaj format": addUserFormat,
+                    "Odustani": function() {
+                        dialog.dialog( "close" );
+                    }
+                },
+                close: function() {
+                    form[ 0 ].reset();
+                    allFields.removeClass( "ui-state-error" );
+                }
+            });
+        }
+    });
+
+    function addUserFormat() {
+        var user_format_width = $("#user_format_width");
+        var user_format_height = $("#user_format_height");
+        var user_format_add_to_my_formats = $("#user_format_add_to_my_formats");
+        var product_id = $("#id_product");
+        var error = false;
+
+        var user_format_width_value = user_format_width.val();
+        var user_format_height_value = user_format_height.val();
+        var product_id_value = product_id.val();
+
+        user_format_width.next().html("");
+        user_format_height.next().html("");
+
+        if(!isInt(user_format_width_value)) {
+            user_format_width.next().html("Molimo upišite broj veći od nule");
+            error = true;
+        }
+
+        if(!isInt(user_format_height_value)) {
+            user_format_height.next().html("Molimo upišite broj veći od nule");
+            error = true;
+        }
+
+        if(error == false) {
+            var option_list = [];
+            $("#id_format_choices option").each(function() {
+                if($(this).attr("value") != "") {
+                    option_list.push($(this).attr("value"))
+                }
+            });
+
+            var user_format_add_to_my_formats_value = 0;
+            if(user_format_add_to_my_formats.is(":checked"))
+                user_format_add_to_my_formats_value = 1;
+
+            $.get("/format/add-format", {
+                product_id: product_id_value,
+                user_format_width: user_format_width_value,
+                user_format_height: user_format_height_value,
+                user_format_add_to_my_formats: user_format_add_to_my_formats_value
+            }).done(function(data) {
+                if(data.format_type == "new" && option_list.indexOf(data.id.toString()) == -1) {
+                    $('<option value="' + data.id + '">' + data.label + '</option>').insertBefore($("#id_format_choices option[value=custom]"));
+                }
+                $("#id_format_choices").val(data.id);
+                $("#dialog-form").remove();
+            });
+        }
+    }
+
+    function isInt(value) {
+        var x = parseFloat(value);
+        return !isNaN(value) && (x | 0) === x && x > 0;
+    }
+
+    $("input[name=has_cover]").change(function() {
+        switch_related_field($(this), $("#id_cover_paper"));
+        switch_related_field($(this), $("#id_cover_plastic"));
+    });
+
+    $("input[name=has_insert]").change(function() {
+        switch_related_field($(this), $("#id_number_of_inserts"));
+        switch_related_field($(this), $("#id_insert_print"));
+    });
+
+    $("input[name=insert_print]").change(function() {
+        switch_related_field($(this), $("#id_insert_paper"));
+        switch_related_field($(this), $("#id_insert_press"));
+        switch_related_field($(this), $("#id_insert_volume"));
+    });
+
+    function switch_related_field(object, parent) {
+        var related_select =  parent.parent().parent();
+        if(object.is(":checked")) {
+            related_select.removeClass("display-none");
+        } else {
+            related_select.addClass("display-none");
+        }
+    }
+
+
+    $("input[name=finish]").each(function() {
+        var finish_object = $(this);
+        get_finish_type_options(finish_object);
+    });
+
+    $("input[name=finish]").change(function() {
+        var finish_object = $(this);
+        get_finish_type_options(finish_object);
+    });
+
+    function get_finish_type_options(finish_object) {
+        var finish_id = finish_object.attr("value");
+        var product_id = $("#id_product").val();
+
+        if (finish_object.is(':checked')) {
+            var options = "";
+
+            $.getJSON("/admin/finish-type/get-selected-finish-types-for-product", { product: product_id }, function( data ) {
+                var checked_list = []
+                $.each( data, function( key, val ) {
+                    checked_list.push(val["pk"])
+                });
+
+                $.getJSON("/admin/finish-type/get-type-for-finish", { finish: finish_id }, function( data ) {
+                    if(data.length > 0) {
+                        options += "<ul id='finish_type'>";
+                        $.each( data, function( key, val ) {
+                            var checked = "";
+                            if (checked_list.indexOf(parseInt(val["pk"])) >= 0) {
+                                checked = "checked";
+                            }
+                            var option_id = finish_id + "_finish_type" + val["pk"];
+                            
+                            options += "<li>" +
+                            "<label for='" + option_id + "'>" +
+                            "<input type='checkbox' id='" + option_id + "' " + checked + " " + " name='finish_type' value='" + val["pk"] + "'>" +
+                            val["fields"]["name"] +
+                            "</label>" +
+                            "</li>";
+                        });
+                        options += "</ul>";
+                    }
+
+                    finish_object.parent().append(options);
+                });
+
+            });
+
+
+        } else {
+            finish_object.parent().find("#finish_type").remove();
+        }
+    }
+});

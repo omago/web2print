@@ -72,6 +72,13 @@ def form(request, pk=None):
     finish = request.GET.get("finish", None)
     finish_type = request.GET.get("finish_type", None)
 
+    finish_price_id = request.GET.get("finish_price_id", None)
+    initial = {"finish": finish, "finish_type": finish_type}
+    if finish_price_id:
+        initial = FinishPrice.objects.filter(pk=finish_price_id).values()[0]
+        initial["finish"] = initial["finish_id"]
+        initial["finish_type"] = initial["finish_type_id"]
+
     if request.POST:
         if pk:
             object = FinishPrice.objects.get(pk=pk)
@@ -89,8 +96,7 @@ def form(request, pk=None):
             object = FinishPrice.objects.get(pk=pk)
             form = FinishPriceForm(instance=object)
         else:
-            form = FinishPriceForm(initial={"finish": finish,
-                                            "finish_type": finish_type})
+            form = FinishPriceForm(initial=initial)
 
     context.update(csrf(request))
     context['form'] = form

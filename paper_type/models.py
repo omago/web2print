@@ -6,7 +6,6 @@ from django.db import models
 
 class PaperType(models.Model):
     name = models.CharField(verbose_name="Naziv", max_length=1024)
-    has_finish = models.BooleanField(verbose_name="Ima finish")
     better_quality_paper = models.BooleanField(verbose_name="Kvalitetniji papir")
 
     def __unicode__(self):

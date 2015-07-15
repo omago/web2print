@@ -55,6 +55,12 @@ def list(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy("admin-login"))
 def form(request, pk=None):
+
+    press_id = request.GET.get("press_id", None)
+    initial = {}
+    if press_id:
+        initial = Press.objects.filter(pk=press_id).values()[0]
+
     if request.POST:
         if pk:
             object = Press.objects.get(pk=pk)
@@ -71,7 +77,7 @@ def form(request, pk=None):
             object = Press.objects.get(pk=pk)
             form = PressForm(instance=object)
         else:
-            form = PressForm()
+            form = PressForm(initial=initial)
 
     context.update(csrf(request))
 

@@ -9,6 +9,7 @@ from paper.models import Paper
 from press.models import Press
 from plastic.models import Plastic
 from finish.models import Finish
+from finish_type.models import FinishType
 
 
 class CartProduct(models.Model):
@@ -21,12 +22,22 @@ class CartProduct(models.Model):
     paper = models.ForeignKey(Paper, null=True, verbose_name="Papir", related_name="cart-product-paper")
     press = models.ForeignKey(Press, null=True, verbose_name="Tisak", related_name="cart-product-press")
     number_of_copies = models.IntegerField(null=True, verbose_name="Naklada")
+
     number_of_mutation = models.IntegerField(null=True, blank=True, verbose_name="Broj mutacija")
+
+    has_cover = models.BooleanField(verbose_name="Korice")
     cover_paper = models.ForeignKey(Paper, null=True, blank=True, verbose_name="Papir za korice", related_name="cart-product-cover-paper")
     cover_plastic = models.ForeignKey(Plastic, null=True, blank=True, verbose_name="Plastika na koricama", related_name="cart-product-cover-plastic")
-    insert_paper = models.ForeignKey(Paper, null=True, blank=True, verbose_name="Papir na umetku", related_name="cart-product-insert-paper")
 
-    finish = models.ManyToManyField(Finish, null=True, blank=True, verbose_name="Dorade", related_name="cart-product-finish")
+    has_insert = models.BooleanField(verbose_name="Umetak")
+    number_of_inserts = models.IntegerField(null=True, blank=True, verbose_name="Broj umetanja")
+    insert_print = models.BooleanField(verbose_name="Tisak umetka")
+    insert_paper = models.ForeignKey(Paper, null=True, blank=True, verbose_name="Papir na umetku", related_name="cart-product-insert-paper")
+    insert_press = models.ForeignKey(Press, null=True, blank=True, verbose_name="Tisak umetka", related_name="cart-product-insert-press")
+    insert_volume = models.IntegerField(null=True, blank=True, verbose_name="Opseg umetka")
+
+    finish = models.ManyToManyField(Finish, verbose_name="Dorade", null=True, blank=True, related_name="cart-product-finish")
+    finish_type = models.ManyToManyField(FinishType, verbose_name="Tipovi dorada", null=True, blank=True, related_name="cart-product-finish-type")
 
     class Meta:
         ordering = ['-pk']

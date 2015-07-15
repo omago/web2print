@@ -54,6 +54,16 @@ def list(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy("admin-login"))
 def form(request, pk=None):
+
+    format_id = request.GET.get("format_id", None)
+    initial = {}
+    if format_id:
+        initial = Format.objects.filter(pk=format_id).values()[0]
+
+        initial["user"] = initial["user_id"]
+        # initial["paper_weight"] = initial["paper_weight_id"]
+        initial["product_subcategory"] = initial["product_subcategory_id"]
+
     if request.POST:
         if pk:
             object = Format.objects.get(pk=pk)
@@ -70,7 +80,7 @@ def form(request, pk=None):
             object = Format.objects.get(pk=pk)
             form = FormatForm(instance=object)
         else:
-            form = FormatForm()
+            form = FormatForm(initial=initial)
 
     context.update(csrf(request))
 

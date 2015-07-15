@@ -54,6 +54,16 @@ def list(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy("admin-login"))
 def form(request, pk=None):
+
+    printer_id = request.GET.get("printer_id", None)
+    initial = {}
+    if printer_id:
+        initial_object = Printer.objects.filter(pk=printer_id).get()
+        initial = initial_object.__dict__
+        initial["press"] = []
+        for press in initial_object.press.all():
+            initial["press"].append(press.pk)
+
     if request.POST:
         if pk:
             object = Printer.objects.get(pk=pk)
@@ -70,7 +80,7 @@ def form(request, pk=None):
             object = Printer.objects.get(pk=pk)
             form = PrinterForm(instance=object)
         else:
-            form = PrinterForm()
+            form = PrinterForm(initial=initial)
 
     context.update(csrf(request))
 

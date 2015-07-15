@@ -12,23 +12,26 @@
             <tr>
                 {% th "Id" "pk" "3" %}
                 {% th "Naziv" "name" "47" "left" %}
-                {% th "Ima finish" "has_finish" "20" "left" %}
-                {% th "Kvalitetniji papir" "better_quality_paper" "20" "left" %}
+                {% th "Kvalitetniji papir" "better_quality_paper" "40" "left" %}
                 {% th "Operacije" None "10" %}
             </tr>
             {% for row in rows %}
                 {% url "admin-paper-type-details" row.pk as details_url %}
+                {% url "admin-paper-type-form" as copy_url %}
                 {% url "admin-paper-type-form" row.pk as edit_url %}
                 {% url "admin-paper-type-delete" row.pk as delete_url %}
                 <tr>
                     {% td row.pk "pk" %}
                     {% td "<a href="|add:edit_url|add:">"|add:row.name|add:"</a>" "name" "left" %}
-                    {% td row.has_finish "has_finish" "left" %}
                     {% td row.better_quality_paper "better_quality_paper" "left" %}
+                    {% with row_pk_string=row.pk|convert_to_string:"0" %}
+                    {% with copy="<a href='"|add:copy_url|add:"?paper_type_id="|add:row_pk_string|add:"' class='copy'></a>" %}
                     {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
                     {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
                     {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}
-                        {% td view|add:edit|add:delete %}
+                        {% td copy|add:view|add:edit|add:delete %}
+                    {% endwith %}
+                    {% endwith %}
                     {% endwith %}
                     {% endwith %}
                     {% endwith %}

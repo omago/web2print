@@ -8,8 +8,11 @@
 .clear {
   clear: both; }
 
+.display-none {
+  display: none; }
+
 body {
-  margin: 0px;
+  margin: 0;
   font-family: "Open Sans", sans-serif;
   font-size: 12px;
   color: #333;
@@ -730,6 +733,28 @@ h1 {
   text-align: center; }
   #banners a {
     padding: 2px; }
+
+.ui-dialog * {
+  color: inherit; }
+
+#dialog-form * {
+  color: inherit; }
+#dialog-form form {
+  padding: 20px; }
+  #dialog-form form fieldset > div {
+    margin: 10px 0; }
+    #dialog-form form fieldset > div label {
+      display: inline-block;
+      width: 200px; }
+    #dialog-form form fieldset > div input[type=text] {
+      width: 40px;
+      padding: 2px;
+      border: 1px solid #d3d3d3; }
+    #dialog-form form fieldset > div .error {
+      display: block;
+      color: red; }
+    #dialog-form form fieldset > div input[type=checkbox] {
+      margin: 6px 0; }
 
 footer {
   margin-top: 50px; }

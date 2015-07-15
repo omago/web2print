@@ -11,7 +11,9 @@
             {% for product in products %}
                 {% url "product-view" category.slug subcategory.slug product.slug as product_view_url %}
                 <div class="product-box">
-                    <a href="{{ product_view_url }}"><img src="{{ product.image.url }}" alt="{{ product.name }}" /></a>
+                    {% if product.image %}
+                        <a href="{{ product_view_url }}"><img src="{{ product.image.url }}" alt="{{ product.name }}" /></a>
+                    {% endif %}
                     <h2><a href="{{ product_view_url }}">{{ product.name }}</a></h2>
                     <a class="read-more" href="{{ product_view_url }}">{% trans "Odaberi >>" %}</a>
                 </div>

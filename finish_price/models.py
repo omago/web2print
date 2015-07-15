@@ -10,8 +10,8 @@ class FinishPrice(models.Model):
     finish = models.ForeignKey(Finish, verbose_name="Dorada")
     finish_type = models.ForeignKey(FinishType, verbose_name="Tip dorade", null=True, blank=True)
     x = models.IntegerField(verbose_name="X")
-    start_price = models.DecimalField(verbose_name="Cijena starta", decimal_places=2, max_digits=11)
-    x_price = models.DecimalField(verbose_name="Cijena X-a", decimal_places=2, max_digits=11)
+    start_price = models.DecimalField(verbose_name="Cijena starta", decimal_places=4, max_digits=11)
+    x_price = models.DecimalField(verbose_name="Cijena X-a", decimal_places=4, max_digits=11)
 
     def __unicode__(self):
         return self.x_price

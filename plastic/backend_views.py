@@ -54,6 +54,12 @@ def list(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy("admin-login"))
 def form(request, pk=None):
+
+    plastic_id = request.GET.get("plastic_id", None)
+    initial = {}
+    if plastic_id:
+        initial = Plastic.objects.filter(pk=plastic_id).values()[0]
+
     if request.POST:
         if pk:
             object = Plastic.objects.get(pk=pk)
@@ -70,7 +76,7 @@ def form(request, pk=None):
             object = Plastic.objects.get(pk=pk)
             form = PlasticForm(instance=object)
         else:
-            form = PlasticForm()
+            form = PlasticForm(initial=initial)
 
     context.update(csrf(request))
 

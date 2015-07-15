@@ -1,0 +1,53 @@
+{% extends "backend.html" %}
+{% load simple_tags %}
+{% load filters %}
+
+{% block content %}
+
+    {% h1 page_title %}
+    {% button_new "Nova cijena umetanja" "admin-insert-price-form" %}
+
+    <table class="grid">
+        {% if rows %}
+            <tr>
+                {% th "Id" "pk" "3" %}
+                {% th "Cijena starta" "start_price" "27" "left" %}
+                {% th "Broj umetanja po jedinici naklade" "number_of_inserts_per_copy" "30" "left" %}
+                {% th "Cijena umetanja" "price_per_insert" "30" "left" %}
+                {% th "Operacije" None "10" %}
+            </tr>
+            {% for row in rows %}
+                {% url "admin-insert-price-details" row.pk as details_url %}
+                {% url "admin-insert-price-form" as copy_url %}
+                {% url "admin-insert-price-form" row.pk as edit_url %}
+                {% url "admin-insert-price-delete" row.pk as delete_url %}
+                <tr>
+                    {% td row.pk "pk" %}
+                    {% with start_price_string=row.start_price|convert_to_string:"0" %}
+                    {% td "<a href="|add:edit_url|add:">"|add:start_price_string|add:"</a>" "start_price" "left" %}
+                    {% endwith %}
+                    {% td row.number_of_inserts_per_copy "number_of_inserts_per_copy" "left" %}
+                    {% td row.price_per_insert "price_per_insert" "left" %}
+
+                    {% with row_pk_string=row.pk|convert_to_string:"0" %}
+                    {% with copy="<a href='"|add:copy_url|add:"?insert_price_id="|add:row_pk_string|add:"' class='copy'></a>" %}
+                    {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
+                    {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
+                    {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}
+                        {% td copy|add:view|add:edit|add:delete %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                {% td "Nema zapisa" %}
+            </tr>
+        {% endif %}
+    </table>
+    {% pager rows %}
+
+{% endblock %}

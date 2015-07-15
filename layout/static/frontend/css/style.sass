@@ -47,8 +47,11 @@ $orange-color: #e67f36
 .clear
   clear: both
 
+.display-none
+  display: none
+
 body
-  margin: 0px
+  margin: 0
   font-family: $font
   font-size: $font-size
   color: $primary-color
@@ -792,6 +795,37 @@ h1
   text-align: center
   a
     padding: 2px
+
+.ui-dialog *
+  color: inherit
+
+#dialog-form
+  *
+    color: inherit
+
+  form
+    padding: 20px
+
+    fieldset
+
+      > div
+        margin: 10px 0
+
+        label
+          display: inline-block
+          width: 200px
+
+        input[type=text]
+          width: 40px
+          padding: 2px
+          border: 1px solid #d3d3d3
+
+        .error
+          display: block
+          color: red
+
+        input[type=checkbox]
+          margin: 6px 0
 
 footer
   margin-top: 50px

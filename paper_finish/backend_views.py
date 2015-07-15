@@ -54,6 +54,12 @@ def list(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy("admin-login"))
 def form(request, pk=None):
+
+    paper_finish_id = request.GET.get("paper_finish_id", None)
+    initial = {}
+    if paper_finish_id:
+        initial = PaperFinish.objects.filter(pk=paper_finish_id).values()[0]
+
     if request.POST:
         if pk:
             object = PaperFinish.objects.get(pk=pk)
@@ -70,7 +76,7 @@ def form(request, pk=None):
             object = PaperFinish.objects.get(pk=pk)
             form = PaperFinishForm(instance=object)
         else:
-            form = PaperFinishForm()
+            form = PaperFinishForm(initial=initial)
 
     context.update(csrf(request))
 

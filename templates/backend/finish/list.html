@@ -21,6 +21,7 @@
             </tr>
             {% for row in rows %}
                 {% url "admin-finish-details" row.pk as details_url %}
+                {% url "admin-finish-form" as copy_url %}
                 {% url "admin-finish-form" row.pk as edit_url %}
                 {% url "admin-finish-delete" row.pk as delete_url %}
                 {% url "admin-finish-type-list" as finish_type_list_url %}
@@ -51,11 +52,14 @@
                     {% endwith %}
 
                     {% endwith %}
-
+                    {% with row_pk_string=row.pk|convert_to_string:"0" %}
+                    {% with copy="<a href='"|add:copy_url|add:"?finish_id="|add:row_pk_string|add:"' class='copy'></a>" %}
                     {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
                     {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
                     {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}
-                        {% td view|add:edit|add:delete %}
+                        {% td copy|add:view|add:edit|add:delete %}
+                    {% endwith %}
+                    {% endwith %}
                     {% endwith %}
                     {% endwith %}
                     {% endwith %}

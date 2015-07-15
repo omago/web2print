@@ -11,12 +11,14 @@
         {% if rows %}
             <tr>
                 {% th "Id" "pk" "3" %}
-                {% th "Širina" "width" "47" "left" %}
-                {% th "Visina" "height" "40" "left" %}
+                {% th "Širina" "width" "27" "left" %}
+                {% th "Visina" "height" "30" "left" %}
+                {% th "Naziv" "name" "30" "left" %}
                 {% th "Operacije" None "10" %}
             </tr>
             {% for row in rows %}
                 {% url "admin-format-details" row.pk as details_url %}
+                {% url "admin-format-form" as copy_url %}
                 {% url "admin-format-form" row.pk as edit_url %}
                 {% url "admin-format-delete" row.pk as delete_url %}
                 <tr>
@@ -25,10 +27,15 @@
                     {% td "<a href="|add:edit_url|add:">"|add:width|add:"</a>" "width" "left" %}
                     {% endwith %}
                     {% td row.height "height" "left" %}
+                    {% td row.name "name" "left" %}
+                    {% with row_pk_string=row.pk|convert_to_string:"0" %}
+                    {% with copy="<a href='"|add:copy_url|add:"?format_id="|add:row_pk_string|add:"' class='copy'></a>" %}
                     {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
                     {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
                     {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}
-                        {% td view|add:edit|add:delete %}
+                        {% td copy|add:view|add:edit|add:delete %}
+                    {% endwith %}
+                    {% endwith %}
                     {% endwith %}
                     {% endwith %}
                     {% endwith %}

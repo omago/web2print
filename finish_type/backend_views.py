@@ -95,6 +95,12 @@ def get_selected_finish_types_for_product(request):
 def form(request, pk=None):
     finish = request.GET.get("finish", None)
 
+    finish_type_id = request.GET.get("finish_type_id", None)
+    initial = {"finish": finish}
+    if finish_type_id:
+        initial = FinishType.objects.filter(pk=finish_type_id).values()[0]
+        initial["finish"] = initial["finish_id"]
+
     if request.POST:
         if pk:
             object = FinishType.objects.get(pk=pk)
@@ -110,7 +116,7 @@ def form(request, pk=None):
             object = FinishType.objects.get(pk=pk)
             form = FinishTypeForm(instance=object)
         else:
-            form = FinishTypeForm(initial={"finish": finish})
+            form = FinishTypeForm(initial=initial)
 
 
     context.update(csrf(request))
