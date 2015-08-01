@@ -7,8 +7,9 @@ from .models import CartProduct
 from format.models import Format
 from paper.models import Paper
 from press.models import Press
-from plastic.models import Plastic
 from finish.models import Finish
+from finish_type.models import FinishType
+from product.models import ProductFinish
 
 
 class CartProductForm(forms.ModelForm):
@@ -53,18 +54,19 @@ class CartProductForm(forms.ModelForm):
         if not product.has_mutations:
             self.fields.pop('number_of_mutation')
 
+        if not product.has_volume:
+            self.fields.pop('volume')
+
         if not product.has_cover:
             self.fields.pop('has_cover')
             self.fields.pop('cover_paper')
-            self.fields.pop('cover_plastic')
         else:
             self.fields["cover_paper"].queryset = Paper.objects.filter(pk__in=self.product.cover_paper.all())
-            self.fields["cover_plastic"].queryset = Plastic.objects.filter(pk__in=self.product.cover_plastic.all())
 
         if not product.has_insert:
             self.fields.pop('has_insert')
             self.fields.pop('number_of_inserts')
-            self.fields.pop('insert_print')
+            self.fields.pop('has_insert_print')
             self.fields.pop('insert_paper')
             self.fields.pop('insert_press')
             self.fields.pop('insert_volume')
@@ -72,23 +74,53 @@ class CartProductForm(forms.ModelForm):
             self.fields["insert_paper"].queryset = Paper.objects.filter(pk__in=self.product.insert_paper.all())
             self.fields["insert_press"].queryset = Press.objects.filter(pk__in=self.product.insert_press.all())
 
-        self.fields["finish"].queryset = Finish.objects.filter(pk__in=self.product.finish.all()).order_by()
+        self.fields.pop('finish')
 
-        print self.product.finish_order
+        if self.product.finish_order:
+            finish_orders = self.product.finish_order.split(",")
+            for finish_order in finish_orders:
+                try:
+                    finish = Finish.objects.get(pk=int(finish_order))
+                    try:
+                        product_finish = ProductFinish.objects.filter(product=self.product).filter(finish=finish).get()
 
-        print type(self.fields["finish"].choices)
-        for choice in self.fields["finish"].choices:
-            print type(choice)
-            print choice
+                        attributes = {"class": "finish_checkbox"}
 
+                        name = "finish_" + str(finish.pk)
+                        attributes["checked"] = "checked" if product_finish.turn_on is True else ""
+                        label = finish.name
 
-        # self.fields["finish"].queryset = Format.get_product_formats(user=self.user, product=self.product)
+                        field = forms.IntegerField(widget=forms.CheckboxInput(attrs=attributes), label=label, required=False)
+                        self.fields[name] = field
 
+                        if finish.has_types:
+                            finish_types = self.product.finish_type.filter(finish=finish).all()
+                            finish_type_list = []
+                            for finish_type in finish_types:
+                                finish_type_list.append((finish_type.pk, finish_type.name))
+
+                            finish_type_field = forms.IntegerField(widget=forms.Select(choices=finish_type_list))
+
+                            name = "finish_type_" + str(finish.pk)
+
+                            self.fields[name] = finish_type_field
+
+                    except ProductFinish.DoesNotExist:
+                        pass
+                except Finish.DoesNotExist:
+                    pass
+
+        pass
+
+        # self.finish_fields = ",".join(self.finish_fields)
 
     # # popraviti metodu
     # def clean(self):
     #     cleaned_data = super(CartProductForm, self).clean()
     #     return cleaned_data
+
+    def finish_group(self):
+        return [self[name] for name in filter(lambda x: x.startswith('finish_')), self.fields.values()]
 
     def save(self):
         cart_product_form = super(CartProductForm, self).save(commit=False)

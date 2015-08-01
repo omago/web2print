@@ -370,7 +370,9 @@ form fieldset { width: 100%; border-collapse: collapse; border: 1px solid white;
 form fieldset > div { position: relative; margin: 1px; }
 form fieldset div.red { background: red; color: white; }
 form fieldset div.green { background: lightgreen; }
-form fieldset > div label { position: absolute; top: 0px; left: 0px; width: 250px; display: block; padding: 10px; line-height: 16px; background: #FFE9D2; }
+form fieldset > div label { position: absolute; top: 0; left: 0; width: 250px; display: block; padding: 10px; line-height: 16px; background: #FFE9D2; }
+form fieldset > div ul li label { width: auto; }
+form fieldset > div ul li label > label { position: absolute; display: inline!important; left: 120px; }
 form fieldset > div > div { background: #FCF5ED; margin-left: 272px;  }
 form.view fieldset > div > div { padding: 10px; min-height: 16px; background: #F4F4F4; }
 form.view fieldset > div label { background: #EBEBEB; }

@@ -24,14 +24,14 @@ class CartProduct(models.Model):
     number_of_copies = models.IntegerField(null=True, verbose_name="Naklada")
 
     number_of_mutation = models.IntegerField(null=True, blank=True, verbose_name="Broj mutacija")
+    volume = models.IntegerField(null=True, blank=True, verbose_name="Opseg")
 
     has_cover = models.BooleanField(verbose_name="Korice")
     cover_paper = models.ForeignKey(Paper, null=True, blank=True, verbose_name="Papir za korice", related_name="cart-product-cover-paper")
-    cover_plastic = models.ForeignKey(Plastic, null=True, blank=True, verbose_name="Plastika na koricama", related_name="cart-product-cover-plastic")
 
     has_insert = models.BooleanField(verbose_name="Umetak")
     number_of_inserts = models.IntegerField(null=True, blank=True, verbose_name="Broj umetanja")
-    insert_print = models.BooleanField(verbose_name="Tisak umetka")
+    has_insert_print = models.BooleanField(verbose_name="Tisak umetka")
     insert_paper = models.ForeignKey(Paper, null=True, blank=True, verbose_name="Papir na umetku", related_name="cart-product-insert-paper")
     insert_press = models.ForeignKey(Press, null=True, blank=True, verbose_name="Tisak umetka", related_name="cart-product-insert-press")
     insert_volume = models.IntegerField(null=True, blank=True, verbose_name="Opseg umetka")

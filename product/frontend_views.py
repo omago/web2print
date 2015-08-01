@@ -44,6 +44,11 @@ def view(request, category, subcategory, product):
     subcategory = ProductSubcategory.objects.filter(slug=subcategory).filter(category=category).get()
     product = Product.objects.filter(subcategory=subcategory).filter(slug=product).get()
 
+    initial = {"has_insert_print": True}
+
+    if product.turn_on_cover:
+        initial["has_cover"] = True
+
     if request.POST:
         form = CartProductForm(product=product, user=request.user, request=request, data=request.POST)
 
@@ -51,7 +56,7 @@ def view(request, category, subcategory, product):
             form.save()
 
     else:
-        form = CartProductForm(product=product, user=request.user, request=request)
+        form = CartProductForm(product=product, user=request.user, request=request, initial=initial)
 
     context = {"category": category,
                "subcategory": subcategory,

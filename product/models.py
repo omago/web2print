@@ -22,7 +22,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=128, verbose_name="Slug")
     image = models.ImageField(max_length=128, verbose_name="Slika", upload_to="products", null=True, blank=True)
     description = models.TextField(verbose_name="Opis", null=True, blank=True)
-    printer = models.ManyToManyField(Printer, verbose_name="Stroj", null=True, blank=True, related_name="product-printer")
+    printer = models.ManyToManyField(Printer, verbose_name="Stroj", related_name="product-printer")
 
     # base attributes
     has_title = models.BooleanField(verbose_name="Proizvod ima naslov")
@@ -34,16 +34,18 @@ class Product(models.Model):
     has_cover = models.BooleanField(verbose_name="Proizvod ima korice")
     turn_on_cover = models.BooleanField(verbose_name="Uključi korice")
     cover_paper = models.ManyToManyField(Paper, verbose_name="Papiri za korice", null=True, blank=True)
-    cover_plastic = models.ManyToManyField(Plastic, verbose_name="Platika za korice", null=True, blank=True)
     cover_printer = models.ManyToManyField(Printer, verbose_name="Stroj za korice", null=True, blank=True, related_name="product-cover-printer")
+    cover_finish = models.ManyToManyField(Finish, verbose_name="Dorade za korice", null=True, blank=True, through="ProductCoverFinish", related_name="product-cover-finish")
+    cover_finish_type = models.ManyToManyField(FinishType, verbose_name="Tipovi dorada za korice", null=True, blank=True, related_name="product_cover_finish_type")
+    cover_finish_order = models.CharField(verbose_name="Redoslijed dorada za korice", max_length=1024, null=True, blank=True)
     has_insert = models.BooleanField(verbose_name="Proizvod ima umetak")
     insert_paper = models.ManyToManyField(Paper, verbose_name="Papiri za umetke", null=True, blank=True, related_name="product-insert-paper")
     insert_press = models.ManyToManyField(Press, verbose_name="Tisak za umetak", null=True, blank=True, related_name="product-insert-press")
     insert_printer = models.ManyToManyField(Printer, verbose_name="Stroj za umetak", null=True, blank=True, related_name="product-insert-printer")
 
     #finish
-    finish = models.ManyToManyField(Finish, verbose_name="Dorade", null=True, blank=True)
-    finish_type = models.ManyToManyField(FinishType, verbose_name="Tipovi dorada", null=True, blank=True)
+    finish = models.ManyToManyField(Finish, verbose_name="Dorade", null=True, blank=True, through="ProductFinish", related_name="product-finish")
+    finish_type = models.ManyToManyField(FinishType, verbose_name="Tipovi dorada", null=True, blank=True, related_name="product_finish_type")
     finish_order = models.CharField(verbose_name="Redoslijed dorada", max_length=1024, null=True, blank=True)
 
     # meta attributes
@@ -56,6 +58,48 @@ class Product(models.Model):
     def get_fields(self):
         return [(field.verbose_name, field.value_to_string(self)) for field in self._meta.fields]
 
+    def save_finishes(self, request):
+        ProductFinish.objects.filter(product=self).delete()
+        finishes = request.POST.getlist('finish')
+        finishes_on = request.POST.getlist('finish_on')
+
+        for finish in finishes:
+            finish_object = Finish.objects.get(pk=int(finish))
+            turn_on = True if finish in finishes_on else False
+            ProductFinish(finish=finish_object, product=self, turn_on=turn_on).save()
+
+    def save_cover_finishes(self, request):
+        ProductCoverFinish.objects.filter(product=self).delete()
+        finishes = request.POST.getlist('cover_finish')
+        finishes_on = request.POST.getlist('cover_finish_on')
+
+        for finish in finishes:
+            finish_object = Finish.objects.get(pk=int(finish))
+            turn_on = True if finish in finishes_on else False
+            ProductCoverFinish(finish=finish_object, product=self, turn_on=turn_on).save()
+
+    def save_finish_types(self, request):
+        product_finish_types = self.finish_type.all()
+
+        for finish_type in product_finish_types:
+            self.finish_type.remove(finish_type)
+
+        finish_types = request.POST.getlist('finish_type')
+
+        for finish_type in finish_types:
+            self.finish_type.add(FinishType.objects.get(pk=int(finish_type)))
+
+    def save_cover_finish_types(self, request):
+        product_cover_finish_types = self.cover_finish_type.all()
+
+        for finish_type in product_cover_finish_types:
+            self.cover_finish_type.remove(finish_type)
+
+        finish_types = request.POST.getlist('cover_finish_type')
+
+        for finish_type in finish_types:
+            self.cover_finish_type.add(FinishType.objects.get(pk=int(finish_type)))
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Product, self).save(*args, **kwargs)
@@ -63,3 +107,15 @@ class Product(models.Model):
     class Meta:
         ordering = ['-pk']
         db_table = "product"
+
+
+class ProductFinish(models.Model):
+    product = models.ForeignKey(Product)
+    finish = models.ForeignKey(Finish)
+    turn_on = models.BooleanField()
+
+
+class ProductCoverFinish(models.Model):
+    product = models.ForeignKey(Product)
+    finish = models.ForeignKey(Finish)
+    turn_on = models.BooleanField()

@@ -12,8 +12,9 @@
             <tr>
                 {% th "Id" "pk" "3" %}
                 {% th "Naziv" "name" "17" "left" %}
-                {% th "Vrsta x-a" "x" "20" "left" %}
-                {% th "Sadrži tipove" "has_types" "15" "left" %}
+                {% th "Dorada za korice" "cover" "15" "left" %}
+                {% th "Vrsta x-a" "x" "10" "left" %}
+                {% th "Sadrži tipove" "has_types" "10" "left" %}
                 {% th "Dodatno" "display_as_additional" "10" "left" %}
                 {% th "Tipovi" "number_of_types" "10" "left" %}
                 {% th "Cijene" "number_of_prices" "10" "left" %}
@@ -29,6 +30,7 @@
                 <tr>
                     {% td row.pk "pk" %}
                     {% td "<a href="|add:edit_url|add:">"|add:row.name|add:"</a>" "name" "left" %}
+                    {% td row.cover "cover" "left" %}
                     {% td row.x "x" "left" %}
                     {% td row.has_types "has_types" "left" %}
                     {% td row.display_as_additional "display_as_additional" "left" %}

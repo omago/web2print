@@ -139,10 +139,22 @@ $(document).ready(function() {
 
     $("input[name=has_insert]").change(function() {
         switch_related_field($(this), $("#id_number_of_inserts"));
-        switch_related_field($(this), $("#id_insert_print"));
+        switch_related_field($(this), $("#id_has_insert_print"));
+
+        if($(this).is(":checked")) {
+            switch_related_field($("input[name=has_insert_print]"), $("#id_insert_paper"));
+            switch_related_field($("input[name=has_insert_print]"), $("#id_insert_press"));
+            switch_related_field($("input[name=has_insert_print]"), $("#id_insert_volume"));
+        } else {
+            switch_related_field($(this), $("#id_insert_paper"));
+            switch_related_field($(this), $("#id_insert_press"));
+            switch_related_field($(this), $("#id_insert_volume"));
+        }
+
+
     });
 
-    $("input[name=insert_print]").change(function() {
+    $("input[name=has_insert_print]").change(function() {
         switch_related_field($(this), $("#id_insert_paper"));
         switch_related_field($(this), $("#id_insert_press"));
         switch_related_field($(this), $("#id_insert_volume"));
@@ -156,7 +168,6 @@ $(document).ready(function() {
             related_select.addClass("display-none");
         }
     }
-
 
     $("input[name=finish]").each(function() {
         var finish_object = $(this);

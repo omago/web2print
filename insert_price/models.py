@@ -18,3 +18,6 @@ class InsertPrice(models.Model):
     class Meta:
         ordering = ['-pk']
         db_table = "insert_price"
+        unique_together = ('start_price', 'number_of_inserts_per_copy', 'price_per_insert')
+        verbose_name = "Cijena umetka"
+        verbose_name_plural = "Cijene umetka"

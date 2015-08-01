@@ -1,18 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import json
 
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.template import RequestContext
+from django.core import serializers
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.context_processors import csrf
 
-from .models import Product
+from .models import Product, ProductFinish, ProductCoverFinish
 from .forms import ProductForm
-from finish.models import Finish
 
 context = {'page_title': "Proizvodi"}
 
@@ -67,16 +68,11 @@ def form(request, pk=None):
 
         if form.is_valid():
             product = form.save()
-            product_finishes = product.finish.all()
-
-            for finish in product_finishes:
-                product.finish.remove(finish)
-
-            finishes = request.POST.getlist('finish')
-
-            for finish in finishes:
-                finish_object = Finish.objects.get(pk=int(finish))
-                product.finish.add(finish_object)
+            form.save_m2m()
+            product.save_finishes(request)
+            product.save_cover_finishes(request)
+            product.save_finish_types(request)
+            product.save_cover_finish_types(request)
 
             return HttpResponseRedirect(reverse("admin-product-list"))
     else:
@@ -109,3 +105,46 @@ def delete(request, pk):
     entry.delete()
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy("admin-login"))
+def is_finish_on_for_product(request):
+    product = request.GET.get("product")
+    finish = request.GET.get("finish")
+    name = request.GET.get("name")
+    response = {"is_on": False}
+
+    if name == "finish":
+        model = ProductFinish
+    elif name == "cover_finish":
+        model = ProductCoverFinish
+
+    try:
+        product_finish = model.objects.filter(product_id=product).filter(finish_id=finish).get()
+        if product_finish.turn_on:
+            response["is_on"] = True
+    except ProductFinish.DoesNotExist:
+        pass
+
+    data = json.dumps(response)
+
+    return HttpResponse(data, content_type='application/json')
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy("admin-login"))
+def get_selected_finish_types_for_product(request):
+    product_id = request.GET.get("product")
+    name = request.GET.get("name")
+    finish_types = []
+
+    product = Product.objects.get(pk=product_id)
+
+    if name == "finish_type":
+        finish_types = product.finish_type.all()
+    elif name == "cover_finish_type":
+        finish_types = product.cover_finish_type.all()
+
+    data = serializers.serialize("json", finish_types)
+
+    return HttpResponse(data, content_type='application/json')

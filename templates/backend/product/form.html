@@ -10,7 +10,6 @@
             <a href="{% url "admin-product-list" %}" class="button back">Natrag</a>
         </div>
         <div id="product_id" class="display-none">{{ product_id }}</div>
-        {{ form.errors }}
         <div class="grid-5 padding-right-20">
             <h2>Osnovni atributi proizvoda</h2>
             <fieldset>
@@ -70,6 +69,11 @@
                     {{ form.has_mutations.errors }}
                 </div>
                 <div>
+                    <label for="{{ form.has_volume.auto_id }}">{{ form.has_volume.label }}</label>
+                    <div>{{ form.has_volume }}</div>
+                    {{ form.has_volume.errors }}
+                </div>
+                <div>
                     <label for="{{ form.has_cover.auto_id }}">{{ form.has_cover.label }}</label>
                     <div>
                         {{ form.has_cover }}
@@ -84,14 +88,19 @@
                             {{ form.cover_paper.errors }}
                         </div>
                         <div class="{% if not form.has_cover.value %}display-none{% endif %}">
-                            <label for="{{ form.cover_plastic.auto_id }}">{{ form.cover_plastic.label }}</label>
-                            <div>{{ form.cover_plastic }}</div>
-                            {{ form.cover_plastic.errors }}
-                        </div>
-                        <div class="{% if not form.has_cover.value %}display-none{% endif %}">
                             <label for="{{ form.cover_printer.auto_id }}">{{ form.cover_printer.label }}</label>
                             <div>{{ form.cover_printer }}</div>
                             {{ form.cover_printer.errors }}
+                        </div>
+                        <div class="{% if not form.has_cover.value %}display-none{% endif %}">
+                            <label for="{{ form.cover_finish.auto_id }}">{{ form.cover_finish.label }}</label>
+                            <div>{{ form.cover_finish }}</div>
+                            {{ form.cover_finish.errors }}
+                        </div>
+                        <div class="display-none">
+                            <label for="{{ form.cover_finish_order.auto_id }}">{{ form.cover_finish_order.label }}</label>
+                            <div>{{ form.cover_finish_order }}</div>
+                            {{ form.cover_finish_order.errors }}
                         </div>
                     </div>
                     {{ form.has_cover.errors }}
