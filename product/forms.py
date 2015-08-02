@@ -2,8 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
-from .models import Product
+from .models import Product, ProductFinish, ProductCoverFinish
 from finish.models import Finish
+from printer_widget import PrinterWidget
+from finish_widget import FinishWidget
 
 
 class ProductForm(forms.ModelForm):
@@ -11,11 +13,15 @@ class ProductForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
 
-        self.fields["cover_finish"].choices = self.get_cover_finish_choices()
-        self.fields["finish"].choices = self.get_finish_choices()
-        self.fields["printer"].widget.attrs.update({'size': '10'})
+        product = kwargs["instance"] if "instance" in kwargs else None
+
         self.fields["cover_printer"].widget.attrs.update({'size': '10'})
+        self.fields["printer"].widget.attrs.update({'product': kwargs["instance"] if "instance" in kwargs else None})
         self.fields["insert_printer"].widget.attrs.update({'size': '10'})
+        self.fields["finish"].widget.attrs.update({"product": product, "order": "finish_order",
+                                                   "model": ProductFinish})
+        self.fields["cover_finish"].widget.attrs.update({"product": product, "order": "cover_finish_order",
+                                                         "cover": True, "model": ProductCoverFinish})
 
     class Meta:
         model = Product
@@ -24,24 +30,24 @@ class ProductForm(forms.ModelForm):
             'formats': forms.CheckboxSelectMultiple(),
             'paper': forms.CheckboxSelectMultiple(),
             'press': forms.CheckboxSelectMultiple(),
-            'printer': forms.CheckboxSelectMultiple(),
+            'printer': PrinterWidget(),
             'cover_paper': forms.CheckboxSelectMultiple(),
             'cover_printer': forms.CheckboxSelectMultiple(),
-            'cover_finish': forms.CheckboxSelectMultiple(),
             'insert_press': forms.CheckboxSelectMultiple(),
             'insert_paper': forms.CheckboxSelectMultiple(),
             'insert_printer': forms.CheckboxSelectMultiple(),
-            'finish': forms.CheckboxSelectMultiple(),
+            'finish': FinishWidget(),
+            'cover_finish': FinishWidget(),
         }
 
     def save(self, commit=True):
         instance = super(ProductForm, self).save(commit=False)
 
         # ukloni polja da ih save_m2m metoda ne pokuša spremit
+        del self.cleaned_data['printer']
         del self.cleaned_data['cover_finish']
         del self.cleaned_data['cover_finish_type']
         del self.cleaned_data['finish']
-        del self.cleaned_data['finish_type']
 
         if commit:
             instance.save()

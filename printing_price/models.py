@@ -11,6 +11,7 @@ class PrintingPrice(models.Model):
     x = models.IntegerField(verbose_name="X")
     start_price = models.DecimalField(verbose_name="Cijena starta", max_digits=11, decimal_places=4)
     x_price = models.DecimalField(verbose_name="Cijena x-a", max_digits=11, decimal_places=4)
+    printing_price_type = models.CharField(verbose_name="Vrsta izračuna cijene", max_length=128, choices=Printer.printing_price_types_choices)
 
     def __unicode__(self):
         return self.start_price
@@ -23,4 +24,4 @@ class PrintingPrice(models.Model):
         db_table = "printing_price"
         verbose_name = "Cijena printa"
         verbose_name_plural = "Cijene printa"
-        unique_together = ('printer', 'both_sides', 'x', 'start_price', 'x_price')
+        unique_together = ('printer', 'both_sides', 'x', 'printing_price_type')

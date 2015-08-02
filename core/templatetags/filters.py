@@ -7,6 +7,12 @@ from django.template.defaultfilters import floatformat
 register = template.Library()
 
 
+def join_list(value, arg):
+    return arg.join([str(x) for x in value])
+
+register.filter('join_list', join_list)
+
+
 def format(value, arg):
     """
     Alters default filter "stringformat" to not add the % at the front,

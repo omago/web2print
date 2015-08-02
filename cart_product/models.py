@@ -7,7 +7,6 @@ from product.models import Product
 from format.models import Format
 from paper.models import Paper
 from press.models import Press
-from plastic.models import Plastic
 from finish.models import Finish
 from finish_type.models import FinishType
 

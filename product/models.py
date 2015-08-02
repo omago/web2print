@@ -8,7 +8,6 @@ from product_subcategory.models import ProductSubcategory
 from format.models import Format
 from paper.models import Paper
 from press.models import Press
-from plastic.models import Plastic
 from finish.models import Finish
 from finish_type.models import FinishType
 from printer.models import Printer
@@ -22,7 +21,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=128, verbose_name="Slug")
     image = models.ImageField(max_length=128, verbose_name="Slika", upload_to="products", null=True, blank=True)
     description = models.TextField(verbose_name="Opis", null=True, blank=True)
-    printer = models.ManyToManyField(Printer, verbose_name="Stroj", related_name="product-printer")
+    printer = models.ManyToManyField(Printer, verbose_name="Stroj", through="ProductPrinter", related_name="product-printer")
 
     # base attributes
     has_title = models.BooleanField(verbose_name="Proizvod ima naslov")
@@ -45,7 +44,6 @@ class Product(models.Model):
 
     #finish
     finish = models.ManyToManyField(Finish, verbose_name="Dorade", null=True, blank=True, through="ProductFinish", related_name="product-finish")
-    finish_type = models.ManyToManyField(FinishType, verbose_name="Tipovi dorada", null=True, blank=True, related_name="product_finish_type")
     finish_order = models.CharField(verbose_name="Redoslijed dorada", max_length=1024, null=True, blank=True)
 
     # meta attributes
@@ -61,44 +59,50 @@ class Product(models.Model):
     def save_finishes(self, request):
         ProductFinish.objects.filter(product=self).delete()
         finishes = request.POST.getlist('finish')
-        finishes_on = request.POST.getlist('finish_on')
 
         for finish in finishes:
             finish_object = Finish.objects.get(pk=int(finish))
-            turn_on = True if finish in finishes_on else False
-            ProductFinish(finish=finish_object, product=self, turn_on=turn_on).save()
+            is_on_name = "id_finish-finish-is-on-" + str(finish_object.pk)
+            is_on = True if request.POST.get(is_on_name) == "on" else False
+            finish_type_name = "id_finish-finish-type-" + str(finish_object.pk)
+
+            product_finish = ProductFinish(finish=finish_object, product=self, is_on=is_on)
+            product_finish.save()
+            product_finish.finish_type.remove()
+
+            values = request.POST.getlist(finish_type_name)
+
+            for value in values:
+                product_finish.finish_type.add(FinishType.objects.get(pk=int(value)))
 
     def save_cover_finishes(self, request):
         ProductCoverFinish.objects.filter(product=self).delete()
         finishes = request.POST.getlist('cover_finish')
-        finishes_on = request.POST.getlist('cover_finish_on')
 
         for finish in finishes:
             finish_object = Finish.objects.get(pk=int(finish))
-            turn_on = True if finish in finishes_on else False
-            ProductCoverFinish(finish=finish_object, product=self, turn_on=turn_on).save()
+            is_on_name = "id_cover_finish-finish-is-on-" + str(finish_object.pk)
+            is_on = True if request.POST.get(is_on_name) == "on" else False
+            finish_type_name = "id_cover_finish-finish-type-" + str(finish_object.pk)
 
-    def save_finish_types(self, request):
-        product_finish_types = self.finish_type.all()
+            product_finish = ProductCoverFinish(finish=finish_object, product=self, is_on=is_on)
+            product_finish.save()
+            product_finish.finish_type.remove()
 
-        for finish_type in product_finish_types:
-            self.finish_type.remove(finish_type)
+            values = request.POST.getlist(finish_type_name)
 
-        finish_types = request.POST.getlist('finish_type')
+            for value in values:
+                product_finish.finish_type.add(FinishType.objects.get(pk=int(value)))
 
-        for finish_type in finish_types:
-            self.finish_type.add(FinishType.objects.get(pk=int(finish_type)))
+    def save_printers(self, request):
+        ProductPrinter.objects.filter(product=self).delete()
+        printers = request.POST.getlist('printer')
 
-    def save_cover_finish_types(self, request):
-        product_cover_finish_types = self.cover_finish_type.all()
-
-        for finish_type in product_cover_finish_types:
-            self.cover_finish_type.remove(finish_type)
-
-        finish_types = request.POST.getlist('cover_finish_type')
-
-        for finish_type in finish_types:
-            self.cover_finish_type.add(FinishType.objects.get(pk=int(finish_type)))
+        for printer in printers:
+            printer_object = Printer.objects.get(pk=int(printer))
+            select_name = "printing-price-type-" + str(printer_object.pk)
+            printing_price_type = request.POST.get(select_name)
+            ProductPrinter(printer=printer_object, product=self, printing_price_type=printing_price_type).save()
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -112,10 +116,18 @@ class Product(models.Model):
 class ProductFinish(models.Model):
     product = models.ForeignKey(Product)
     finish = models.ForeignKey(Finish)
-    turn_on = models.BooleanField()
+    is_on = models.BooleanField()
+    finish_type = models.ManyToManyField(FinishType)
 
 
 class ProductCoverFinish(models.Model):
     product = models.ForeignKey(Product)
     finish = models.ForeignKey(Finish)
-    turn_on = models.BooleanField()
+    is_on = models.BooleanField()
+    finish_type = models.ManyToManyField(FinishType)
+
+
+class ProductPrinter(models.Model):
+    product = models.ForeignKey(Product)
+    printer = models.ForeignKey(Printer)
+    printing_price_type = models.CharField(max_length=128, choices=Printer.printing_price_types_choices)

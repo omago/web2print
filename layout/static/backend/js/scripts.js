@@ -117,46 +117,46 @@ $(document).ready(function() {
         }
     }
 
-    $("select#id_finish").change(function() {
-        var finish_select = $(this);
-        var finish_select_value = finish_select.val();
-        var finish_type = $("#id_finish_type");
-        $("#id_finish_type option:gt(0)").remove();
-        var finish_type_initial_option = $("#id_finish_type").html();
-        var options = [];
-
-        options.push(finish_type_initial_option);
-        $.getJSON("/admin/finish-type/get-type-for-finish", { finish: finish_select_value }, function( data ) {
-            $.each( data, function( key, val ) {
-                options.push("<option value='" + val["pk"] + "'>" + val["fields"]["name"] + "</option>");
-            });
-            finish_type.html(options);
-        });
-    });
+    //$("select#id_finish").change(function() {
+    //    var finish_select = $(this);
+    //    var finish_select_value = finish_select.val();
+    //    var finish_type = $("#id_finish_type");
+    //    $("#id_finish_type option:gt(0)").remove();
+    //    var finish_type_initial_option = $("#id_finish_type").html();
+    //    var options = [];
+    //
+    //    options.push(finish_type_initial_option);
+    //    $.getJSON("/admin/finish-type/get-type-for-finish", { finish: finish_select_value }, function( data ) {
+    //        $.each( data, function( key, val ) {
+    //            options.push("<option value='" + val["pk"] + "'>" + val["fields"]["name"] + "</option>");
+    //        });
+    //        finish_type.html(options);
+    //    });
+    //});
 
     /*
     Cover finish functions
      */
 
-    $("ul#id_cover_finish").sortable({
-        stop: function() {
-            set_finish_order("cover_finish");
-        }
-    });
-
-    set_finish_order("cover_finish");
-
-    $("input[name=cover_finish]").each(function() {
-        var finish_object = $(this);
-        get_finish_type_options(finish_object, "cover_finish_type");
-        is_finish_on(finish_object, "cover_finish");
-    });
-
-    $("input[name=cover_finish]").change(function() {
-        var finish_object = $(this);
-        get_finish_type_options(finish_object, "cover_finish_type");
-        is_finish_on(finish_object, "cover_finish");
-    });
+    //$("ul#id_cover_finish").sortable({
+    //    stop: function() {
+    //        set_finish_order("cover_finish");
+    //    }
+    //});
+    //
+    //set_finish_order("cover_finish");
+    //
+    //$("input[name=cover_finish]").each(function() {
+    //    var finish_object = $(this);
+    //    get_finish_type_options(finish_object, "cover_finish_type");
+    //    is_finish_on(finish_object, "cover_finish");
+    //});
+    //
+    //$("input[name=cover_finish]").change(function() {
+    //    var finish_object = $(this);
+    //    get_finish_type_options(finish_object, "cover_finish_type");
+    //    is_finish_on(finish_object, "cover_finish");
+    //});
 
 
 
@@ -171,7 +171,11 @@ $(document).ready(function() {
         }
     });
 
-    set_finish_order("finish");
+    $("ul#id_cover_finish").sortable({
+        stop: function() {
+            set_finish_order("cover_finish");
+        }
+    });
 
     function set_finish_order(name) {
         var list_of_values = [];
@@ -184,88 +188,27 @@ $(document).ready(function() {
         $("input#id_" + name + "_order").val(list_of_values.join())
     }
 
-    $("input[name=finish]").each(function() {
-        var finish_object = $(this);
-        get_finish_type_options(finish_object, "finish_type");
-        is_finish_on(finish_object, "finish");
-    });
-
     $("input[name=finish]").change(function() {
         var finish_object = $(this);
-        get_finish_type_options(finish_object, "finish_type");
-        is_finish_on(finish_object, "finish");
+
+        if(finish_object.is(":checked")) {
+            finish_object.nextAll("label").show();
+            finish_object.nextAll("ul").show();
+        } else {
+            finish_object.nextAll("label").hide();
+            finish_object.nextAll("ul").hide();
+        }
     });
 
+    $("input[name=cover_finish]").change(function() {
+        var finish_object = $(this);
 
-    /*
-    Functions
-     */
-
-    function get_finish_type_options(finish_object, name, type) {
-        var finish_id = finish_object.attr("value");
-        var product_id = $("#product_id").html();
-
-        if (finish_object.is(':checked')) {
-            var options = "";
-
-            $.getJSON("/admin/product/get-selected-finish-types-for-product", { product: product_id, name: name }, function( data ) {
-                var checked_list = [];
-                $.each( data, function( key, val ) {
-                    checked_list.push(val["pk"])
-                });
-
-                $.getJSON("/admin/finish-type/get-type-for-finish", { finish: finish_id }, function( data ) {
-                    if(data.length > 0) {
-                        options += "<ul id='" + name + "'>";
-                        $.each( data, function( key, val ) {
-                            var checked = "";
-                            if (checked_list.indexOf(parseInt(val["pk"])) >= 0) {
-                                checked = "checked";
-                            }
-                            var option_id = finish_id + "_" + name + "_" + val["pk"];
-                            options += "<li>" +
-                            "<label for='" + option_id + "'>" +
-                            "<input type='checkbox' id='" + option_id + "' " + checked + " " + " name='" + name + "' value='" + val["pk"] + "'>" +
-                            val["fields"]["name"] +
-                            "</label>" +
-                            "</li>";
-                        });
-                        options += "</ul>";
-                    }
-
-                    finish_object.parent().append(options);
-                });
-
-            });
-
-
+        if(finish_object.is(":checked")) {
+            finish_object.nextAll("label").show();
+            finish_object.nextAll("ul").show();
         } else {
-            finish_object.parent().find("#" + name).remove();
+            finish_object.nextAll("label").hide();
+            finish_object.nextAll("ul").hide();
         }
-    }
-
-    function is_finish_on(finish_object, name) {
-        var finish_id = finish_object.attr("value");
-        var product_id = $("#product_id").html();
-
-        if (finish_object.is(':checked')) {
-            $.getJSON("/admin/product/is-finish-on-for-product", { product: product_id, finish: finish_id, name: name }, function( data ) {
-                var checked = "";
-                var option_id = name + "_on_" + finish_id;
-
-                if(data.is_on) {
-                    var checked = "checked";
-                }
-
-                var on_checkbox = "<label for='" + option_id + "'>" +
-                    "<input type='checkbox' id='" + option_id + "' " + checked + " " + " name='" + name + "_on' value='" + finish_id + "'>" +
-                    "Označi kao uključeno</label>";
-
-                finish_object.parent().append(on_checkbox);
-            });
-
-        } else {
-            finish_object.parent().find("label[for=" + name + "_on_" + finish_id + "]").remove();
-        }
-    }
+    });
 });

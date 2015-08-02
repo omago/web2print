@@ -74,45 +74,6 @@ class CartProductForm(forms.ModelForm):
             self.fields["insert_paper"].queryset = Paper.objects.filter(pk__in=self.product.insert_paper.all())
             self.fields["insert_press"].queryset = Press.objects.filter(pk__in=self.product.insert_press.all())
 
-        self.fields.pop('finish')
-
-        if self.product.finish_order:
-            finish_orders = self.product.finish_order.split(",")
-            for finish_order in finish_orders:
-                try:
-                    finish = Finish.objects.get(pk=int(finish_order))
-                    try:
-                        product_finish = ProductFinish.objects.filter(product=self.product).filter(finish=finish).get()
-
-                        attributes = {"class": "finish_checkbox"}
-
-                        name = "finish_" + str(finish.pk)
-                        attributes["checked"] = "checked" if product_finish.turn_on is True else ""
-                        label = finish.name
-
-                        field = forms.IntegerField(widget=forms.CheckboxInput(attrs=attributes), label=label, required=False)
-                        self.fields[name] = field
-
-                        if finish.has_types:
-                            finish_types = self.product.finish_type.filter(finish=finish).all()
-                            finish_type_list = []
-                            for finish_type in finish_types:
-                                finish_type_list.append((finish_type.pk, finish_type.name))
-
-                            finish_type_field = forms.IntegerField(widget=forms.Select(choices=finish_type_list))
-
-                            name = "finish_type_" + str(finish.pk)
-
-                            self.fields[name] = finish_type_field
-
-                    except ProductFinish.DoesNotExist:
-                        pass
-                except Finish.DoesNotExist:
-                    pass
-
-        pass
-
-        # self.finish_fields = ",".join(self.finish_fields)
 
     # # popraviti metodu
     # def clean(self):

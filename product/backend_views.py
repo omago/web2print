@@ -71,8 +71,7 @@ def form(request, pk=None):
             form.save_m2m()
             product.save_finishes(request)
             product.save_cover_finishes(request)
-            product.save_finish_types(request)
-            product.save_cover_finish_types(request)
+            product.save_printers(request)
 
             return HttpResponseRedirect(reverse("admin-product-list"))
     else:

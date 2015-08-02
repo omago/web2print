@@ -11,11 +11,12 @@
         {% if rows %}
             <tr>
                 {% th "Id" "pk" "3" %}
-                {% th "Stroj" "printer" "17" "left" %}
-                {% th "Obostrani tisak" "both_sides" "17" "left" %}
-                {% th "X" "x" "18" "left" %}
-                {% th "Cijena starta" "start_price" "17" "left" %}
-                {% th "Cijena x-a" "x_price" "18" "left" %}
+                {% th "Stroj" "printer" "15" "left" %}
+                {% th "Obostrani tisak" "both_sides" "15" "left" %}
+                {% th "X" "x" "15" "left" %}
+                {% th "Cijena starta" "start_price" "15" "left" %}
+                {% th "Cijena x-a" "x_price" "15" "left" %}
+                {% th "Vrsta izračuna cijene" "printing_price_type" "15" "left" %}
                 {% th "Operacije" None "10" %}
             </tr>
             {% for row in rows %}
@@ -30,7 +31,7 @@
                     {% td row.x "x" "left" %}
                     {% td row.start_price "start_price" "left" %}
                     {% td row.x_price "x_price" "left" %}
-
+                    {% td row.printing_price_type "printing_price_type" "left" %}
                     {% with row_pk_string=row.pk|convert_to_string:"0" %}
                     {% with copy="<a href='"|add:copy_url|add:"?printing_price_id="|add:row_pk_string|add:"' class='copy'></a>" %}
                     {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
