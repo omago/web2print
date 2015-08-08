@@ -9,7 +9,9 @@ from paper.models import Paper
 from press.models import Press
 from finish.models import Finish
 from finish_type.models import FinishType
-from product.models import ProductFinish
+from cart_product.finish_widget import FinishWidget
+
+from product.models import ProductFinish, ProductCoverFinish
 
 
 class CartProductForm(forms.ModelForm):
@@ -24,15 +26,6 @@ class CartProductForm(forms.ModelForm):
         self.product_price = 0
 
         self.cart_id = request.session.get("cart_id", None)
-
-        # dodavanje cart_idija
-        # if not self.cart_id:
-        #     cart = Cart()
-        #     cart.user = self.user
-        #     cart.save()
-        #
-        #     self.cart_id = cart.pk
-        #     request.session["cart_id"] = self.cart_id
 
         self.fields['product'].widget = forms.HiddenInput()
         self.fields['product'].initial = self.product
@@ -62,6 +55,8 @@ class CartProductForm(forms.ModelForm):
             self.fields.pop('cover_paper')
         else:
             self.fields["cover_paper"].queryset = Paper.objects.filter(pk__in=self.product.cover_paper.all())
+            # self.fields["cover_finish"].widget.attrs.update({"product": product, "order": "cover_finish_order",
+            #                                                  "cover": True, "model": ProductCoverFinish})
 
         if not product.has_insert:
             self.fields.pop('has_insert')
@@ -74,14 +69,8 @@ class CartProductForm(forms.ModelForm):
             self.fields["insert_paper"].queryset = Paper.objects.filter(pk__in=self.product.insert_paper.all())
             self.fields["insert_press"].queryset = Press.objects.filter(pk__in=self.product.insert_press.all())
 
-
-    # # popraviti metodu
-    # def clean(self):
-    #     cleaned_data = super(CartProductForm, self).clean()
-    #     return cleaned_data
-
-    def finish_group(self):
-        return [self[name] for name in filter(lambda x: x.startswith('finish_')), self.fields.values()]
+        self.fields["finish"].widget.attrs.update({"product": product, "order": "finish_order",
+                                                   "model": ProductFinish})
 
     def save(self):
         cart_product_form = super(CartProductForm, self).save(commit=False)
@@ -96,7 +85,8 @@ class CartProductForm(forms.ModelForm):
     class Meta:
         model = CartProduct
         exclude = ['slug', 'cart']
+
         widgets = {
-            'finish': forms.CheckboxSelectMultiple(),
-            'finish_type': forms.Select(),
+            'finish': FinishWidget(),
+            'cover_finish': FinishWidget(),
         }

@@ -169,57 +169,12 @@ $(document).ready(function() {
         }
     }
 
-    $("input[name=finish]").each(function() {
-        var finish_object = $(this);
-        get_finish_type_options(finish_object);
-    });
-
-    $("input[name=finish]").change(function() {
-        var finish_object = $(this);
-        get_finish_type_options(finish_object);
-    });
-
-    function get_finish_type_options(finish_object) {
-        var finish_id = finish_object.attr("value");
-        var product_id = $("#id_product").val();
-
-        if (finish_object.is(':checked')) {
-            var options = "";
-
-            $.getJSON("/admin/finish-type/get-selected-finish-types-for-product", { product: product_id }, function( data ) {
-                var checked_list = []
-                $.each( data, function( key, val ) {
-                    checked_list.push(val["pk"])
-                });
-
-                $.getJSON("/admin/finish-type/get-type-for-finish", { finish: finish_id }, function( data ) {
-                    if(data.length > 0) {
-                        options += "<ul id='finish_type'>";
-                        $.each( data, function( key, val ) {
-                            var checked = "";
-                            if (checked_list.indexOf(parseInt(val["pk"])) >= 0) {
-                                checked = "checked";
-                            }
-                            var option_id = finish_id + "_finish_type" + val["pk"];
-                            
-                            options += "<li>" +
-                            "<label for='" + option_id + "'>" +
-                            "<input type='checkbox' id='" + option_id + "' " + checked + " " + " name='finish_type' value='" + val["pk"] + "'>" +
-                            val["fields"]["name"] +
-                            "</label>" +
-                            "</li>";
-                        });
-                        options += "</ul>";
-                    }
-
-                    finish_object.parent().append(options);
-                });
-
-            });
-
-
+    $(".checkbox-select input").change(function() {
+        var object = $(this);
+        if(object.is(":checked")) {
+            object.next("select").show();
         } else {
-            finish_object.parent().find("#finish_type").remove();
+            object.next("select").hide();
         }
-    }
+    })
 });

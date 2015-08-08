@@ -674,6 +674,10 @@ h1 {
             margin-right: 6px; }
           .product-view section > form fieldset > div > div div select {
             width: 258px; }
+          .product-view section > form fieldset > div > div div.checkbox-select select {
+            width: 200px; }
+          .product-view section > form fieldset > div > div div.checkbox-select input[type=checkbox] {
+            margin-right: 30px; }
         .product-view section > form fieldset > div > div .errorlist {
           margin-top: 4px;
           margin-left: 132px;
