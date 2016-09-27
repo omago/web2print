@@ -14,20 +14,12 @@ from .models import Product
 
 from cart_product.price_calculation import PriceCalculation
 
+
 def calculate_price(request):
 
     if request.is_ajax():
         price_calculation = PriceCalculation(
-            product=request.POST.get("product", None),
-            paper_format=request.POST.get("format_choices", None),
-            paper=request.POST.get("paper", None),
-            press=request.POST.get("press", None),
-            number_of_copies=request.POST.get("number_of_copies", None),
-            has_insert=request.POST.get("has_insert", None),
-            number_of_inserts=request.POST.get("number_of_inserts", None),
-            insert_print=request.POST.get("insert_print", None),
-            insert_paper=request.POST.get("insert_paper", None),
-            insert_press=request.POST.get("insert_press", None),
+            data=request.POST,
             user=request.user,
         )
 

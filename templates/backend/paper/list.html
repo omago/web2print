@@ -12,9 +12,11 @@
             <tr>
                 {% th "Id" "pk" "3" %}
                 {% th "Tip papira" "paper_type.name" "27" "left" %}
-                {% th "Gramatura papira" "paper_weight.weight" "20" "left" %}
-                {% th "Finish papira" "paper_finish.name" "20" "left" %}
-                {% th "Cijena po kilogramu papira" "price_per_kilogram" "20" "left" %}
+                {% th "Gramatura papira" "paper_weight.weight" "10" "left" %}
+                {% th "Finish papira" "paper_finish.name" "10" "left" %}
+                {% th "Cijena po kilogramu papira" "price_per_kilogram" "15" "left" %}
+                {% th "Rola" "role" "10" "left" %}
+                {% th "Cijena po kilogramu (rola)" "price_per_kilogram_role" "15" "left" %}
                 {% th "Operacije" None "10" %}
             </tr>
             {% for row in rows %}
@@ -28,6 +30,8 @@
                     {% td row.paper_weight.weight "paper_weight.weight" "left" %}
                     {% td row.paper_finish.name "paper_finish.name" "left" %}
                     {% td row.price_per_kilogram "price_per_kilogram" "left" %}
+                    {% td row.role "role" "left" %}
+                    {% td row.price_per_kilogram_role "price_per_kilogram_role" "left" %}
                     {% with row_pk_string=row.pk|convert_to_string:"0" %}
                     {% with copy="<a href='"|add:copy_url|add:"?paper_id="|add:row_pk_string|add:"' class='copy'></a>" %}
                     {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}

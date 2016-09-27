@@ -27,6 +27,8 @@ class CartProduct(models.Model):
 
     has_cover = models.BooleanField(verbose_name="Korice")
     cover_paper = models.ForeignKey(Paper, null=True, blank=True, verbose_name="Papir za korice", related_name="cart-product-cover-paper")
+    cover_finish = models.ManyToManyField(Finish, verbose_name="Dorade", null=True, blank=True, related_name="cart-product-cover-finish")
+    cover_finish_type = models.ManyToManyField(FinishType, verbose_name="Tipovi dorada", null=True, blank=True, related_name="cart-product-cover-finish-type")
 
     has_insert = models.BooleanField(verbose_name="Umetak")
     number_of_inserts = models.IntegerField(null=True, blank=True, verbose_name="Broj umetanja")

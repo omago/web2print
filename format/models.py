@@ -17,7 +17,11 @@ class Format(models.Model):
     product_subcategory = models.ForeignKey(ProductSubcategory, verbose_name="Podkategorija proizvoda", blank=True, null=True)
 
     def __unicode__(self):
-        return str(self.width) + "x" + str(self.height)
+        format_name = str(self.width) + "x" + str(self.height)
+        if self.name != "":
+            format_name = self.name + " (" + format_name + ")"
+
+        return format_name
 
     def get_fields(self):
         return [(field.verbose_name, field.value_to_string(self)) for field in self._meta.fields]

@@ -380,9 +380,9 @@ form.view fieldset > div label { background: #EBEBEB; }
 form fieldset > div > div input[type=email],
 form fieldset > div > div input[type=number],
 form fieldset > div > div input[type=password],
-form fieldset > div > div input[type=text] { border: 0px; width: 97%; background: transparent; height: 36px; padding-left: 1.5%; padding-right: 1.5%; }
-form fieldset > div > div input[type=file] { border: 0px; width: 97%; background: transparent; height: 29px; padding-left: 1.5%; padding-right: 1.5%; padding-top: 7px; }
-form fieldset > div > div input[type=checkbox] { border: 0px; background: transparent; margin: 11px; height: 14px; width: 14px; }
+form fieldset > div > div input[type=text] { border: 0; width: 97%; background: transparent; height: 36px; padding-left: 1.5%; padding-right: 1.5%; }
+form fieldset > div > div input[type=file] { border: 0; width: 97%; background: transparent; height: 29px; padding-left: 1.5%; padding-right: 1.5%; padding-top: 7px; }
+form fieldset > div > div input[type=checkbox] { border: 0; background: transparent; margin: 11px; height: 14px; width: 14px; }
 form fieldset > div > div textarea { border: 0; width: 97%; background: transparent; padding-left: 1.5%; padding-right: 1.5%; padding-top: 1.5%; padding-bottom: 1.5%; }
 form fieldset > div > div textarea:focus { background: white; }
 form fieldset > div > div input:focus { background: white; }
@@ -397,6 +397,7 @@ form fieldset > div > div > ul label { position: relative; background: transpare
 form fieldset > div > div > ul label input[type=checkbox] { margin: 1px 6px; }
 form fieldset > div > div > ul.checkbox-select label select { width: auto; position: absolute; left: 150px; top: 0; line-height: 28px; height: 28px; }
 form fieldset > div > div > ul.checkbox-select label select option { line-height: 28px; }
+form fieldset > div > div > ul.checkbox-select input[type=number] { position: absolute; left: 300px; width: 100px; height: 28px; top: 0; }
 
 form fieldset > div > div > div { position: relative;  }
 form fieldset > div > div > div label { position: relative; display: block; width: auto; }

@@ -1,0 +1,43 @@
+.product-category-list {
+    background: white;
+    padding: 20px 4px;
+
+    .product-box {
+        margin: 5px;
+        float: left;
+        width: 344px;
+        height: 200px;
+        border: 1px solid #d0d0d0;
+        position: relative;
+
+        h2 {
+            position: absolute;
+            top: 125px;
+            right: 0;
+
+            a {
+                padding: 10px 20px;
+                font-size: 14px;
+                background-color: $orange-color;
+                color: white;
+                text-transform: uppercase;
+
+                &:hover {
+                    background-color: #bfc73d;
+                }
+            }
+        }
+
+        .read-more {
+            padding: 5px 20px;
+            display: block;
+            position: absolute;
+            color: white;
+            background-color: $light-green-color;
+            top: 160px;
+            right: 0;
+
+            &:hover { background-color: #bfc73d; }
+        }
+    }
+}

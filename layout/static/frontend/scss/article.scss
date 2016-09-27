@@ -1,0 +1,23 @@
+.article {
+    background: white;
+    padding: 30px;
+
+    h1 {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    h2 {
+        color: #919191;
+        margin: 20px 0 10px 0;
+        font-size: 18px;
+    }
+
+    ul, ol {
+        margin: 10px 0 10px 30px;
+
+        ul, ol {
+            margin: 0 0 0 30px;
+        }
+    }
+}

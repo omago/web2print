@@ -53,10 +53,12 @@ class CartProductForm(forms.ModelForm):
         if not product.has_cover:
             self.fields.pop('has_cover')
             self.fields.pop('cover_paper')
+            self.fields.pop('cover_finish')
+            self.fields.pop('cover_finish_type')
         else:
             self.fields["cover_paper"].queryset = Paper.objects.filter(pk__in=self.product.cover_paper.all())
-            # self.fields["cover_finish"].widget.attrs.update({"product": product, "order": "cover_finish_order",
-            #                                                  "cover": True, "model": ProductCoverFinish})
+            self.fields["cover_finish"].widget.attrs.update({"product": product, "order": "cover_finish_order",
+                                                             "cover": True, "model": ProductCoverFinish})
 
         if not product.has_insert:
             self.fields.pop('has_insert')

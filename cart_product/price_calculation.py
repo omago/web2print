@@ -1,233 +1,173 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import math
 from decimal import *
 
 from product.models import Product
 from paper.models import Paper
 from press.models import Press
-from printing_price.models import PrintingPrice
-from insert_price.models import InsertPrice
 from format.models import Format
+from product.models import ProductFinish
+
+from .price_calculation_helper import PriceCalculationHelper
+from .finish_price_calculation import FinishPriceCalculation
+from .cover_price_calculation import CoverPriceCalculation
+from .insert_price_calculation import InsertPriceCalculation
+from .printing_price_calculation import PrintingPriceCalculation
 
 
-class PriceCalculation():
+class PriceCalculation:
 
-    padding = 2  # napust kod printa
-    paper_weight_payment_threshold = 250  # težina papira nakon koje se plaća i papir
+    def __init__(self, data, user):
 
-    def __init__(self, user, product, paper, press, number_of_copies, paper_format,
-                 has_insert, number_of_inserts, insert_print, insert_paper, insert_press):
-
+        self.data = data  # POST data
         self.user = user  # trenutni korisnik
-        self.product = Product.objects.get(pk=product)  # odabrani proizvod
-        self.paper = Paper.objects.get(pk=paper)  # odabrani papir
-        self.press = Press.objects.get(pk=press)  # odabrana vrsta tiska
-        self.number_of_copies = int(number_of_copies)  # naklada - broj primjeraka
-        self.product_format = Format.objects.get(pk=paper_format)  # format papira
 
-        self.has_insert = has_insert
-        self.number_of_inserts = int(number_of_inserts) if number_of_inserts else 0
-        self.insert_print = insert_print
-        self.insert_paper = Paper.objects.get(pk=insert_paper) if insert_paper else None
-        self.insert_press = Press.objects.get(pk=insert_press) if insert_press else None
+        self.calculation_helper = PriceCalculationHelper(self.data)
 
+        self.product = self.calculation_helper.get_object_by_pk(Product, "product")  # odabrani proizvod
+
+        # zajednički parametri
+        self.product_format = self.calculation_helper.get_object_by_pk(Format, "format_choices")  # format papira
+        self.number_of_copies = self.calculation_helper.get_value_from_data("number_of_copies", int, 0)  # naklada - broj primjeraka
+        self.number_of_mutation = self.calculation_helper.get_value_from_data("number_of_mutation", int, 1)  # broj mutacija
+        self.volume = self.calculation_helper.get_value_from_data("volume", int, 0)  # broj stranica
+
+        # parametri tiska
         self.printing_price = 0
         self.printing_printer = None
+        self.number_of_sheets = 0  # broj araka
 
+        # parametri umetka
         self.insert_price = 0
         self.insert_printer = None
 
+        # parametri korica
+        self.cover_price = 0
+
+        # parametri dorade
+        self.finish_price = 0
+        self.finish_affects_assembly_in_press = False
+
+        # cijena finalnog proizvoda
         self.product_price = 0
 
+        # todo izračunati težinu proizvoda, težina papira puta naklada, puta broj kopija, puta opseg itd
+        # todo istestirati košaricu
+
     def get_price(self):
+        """
+        Funkcija konvertira cijenu u Decimal
+
+        Returns:
+            Funkcija vraća cijenu
+
+        """
         return float(self.product_price)
 
     def calculate_price(self):
-        self.printing_price, self.printing_printer = self.get_printing_price()
-        self.insert_price, self.insert_printer = self.get_insert_price()
+        """
+        Glavni handler izračuna
 
-        self.product_price = self.printing_price + self.insert_price
+        Returns:
+            izračunava cijenu
+
+        """
+        self.finish_price = self.get_finish_price()
+        self.printing_price = self.get_printing_price()
+        self.insert_price = self.get_insert_price()
+        self.cover_price = self.get_cover_price()
+
+        self.product_price = self.printing_price + self.insert_price + self.cover_price + self.finish_price
 
     def get_printing_price(self):
         """
-        Funkcija nalazi cijenu naisplativijeg tiska.
-        Prolazi korz printere definirane te računa cijenu za svaki od tih strojeva i vraća najnižu cijenu
+        Funkcija poziva calculator dorada te dohvaća cijenu
 
         Returns:
-            Funkcija vraća cijenu i printer
+            funkcija vraća cijenu koju vrati kalkulator
 
         """
-        product_printers = self.product.printer.all()
+        press = self.calculation_helper.get_object_by_pk(Press, "press")  # odabrani tisak
+        paper = self.calculation_helper.get_object_by_pk(Paper, "paper")  # odabrani papir
+        number_of_copies = self.calculation_helper.get_value_from_data("number_of_copies", int, 0)  # naklada - broj primjeraka
+        number_of_mutation = self.calculation_helper.get_value_from_data("number_of_mutation", int, 1)  # broj mutacija
+        volume = self.calculation_helper.get_value_from_data("volume", int, 0)  # broj stranica
 
-        product_price = 0
-        most_affordable_printer = None
+        printing_calculation = PrintingPriceCalculation(printers=self.product.printer.all(),
+                                                        user=self.user,
+                                                        finish_affects_assembly_in_press=self.finish_affects_assembly_in_press,
+                                                        product_format=self.product_format,
+                                                        press=press,
+                                                        paper=paper,
+                                                        number_of_copies=number_of_copies,
+                                                        number_of_mutation=number_of_mutation,
+                                                        volume=volume)
+        printing_calculation.calculate_price()
+        self.number_of_sheets = printing_calculation.number_of_sheets
 
-        for printer in product_printers:
-            printer_price = self.calculate_printer_printing_price(printer)
-
-            if product_price == 0 or printer_price < product_price:
-                product_price = printer_price
-                most_affordable_printer = printer
-
-        return product_price, most_affordable_printer
+        return printing_calculation.get_price()
 
     def get_insert_price(self):
         """
-        Funkcija nalazi cijenu  umetka.
-        Cijena umetka sastoji se od dvije komponente.
-            1. Cijena umetanja - računa se po formuli start + (naklada * broj_umetanja * cijena_po_umetku)
-            2. Tisak umetka - traži se najisplativija opcija kao i kod tiska
+        Funkcija poziva calculator umetka te dohvaća cijenu
 
         Returns:
-            Funkcija vraća cijenu i stroj
+            funkcija vraća cijenu koju vrati kalkulator
 
         """
-        insert_price = 0
+        has_insert = self.calculation_helper.get_value_from_data("has_insert")  # ima umetak
+        number_of_inserts = self.calculation_helper.get_value_from_data("number_of_inserts", int, 0)  # broj umetaka
+        insert_print = self.calculation_helper.get_value_from_data("insert_print")  # ima umetak
+        insert_paper = self.calculation_helper.get_object_by_pk(Paper, "insert_paper")  # papir umetka
+        insert_press = self.calculation_helper.get_object_by_pk(Press, "insert_press")  # tiska umetka
+        insert_volume = self.calculation_helper.get_value_from_data("insert_volume", int, 0)  # opseg umetka
 
-        if self.has_insert:
-            insert_price_object = InsertPrice.objects.filter(number_of_inserts_per_copy=self.number_of_inserts).get()
-            insert_price = insert_price_object.start_price + (self.number_of_copies * self.number_of_inserts *
-                                                              insert_price_object.price_per_insert)
+        insert_calculation = InsertPriceCalculation(has_insert=has_insert,
+                                                    user=self.user,
+                                                    number_of_copies=self.number_of_copies,
+                                                    number_of_inserts=number_of_inserts,
+                                                    insert_print=insert_print,
+                                                    insert_paper=insert_paper,
+                                                    insert_press=insert_press,
+                                                    insert_volume=insert_volume,
+                                                    product_format=self.product_format)
+        insert_calculation.calculate_price()
+        return insert_calculation.get_price()
 
-        return insert_price, None
-
-    def calculate_printer_printing_price(self, printer):
+    def get_cover_price(self):
         """
-        Cijena printa za printer.
-        Funkcija prvo dohvaća cijenu papira ovisno o dimenziji, zatim računa broj proizvoda koji stane na
-        stranicu stroja.
-        Ovisno o tome ima li korisnik definiranu cijenu printa dohvaća se cijena az korisnika ili cijena za taj stroj
-
-        Args:
-            printer: stroj
-            paper_price: cijena papira
+        Funkcija poziva calculator korica te dohvaća cijenu
 
         Returns:
-            Funkcija vraća cijenu
+            funkcija vraća cijenu koju vrati kalkulator
 
         """
-        # cijena papira ovisno o odabranom printeru
-        paper_price = self.calculate_paper_price(printer.width, printer.height)
+        has_cover = self.calculation_helper.get_value_from_data("has_cover")  # ima korice
+        cover_paper = self.calculation_helper.get_object_by_pk(Paper, "cover_paper")  # papir korica
+        cover_finishes = self.calculation_helper.get_finishes("cover_finish")  # dorade za korice
 
-        # broj proizvoda po veličina printa za printer
-        products_per_sheet = self.calculate_number_of_products_per_printer_printing_area(
-            printer.width, printer.height, self.padding, self.padding)
+        cover_calculation = CoverPriceCalculation(volume=self.volume, product_format=self.product_format,
+                                                  number_of_copies=self.number_of_copies, has_cover=has_cover,
+                                                  cover_paper=cover_paper, cover_finishes=cover_finishes)
+        cover_calculation.calculate_price()
+        return cover_calculation.get_price()
 
-        # broj araka - odnosno jedinica papira za taj printer
-        number_of_sheets = int(math.ceil(int(self.number_of_copies) / float(products_per_sheet)))
-
-        # slučaj ako korisnik ima definiranu cijenu klika i cijenu starta, mora i stroj biti definiran za davanje popusta
-        if self.user.start_price and self.user.click_price and printer.user_discount is True:
-            price = self.get_user_price(number_of_sheets, paper_price)
-        else:
-            price = self.get_printer_price(number_of_sheets, paper_price)
-
-        return price
-
-    def get_user_price(self, number_of_sheets, paper_price):
+    def get_finish_price(self):
         """
-        Cijena printa za korisnika.
-        Cijena se računa po formuli cijena_starta + broj_klikova * (cijena_klika +  cijena_papira), u slučaju da je
-        se radi o obostranom print cijene se množi s dva
-
-        Args:
-            printer: stroj
-            paper_price: cijena papira
+        Funkcija poziva calculator dorada te dohvaća cijenu
 
         Returns:
-            Funkcija vraća cijenu
+            funkcija vraća cijenu koju vrati kalkulator
 
         """
-        # cijena printa za korisnika je cijena starta za korisnika + broj araka*(cijena klika + cijena papira)
-        if self.press.both_sides_print:
-            price = self.user.start_price + number_of_sheets*(2 * self.user.click_price + paper_price)
-        else:
-            price = self.user.start_price + number_of_sheets*(self.user.click_price + paper_price)
+        finishes = self.calculation_helper.get_finishes("finish")  # dorade
+        finish_calculation = FinishPriceCalculation(finishes=finishes,
+                                                    volume=self.volume,
+                                                    product_format=self.product_format,
+                                                    number_of_copies=self.number_of_copies,
+                                                    finish_model=ProductFinish)
+        finish_calculation.calculate_price()
+        self.finish_affects_assembly_in_press = finish_calculation.affects_assembly_in_press
 
-        return price
-
-    def get_printer_price(self, printer, number_of_sheets, paper_price):
-        """
-        Cijena printa za određeni stroj.
-        Cijena se računa po formuli cijena_starta + (broj_klikova * cijena klika), u slučaju da je
-        težina papira veća od feinirane granice težine dodaje se još i cijena papira
-
-        Args:
-            printer: stroj
-            number_of_sheets: broj klikova
-            paper_price: cijena papira
-
-        Returns:
-            Funkcija vraća cijenu
-
-        """
-
-        # cijena za taj printer i za broj araka
-        printing_price = PrintingPrice.objects\
-            .filter(printer_id=printer.id)\
-            .filter(quire_from__lte=number_of_sheets)\
-            .filter(quire_to__gte=number_of_sheets)\
-            .get()
-
-        number_of_prints = 1  # broj tisaka po komadu papira - obostrani tisak je 2, obični tisak je 1
-
-        # ako je obostrani print
-        if self.press.both_sides_print:
-            printing_price = printing_price.filter(both_sides=True)
-            number_of_prints = 2
-
-        # start + (broj araka * cijena arka)
-        price = printing_price.start_price + (number_of_prints * number_of_sheets * printing_price.click_price)
-
-        # ako je papir teži od definirane granice težine ili ako je papir kvalitetniji dodaje se još i cijena papira
-        if self.paper.paper_weight.weight > self.paper_weight_payment_threshold \
-                or self.paper.paper_type.better_quality_paper is True:
-            price = price + (paper_price * number_of_sheets)
-
-        return price
-
-    def calculate_paper_price(self, width, height):
-        """
-        Cijena papira po veličini papira.
-        Izračunava se cijena papir aovisno o težini i veličini
-
-        Args:
-            width: širina printera
-            height: visina printera
-
-        Returns:
-            Funkcija vraća broj proizvoda na formatu printera
-
-        """
-        paper_price = (Decimal(width)/1000)*(Decimal(height)/1000)*self.paper.paper_weight.weight*(self.paper.price_per_kilogram/1000)
-        return paper_price
-
-    def calculate_number_of_products_per_printer_printing_area(self, width, height, width_padding, height_padding):
-        """
-        Funkcija izračunava broj proizvoda po formatu printera.
-        Izračunava se najveći mogući broj proizvoad po formatu kako bi iskoristivost bila što veća
-
-        Args:
-            width: širina printera
-            height: visina printera
-            width_padding: padding na širinu proizvoda
-            height_padding: padding na visinu proizvoda
-
-        Returns:
-            Funkcija vraća broj proizvoda na formatu printera
-
-        """
-        product_width = self.product_format.width + width_padding  # širina proizvoda s napustom
-        product_height = self.product_format.height + height_padding  # visina proizvoda s napustom
-
-        products_per_horizontal_sheet = int(width/float(product_width)) * int(height/float(product_height))
-        products_per_vertical_sheet = int(height/float(product_width)) * int(width/float(product_height))
-
-        if products_per_horizontal_sheet > products_per_vertical_sheet:
-            products_per_sheet = products_per_horizontal_sheet
-        else:
-            products_per_sheet = products_per_vertical_sheet
-
-        return products_per_sheet
+        return finish_calculation.get_price()

@@ -27,15 +27,18 @@ class PrinterWidget(widgets.MultiWidget):
             printer_id = widget_id + "_" + str(i)
 
             select_name = "printing-price-type-" + str(printer.pk)
+            minimum_name = "printing-price-minimum-" + str(printer.pk)
             printer_attrs = {"id": printer_id, "value": printer.pk}
             select_value = self.get_select_value(printer, select_name)
+            minimum_value = self.get_minimum_value(printer, minimum_name)
 
             if value and printer.pk in value:
                 printer_attrs["checked"] = "checked"
 
             checkbox = forms.CheckboxInput(attrs=printer_attrs).render(name=name, value=None)
             select = forms.Select(choices=Printer.printing_price_types_choices).render(name=select_name, value=select_value)
-            printer_list.append('<li><label for="' + printer_id + '">' + checkbox + printer.name + select + '</label></li>')
+            minimum = forms.NumberInput(attrs={'placeholder': 'Minimum'}).render(name=minimum_name, value=minimum_value)
+            printer_list.append('<li><label for="' + printer_id + '">' + checkbox + printer.name + select + minimum + '</label></li>')
             i += 1
 
         return format_html('<ul class="checkbox-select" id="' + widget_id + '">' + "".join(printer_list) + "</ul>")
@@ -65,3 +68,21 @@ class PrinterWidget(widgets.MultiWidget):
                 pass
 
         return select_value
+
+    def get_minimum_value(self, printer, minimum_name):
+
+        minimum_value = ""
+
+        if self.data:
+            minimum_value = self.data.get(minimum_name)
+        elif self.attrs["product"]:
+            try:
+                product_printer = ProductPrinter.objects.filter(product=self.attrs["product"], printer=printer).get()
+                minimum_value = product_printer.minimum
+            except ProductPrinter.DoesNotExist:
+                pass
+
+        if minimum_value == 0:
+            minimum_value = ""
+
+        return minimum_value

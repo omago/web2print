@@ -97,7 +97,7 @@ def form(request, pk=None):
 
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(create_url("admin-finish-price-list", request))
+            return HttpResponseRedirect(create_url("admin-finish-type-list", request))
     else:
         if pk:
             object = FinishType.objects.get(pk=pk)
@@ -109,7 +109,7 @@ def form(request, pk=None):
     context.update(csrf(request))
 
     context['form'] = form
-    context["back_url"] = create_url("admin-finish-price-list", request)
+    context["back_url"] = create_url("admin-finish-type-list", request)
 
     return render_to_response('backend/finish_type/form.html', context, context_instance=RequestContext(request))
 

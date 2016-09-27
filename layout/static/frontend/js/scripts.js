@@ -135,6 +135,7 @@ $(document).ready(function() {
     $("input[name=has_cover]").change(function() {
         switch_related_field($(this), $("#id_cover_paper"));
         switch_related_field($(this), $("#id_cover_plastic"));
+        switch_related_div($(this), $("#id_cover_finish_div"));
     });
 
     $("input[name=has_insert]").change(function() {
@@ -166,6 +167,14 @@ $(document).ready(function() {
             related_select.removeClass("display-none");
         } else {
             related_select.addClass("display-none");
+        }
+    }
+
+    function switch_related_div(object, related_div) {
+        if(object.is(":checked")) {
+            related_div.removeClass("display-none");
+        } else {
+            related_div.addClass("display-none");
         }
     }
 

@@ -1,0 +1,56 @@
+.articles {
+    margin-top: 20px;
+
+    div.box-1 h2 { background-color: rgba(#8088bc, 0.7); }
+    div.box-2 h2 { background-color: rgba(#bc80ba, 0.7); }
+    div.box-3 h2 { background-color: rgba(#ffb243, 0.7); }
+
+    div.box-1,
+    div.box-2,
+    div.box-3 {
+        background: white;
+        position: relative;
+        min-height: 320px;
+        padding-bottom: 14px;
+
+        h2 {
+            z-index: 9;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            font-weight: bold;
+            text-align: center;
+
+            a {
+                display: block;
+                padding: 10px;
+                font-size: 14px;
+                color: white;
+            }
+        }
+
+        p {
+            font-size: 13px;
+            padding: 10px;
+            color: $grey-color;
+        }
+
+        > a {
+            font-weight: bold;
+            font-size: 14px;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            text-transform: uppercase;
+            color: $grey-color;
+        }
+
+        img.new {
+            z-index: 10;
+            position: absolute;
+            right: -3px;
+            top: -3px;
+        }
+    }
+}

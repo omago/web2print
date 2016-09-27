@@ -12,11 +12,14 @@
             <tr>
                 {% th "Id" "pk" "3" %}
                 {% th "Naziv" "name" "10" "left" %}
-                {% th "Color" "color" "10" "left" %}
-                {% th "Širina printa" "width" "10" "left" %}
-                {% th "Visina printa" "height" "10" "left" %}
-                {% th "Omogući korisnički popust" "user_discount" "10" "left" %}
-                {% th "Rola" "role" "10" "left" %}
+                {% th "Color" "color" "5" "left" %}
+                {% th "Širina otiska" "printing_area_width" "7" "left" %}
+                {% th "Visina otiska" "printing_area_height" "7" "left" %}
+                {% th "Max širina papira" "max_paper_width" "7" "left" %}
+                {% th "Max visina papira" "max_paper_height" "7" "left" %}
+                {% th "Širina klika" "click_width" "5" "left" %}
+                {% th "Korisnički popust" "user_discount" "7" "left" %}
+                {% th "Rola" "role" "5" "left" %}
                 {% th "Tisak" "press" "10" "left" %}
                 {% th "Vrsta izračuna cijene" "printing_price_type" "10" "left" %}
                 {% th "Operacije" None "10" %}
@@ -30,8 +33,11 @@
                     {% td row.pk "pk" %}
                     {% td "<a href="|add:edit_url|add:">"|add:row.name|add:"</a>" "name" "left" %}
                     {% td row.color "color" "left" %}
-                    {% td row.width "width" "left" %}
-                    {% td row.height "height" "left" %}
+                    {% td row.printing_area_width "printing_area_width" "left" %}
+                    {% td row.printing_area_height "printing_area_height" "left" %}
+                    {% td row.max_paper_width "max_paper_width" "left" %}
+                    {% td row.max_paper_height "max_paper_height" "left" %}
+                    {% td row.click_width "click_width" "left" %}
                     {% td row.user_discount "user_discount" "left" %}
                     {% td row.role "role" "left" %}
                     {% td row.press.all|join_list:", " "press" "left" %}

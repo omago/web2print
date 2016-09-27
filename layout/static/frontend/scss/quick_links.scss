@@ -1,0 +1,16 @@
+.quick-links {
+    a {
+        background: white no-repeat center 10px;
+        border-top: 5px solid #74afc7;
+        color: $grey-color;
+        display: block;
+        padding-top: 60px;
+        padding-bottom: 16px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    #order-press { background-image: url("../images/question-mark.png"); }
+    #sending-instructions { background-image: url("../images/up-arrow.png"); }
+    #featured-products { background-image: url("../images/percentage.png"); }
+}

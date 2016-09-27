@@ -117,22 +117,22 @@ $(document).ready(function() {
         }
     }
 
-    //$("select#id_finish").change(function() {
-    //    var finish_select = $(this);
-    //    var finish_select_value = finish_select.val();
-    //    var finish_type = $("#id_finish_type");
-    //    $("#id_finish_type option:gt(0)").remove();
-    //    var finish_type_initial_option = $("#id_finish_type").html();
-    //    var options = [];
-    //
-    //    options.push(finish_type_initial_option);
-    //    $.getJSON("/admin/finish-type/get-type-for-finish", { finish: finish_select_value }, function( data ) {
-    //        $.each( data, function( key, val ) {
-    //            options.push("<option value='" + val["pk"] + "'>" + val["fields"]["name"] + "</option>");
-    //        });
-    //        finish_type.html(options);
-    //    });
-    //});
+    $("select#id_finish").change(function() {
+       var finish_select = $(this);
+       var finish_select_value = finish_select.val();
+       var finish_type = $("#id_finish_type");
+       $("#id_finish_type option:gt(0)").remove();
+       var finish_type_initial_option = $("#id_finish_type").html();
+       var options = [];
+
+       options.push(finish_type_initial_option);
+       $.getJSON("/admin/finish-type/get-type-for-finish", { finish: finish_select_value }, function( data ) {
+           $.each( data, function( key, val ) {
+               options.push("<option value='" + val["pk"] + "'>" + val["fields"]["name"] + "</option>");
+           });
+           finish_type.html(options);
+       });
+    });
 
     /*
     Cover finish functions

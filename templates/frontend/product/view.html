@@ -92,6 +92,10 @@
                             {{ form.cover_paper.errors }}
                         </div>
 
+                        <div id="id_cover_finish_div" class="{% if not form.has_cover.value %}display-none{% endif %}">
+                            {{ form.cover_finish }}
+                        </div>
+
                         <div>
                             <label for="{{ form.has_insert.auto_id }}">{{ form.has_insert.label }}</label>
                             <div>{{ form.has_insert }}{% if form.has_insert.field.required %}<span class="required">*</span>{% endif %}</div>

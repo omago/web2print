@@ -1,0 +1,16 @@
+.article {
+  background: white;
+  padding: 30px; }
+  .article h1 {
+    margin-bottom: 20px;
+    text-align: left; }
+  .article h2 {
+    color: #919191;
+    margin: 20px 0 10px 0;
+    font-size: 18px; }
+  .article ul, .article ol {
+    margin: 10px 0 10px 30px; }
+    .article ul ul, .article ul ol, .article ol ul, .article ol ol {
+      margin: 0 0 0 30px; }
+
+/*# sourceMappingURL=article.css.map */

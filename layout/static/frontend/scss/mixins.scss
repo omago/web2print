@@ -1,0 +1,33 @@
+@mixin box-shadow($blur, $color: black) {
+    -webkit-box-shadow: 0 0 $blur 0 $color;
+    -moz-box-shadow:    0 0 $blur 0 $color;
+    box-shadow:         0 0 $blur 0 $color;
+}
+
+@mixin vertical-gradient($color1, $color2) {
+    background: $color1;
+    background: -moz-linear-gradient(top, $color1 0%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color1), color-stop(100%, $color2)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, $color1 0%, $color2 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, $color1 0%, $color2 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, $color1 0%, $color2 100%); /* IE10+ */
+    background: linear-gradient(to bottom, $color1 0%, $color2 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$color1', endColorstr='$color2',GradientType=0 ); /* IE6-9 */
+}
+
+@mixin vertical-gradient-with-image($image, $color1, $color2) {
+    background: ($color1 + $color2) / 2 $image;
+    background: $image, -webkit-gradient(linear, left top, left bottom, from($color1), to($color2));
+    background: $image, -moz-linear-gradient(center top, $color1 0%, $color2 100%);
+    background: $image, -moz-gradient(center top, $color1 0%, $color2 100%);
+}
+
+@mixin vertical-gradient-with-image($image, $image_repeat, $image_vertical, $image_horizontal, $color1, $color2) {
+    background: url($image) $image_repeat $image_vertical $image_horizontal, $color1;
+    background: url($image) $image_repeat $image_vertical $image_horizontal, -moz-linear-gradient(top, $color1 0%, #ffffff 100%); /* FF3.6+ */
+    background: url($image) $image_repeat $image_vertical $image_horizontal, -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color1), color-stop(100%, $color2)); /* Chrome,Safari4+ */
+    background: url($image) $image_repeat $image_vertical $image_horizontal, -webkit-linear-gradient(top, $color1 0%, $color2 100%); /* Chrome10+,Safari5.1+ */
+    background: url($image) $image_repeat $image_vertical $image_horizontal, -o-linear-gradient(top, $color1 0%, $color2 100%); /* Opera 11.10+ */
+    background: url($image) $image_repeat $image_vertical $image_horizontal, -ms-linear-gradient(top, $color1 0%, $color2 100%); /* IE10+ */
+    background: url($image) $image_repeat $image_vertical $image_horizontal, linear-gradient(to bottom, $color1 0%, $color2 100%); /* W3C */
+}

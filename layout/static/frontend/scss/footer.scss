@@ -1,0 +1,60 @@
+footer {
+    margin-top: 50px;
+
+    * {
+        color: white;
+    }
+
+    .footer-top {
+        background: #74afc8;
+        height: 106px;
+
+        div {
+            font-size: 20px;
+            color: white;
+            line-height: 106px;
+            background: no-repeat left center;
+            text-indent: 80px;
+        }
+
+        div:nth-child(1) {  background-image: url("../images/delivery.png"); }
+        div:nth-child(2) { background-image: url("../images/phone.png"); }
+    }
+
+    .footer-middle {
+        background: #6b9db6;
+        height: 280px;
+
+        menu {
+            padding-top: 30px;
+
+            h2 {
+                font-size: 20px;
+                color: white;
+                font-weight: bold;
+            }
+
+            nav {
+                > a {
+                    display: block;
+                    color: white;
+                    font-size: 14px;
+                    padding: 6px 0;
+                }
+
+                div {
+                    margin-top: 16px;
+
+                    a { margin-right: 10px; }
+                }
+            }
+        }
+    }
+
+    .footer-bottom {
+        height: 64px;
+        background: #3f3d3d;
+        line-height: 62px;
+        color: #a6dbef;
+    }
+}

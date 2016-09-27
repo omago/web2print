@@ -12,12 +12,13 @@
             <tr>
                 {% th "Id" "pk" "3" %}
                 {% th "Naziv" "name" "17" "left" %}
-                {% th "Dorada za korice" "cover" "15" "left" %}
+                {% th "Dorada za korice" "cover" "10" "left" %}
                 {% th "Vrsta x-a" "x" "10" "left" %}
                 {% th "Sadrži tipove" "has_types" "10" "left" %}
                 {% th "Dodatno" "display_as_additional" "10" "left" %}
                 {% th "Tipovi" "number_of_types" "10" "left" %}
                 {% th "Cijene" "number_of_prices" "10" "left" %}
+                {% th "Utječe na montažu" "affects_assembly_in_press" "10" "left" %}
                 {% th "Operacije" None "10" %}
             </tr>
             {% for row in rows %}
@@ -36,7 +37,6 @@
                     {% td row.display_as_additional "display_as_additional" "left" %}
 
                     {% with row_pk_string=row.pk|convert_to_string:"0" %}
-
                     {% with number_of_types=row.number_of_types|convert_to_string:"0" %}
                     {% with types="<a href='"|add:finish_type_list_url|add:"?finish="|add:row_pk_string|add:"'>"|add:number_of_types|add:"</a>" %}
                         {% if row.has_types %}
@@ -55,6 +55,7 @@
 
                     {% endwith %}
                     {% with row_pk_string=row.pk|convert_to_string:"0" %}
+                    {% td row.affects_assembly_in_press "affects_assembly_in_press" "left" %}
                     {% with copy="<a href='"|add:copy_url|add:"?finish_id="|add:row_pk_string|add:"' class='copy'></a>" %}
                     {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
                     {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}

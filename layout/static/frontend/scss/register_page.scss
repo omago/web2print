@@ -1,0 +1,92 @@
+#register-page {
+    background: #ffffff;
+    padding: 20px;
+
+    * { color: #5e5e5e; }
+    h1 { margin-bottom: 10px; }
+
+    h2 {
+        border-bottom: 1px dashed #5e5e5e;
+        font-size: 16px;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+
+    .notification {
+        background: #f2f2f2;
+        padding: 10px;
+
+        a {
+            color: $light-green-color;
+
+            &:hover { text-decoration: underline; }
+        }
+    }
+
+    .required-fields {
+        text-align: right;
+        margin-top: 20px;
+        margin-bottom: -19px;
+    }
+
+    form {
+        padding-top: 20px;
+
+        > div {
+            margin: 10px 0;
+
+            label {
+                width: 200px;
+                display: inline-block;
+            }
+
+            .errorlist {
+                list-style-type: none;
+                margin-left: 206px;
+
+                li {
+                    color: red;
+                    font-size: 11px;
+                }
+            }
+
+            div {
+                width: 400px;
+                display: inline-block;
+
+                input {
+                    width: 367px;
+                    padding: 4px;
+                    border: 1px solid #e2e2e2;
+                }
+
+                input[type=checkbox] {
+                    width: 12px;
+                    padding: 4px;
+                    border: 1px solid #e2e2e2;
+                }
+
+                .required {
+                    padding-left: 4px;
+                }
+            }
+        }
+
+        input[type=submit] {
+            margin-left: 204px;
+            padding: 10px 36px;
+            font-size: 16px;
+            background-color: $light-green-color;
+            color: #ffffff;
+
+            &:hover { background-color: red; }
+        }
+    }
+
+    .gradient {
+        margin-top: 20px;
+        margin-bottom: 8px;
+        @include vertical-gradient(#f2f2f2, #ffffff);
+        height: 20px;
+    }
+}

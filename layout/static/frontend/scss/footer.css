@@ -1,0 +1,42 @@
+footer {
+  margin-top: 50px; }
+  footer * {
+    color: white; }
+  footer .footer-top {
+    background: #74afc8;
+    height: 106px; }
+    footer .footer-top div {
+      font-size: 20px;
+      color: white;
+      line-height: 106px;
+      background: no-repeat left center;
+      text-indent: 80px; }
+    footer .footer-top div:nth-child(1) {
+      background-image: url("../images/delivery.png"); }
+    footer .footer-top div:nth-child(2) {
+      background-image: url("../images/phone.png"); }
+  footer .footer-middle {
+    background: #6b9db6;
+    height: 280px; }
+    footer .footer-middle menu {
+      padding-top: 30px; }
+      footer .footer-middle menu h2 {
+        font-size: 20px;
+        color: white;
+        font-weight: bold; }
+      footer .footer-middle menu nav > a {
+        display: block;
+        color: white;
+        font-size: 14px;
+        padding: 6px 0; }
+      footer .footer-middle menu nav div {
+        margin-top: 16px; }
+        footer .footer-middle menu nav div a {
+          margin-right: 10px; }
+  footer .footer-bottom {
+    height: 64px;
+    background: #3f3d3d;
+    line-height: 62px;
+    color: #a6dbef; }
+
+/*# sourceMappingURL=footer.css.map */

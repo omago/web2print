@@ -12,10 +12,11 @@
             <tr>
                 {% th "Id" "pk" "3" %}
                 {% th "Stroj" "printer" "15" "left" %}
-                {% th "Obostrani tisak" "both_sides" "15" "left" %}
-                {% th "X" "x" "15" "left" %}
+                {% th "Obostrani tisak" "both_sides" "10" "left" %}
+                {% th "X" "x" "10" "left" %}
                 {% th "Cijena starta" "start_price" "15" "left" %}
-                {% th "Cijena x-a" "x_price" "15" "left" %}
+                {% th "Cijena starta po arku" "start_price_per_sheet" "15" "left" %}
+                {% th "Cijena x-a" "x_price" "10" "left" %}
                 {% th "Vrsta izračuna cijene" "printing_price_type" "15" "left" %}
                 {% th "Operacije" None "10" %}
             </tr>
@@ -30,6 +31,7 @@
                     {% td row.both_sides "both_sides" "left" %}
                     {% td row.x "x" "left" %}
                     {% td row.start_price "start_price" "left" %}
+                    {% td row.start_price_per_sheet "start_price_per_sheet" "left" %}
                     {% td row.x_price "x_price" "left" %}
                     {% td row.printing_price_type "printing_price_type" "left" %}
                     {% with row_pk_string=row.pk|convert_to_string:"0" %}

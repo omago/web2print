@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
-from finish_type.models import FinishType
 
 
 class FinishWidgetHelper():
