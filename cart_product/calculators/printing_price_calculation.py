@@ -7,11 +7,8 @@ from printer_price_calculation import PrinterPriceCalculation
 
 class PrintingPriceCalculation:
 
-    padding = 2  # napust kod printa
-    paper_weight_payment_threshold = 250  # težina papira nakon koje se plaća i papir
-
-    def __init__(self, printers, product_format, press, paper, number_of_copies, number_of_mutation, volume,
-                 finish_affects_assembly_in_press, user):
+    def __init__(self, printers, product_format, press, paper, number_of_copies, volume, user, number_of_mutation=1,
+                 finish_affects_assembly_in_press=False):
 
         # obavezni attributi
         self.printers = printers
@@ -39,16 +36,6 @@ class PrintingPriceCalculation:
         self.total_printing_price = 0
         self.number_of_sheets = 0
 
-    def get_price(self):
-        """
-        Funkcija konvertira cijenu u decimal
-
-        Returns:
-            Funkcija vraća cijenu
-
-        """
-        return Decimal(self.total_printing_price)
-
     def calculate_price(self):
         """
         Funkcija kojom se poziva izračun
@@ -60,7 +47,7 @@ class PrintingPriceCalculation:
         if self.printers and self.product_format and self.press and self.paper and self.number_of_copies > 0:
             self.total_printing_price += self.get_printing_price()
 
-        return self.get_price()
+        return Decimal(self.total_printing_price)
 
     def get_printing_price(self):
         """

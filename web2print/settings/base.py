@@ -70,6 +70,8 @@ INSTALLED_APPS = (
     "finish",
     "finish_price",
     "finish_type",
+    "spine",
+    "shipping_price",
 )
 
 MIDDLEWARE_CLASSES = (

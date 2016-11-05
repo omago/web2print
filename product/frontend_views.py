@@ -3,16 +3,15 @@
 
 import json
 
-from django.template import RequestContext
-from django.shortcuts import render_to_response
 from django.http import HttpResponse
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
+from cart_product.calculators.price_calculation import PriceCalculation
+from cart_product.forms import CartProductForm
 from product_category.models import ProductCategory
 from product_subcategory.models import ProductSubcategory
-from cart_product.forms import CartProductForm
 from .models import Product
-
-from cart_product.price_calculation import PriceCalculation
 
 
 def calculate_price(request):

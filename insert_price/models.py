@@ -21,3 +21,7 @@ class InsertPrice(models.Model):
         unique_together = ('start_price', 'number_of_inserts_per_copy', 'price_per_insert')
         verbose_name = "Cijena umetka"
         verbose_name_plural = "Cijene umetka"
+
+    @staticmethod
+    def get(number_of_inserts):
+        return InsertPrice.filter(number_of_inserts_per_copy=number_of_inserts).first()

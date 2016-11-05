@@ -8,28 +8,13 @@ from finish.models import Finish
 
 class FinishPriceCalculation:
 
-    def __init__(self, number_of_sheets, finishes, volume, product_format, number_of_copies, finish_model):
-        self.number_of_sheets = number_of_sheets
+    def __init__(self, params, finishes, finish_model):
+        self.params = params
 
         self.finishes = finishes
-        self.volume = volume
-        self.number_of_copies = number_of_copies
         self.finish_model = finish_model
-        self.product_format = product_format
-        self.affects_assembly_in_press = False
 
         self.total_finishes_price = 0
-        #TODO: cijena papira, kako se izračunavai izračunav ali se za svaku doradu???
-
-    def get_price(self):
-        """
-        Funkcija konvertira cijenu u float
-
-        Returns:
-            Funkcija vraća cijenu
-
-        """
-        return Decimal(self.total_finishes_price)
 
     def calculate_price(self):
         """
@@ -45,6 +30,8 @@ class FinishPriceCalculation:
                 if finish_price:
                     self.total_finishes_price += finish_price
 
+        return Decimal(self.total_finishes_price)
+
     def get_finish_price(self, finish_dict):
         """
         Funkcija kojom se računa cijena za određenu doradu
@@ -55,7 +42,7 @@ class FinishPriceCalculation:
         """
         finish = None
         if "finish_id" in finish_dict:
-            finish = self.finish_model.objects.get(pk=finish_dict["finish_id"])  #TODO provjeriti točnos finish_id-ija
+            finish = self.finish_model.objects.get(pk=finish_dict["finish_id"])
 
         finish_type_id = None
         if "finish_type_id" in finish_dict:
@@ -63,19 +50,10 @@ class FinishPriceCalculation:
             if finish_type_id is None:
                 return None
 
-        # u slučaju da je na doradi određeno da dorada utječe na montažu postaviti za cijeli izračun da utječe na
-        # montažu kako bi se vrijednosti vratila u glavni izračun
-        if finish.finish.affects_assembly_in_press:
-            self.affects_assembly_in_press = True
-
         if finish.finish.x == Finish.COPIES:
-            x = self.number_of_copies
+            x = self.params.number_of_copies
         elif finish.finish.x == Finish.NUMBER_OF_SHEETS:
-            x = self.number_of_sheets
-        else:
-            x = self.number_of_copies  #TODO: ovo bi trebao biti izračun po kvadratu - potrebno provjeriti
-            #TODO kod finish modela ne postoji definiranje cijene po kvadratu, dali se dobije finish.finish.x vrijednost
-
+            x = self.params.number_of_sheets
 
         # cijena se prvo dohvaća za fiksni x
         finish_price = FinishPrice.get_x_price(finish.id, x, finish_type_id)
@@ -97,6 +75,3 @@ class FinishPriceCalculation:
         price = start_price + (x * x_price)
 
         return price
-
-    #TODO zašto korisnik na kalkulatoru odabire papir kada može odabirati papir gramaturu i finish posebno,
-    #TODO pisanje skripti za unos???

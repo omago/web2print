@@ -13,8 +13,8 @@ class PrinterPriceCalculation():
     padding = 4  # napust kod printa
     paper_weight_payment_threshold = 250  # težina papira nakon koje se plaća i papir
 
-    def __init__(self, printer, product_format, press, paper, number_of_copies,
-                 number_of_mutations=None, volume=None, user=None, finish_affects_assembly_in_press=None):
+    def __init__(self, printer, product_format, press, paper, number_of_copies, number_of_mutations=None, volume=None,
+                 user=None, finish_affects_assembly_in_press=None):
 
         self.printer = printer
         self.press = press

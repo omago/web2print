@@ -1,0 +1,59 @@
+{% extends "backend.html" %}
+{% load simple_tags %}
+{% load filters %}
+
+{% block content %}
+
+    {% h1 page_title %}
+    {% button_new "Nova defincija hrbta" "admin-spine-form" %}
+
+    <table class="grid">
+        {% if rows %}
+            <tr>
+                {% th "Id" "pk" "3" %}
+                {% th "Tip dorade" "finish_type.name" "17" "left" %}
+                {% th "Papir" "paper" "20" "left" %}
+                {% th "Debljina" "thickness" "10" "left" %}
+                {% th "Broj stranica od" "number_of_pages_from" "20" "left" %}
+                {% th "Broj stranica do" "number_of_pages_to" "20" "left" %}
+                {% th "Operacije" None "10" %}
+            </tr>
+            {% for row in rows %}
+                {% url "admin-spine-details" row.pk as details_url %}
+                {% url "admin-spine-form" as copy_url %}
+                {% url "admin-spine-form" row.pk as edit_url %}
+                {% url "admin-spine-delete" row.pk as delete_url %}
+                <tr>
+                    {% td row.pk "pk" %}
+                    {% with finish_type=row.finish_type.name %}
+                    {% with finish=row.finish_type.finish.name %}
+                    {% td "<a href="|add:edit_url|add:">"|add:finish|add:" - "|add:finish_type|add:"</a>" "finish_type.name" "left" %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% td row.paper "paper" "left" %}
+                    {% td row.thickness "thickness" "left" %}
+                    {% td row.number_of_pages_from "number_of_pages_from" "left" %}
+                    {% td row.number_of_pages_to "number_of_pages_to" "left" %}
+
+                    {% with row_pk_string=row.pk|convert_to_string:"0" %}
+                    {% with copy="<a href='"|add:copy_url|add:"?spine_id="|add:row_pk_string|add:"' class='copy'></a>" %}
+                    {% with view="<a href='"|add:details_url|add:"' class='view'></a>" %}
+                    {% with edit="<a href='"|add:edit_url|add:"' class='edit'></a>" %}
+                    {% with delete="<a href='"|add:delete_url|add:"' class='delete'></a>" %}
+                        {% td copy|add:view|add:edit|add:delete %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                {% td "Nema zapisa" %}
+            </tr>
+        {% endif %}
+    </table>
+    {% pager rows %}
+
+{% endblock %}

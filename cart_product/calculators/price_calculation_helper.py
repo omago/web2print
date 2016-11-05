@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-class PriceCalculationHelper():
+class PriceCalculationHelper:
 
     def __init__(self, data):
         self.data = data
@@ -65,3 +65,19 @@ class PriceCalculationHelper():
                 finishes_list.append(finish_dict)
 
         return finishes_list
+
+    @staticmethod
+    def does_finish_affect_assembly_in_press(finishes):
+        """
+        Funkcija provjerava utječu li dorade na montažu u tisku
+
+        Returns:
+            Funkcija vraća True ako dorade utječe na tisak ili False ako ne utječe
+
+        """
+        for finish in finishes:
+            # u slučaju da je na doradi određeno da dorada utječe na cijenu tiska
+            if finish.finish.affects_assembly_in_press:
+                return True
+
+        return False
